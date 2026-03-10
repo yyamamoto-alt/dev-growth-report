@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P0 アクションプラン — 実行マニュアル</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+  :root { --bg:#fafafa; --s:#fff; --s2:#f5f5f7; --b:#e5e5ea; --t:#1d1d1f; --d:#6e6e73; --blue:#0066cc; --green:#00875a; --red:#bf2600; --orange:#ff8b00; --purple:#6554c0; --navy:#1a1a2e; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--t);line-height:1.9;font-size:15px}
+  .cover{min-height:60vh;background:linear-gradient(135deg,#0f3460,#1a1a2e);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;color:#fff;padding:3rem 2rem}
+  .cover *{position:relative}
+  .cover-tag{font-size:.7rem;letter-spacing:.3em;opacity:.5;margin-bottom:1rem}
+  .cover h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;line-height:1.3;margin-bottom:.8rem}
+  .cover h1 em{font-style:normal;color:#4facfe}
+  .cover .sub{font-size:1rem;opacity:.6;max-width:600px}
+  .content{max-width:920px;margin:0 auto;padding:2rem}
+  .ch{margin:3rem 0}
+  .ch-head{display:flex;align-items:baseline;gap:.8rem;margin-bottom:1.5rem;padding-bottom:.6rem;border-bottom:2px solid var(--navy)}
+  .ch-num{font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--blue);font-weight:700}
+  .ch h2{font-size:1.4rem;font-weight:700}
+  .ch h3{font-size:1.05rem;font-weight:700;margin:1.8rem 0 .8rem;padding-left:.7rem;border-left:3px solid var(--blue)}
+  .ch h4{font-size:.95rem;font-weight:700;margin:1rem 0 .5rem}
+  .ch p{margin-bottom:.8rem;color:#333;font-size:.92rem}
+  table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.86rem}
+  th{background:var(--navy);color:#fff;padding:.5rem .7rem;text-align:left;font-weight:500;font-size:.78rem}
+  td{padding:.5rem .7rem;border-bottom:1px solid var(--b);vertical-align:top}
+  tr:nth-child(even) td{background:var(--s2)}
+  .callout{padding:1rem 1.2rem;border-radius:8px;margin:1rem 0;font-size:.88rem}
+  .cb{background:#e8f4fd;border-left:4px solid var(--blue)}
+  .cg{background:#e3fcef;border-left:4px solid var(--green)}
+  .cr{background:#ffebe6;border-left:4px solid var(--red)}
+  .cy{background:#fffae6;border-left:4px solid var(--orange)}
+  .cp{background:#eae6ff;border-left:4px solid var(--purple)}
+  .callout strong{display:block;margin-bottom:.2rem}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin:1rem 0}
+  .card{background:var(--s);border:1px solid var(--b);border-radius:10px;padding:1.2rem}
+  .card h4{margin:0 0 .3rem;font-size:.9rem}
+  .card p,.card ul{font-size:.83rem;color:var(--d)}
+  .card ul{padding-left:1rem}
+  .badge{display:inline-block;padding:.12rem .45rem;border-radius:4px;font-size:.7rem;font-weight:700}
+  .bg{background:#e3fcef;color:var(--green)}
+  .bb{background:#e8f4fd;color:var(--blue)}
+  .br{background:#ffebe6;color:var(--red)}
+  .bo{background:#fffae6;color:var(--orange)}
+  .bp{background:#eae6ff;color:var(--purple)}
+  .template{background:#1a1a2e;color:#e4e4ef;border-radius:8px;padding:1.2rem 1.5rem;margin:1rem 0;font-size:.85rem;white-space:pre-wrap;line-height:1.7;font-family:'Noto Sans JP',sans-serif;overflow-x:auto}
+  .template .label{color:#4facfe;font-size:.7rem;letter-spacing:.1em;margin-bottom:.5rem;display:block}
+  .copy-hint{font-size:.72rem;color:var(--d);text-align:right;margin-top:.3rem}
+  .checklist{list-style:none;padding:0;margin:1rem 0}
+  .checklist li{padding:.5rem 0 .5rem 2rem;border-bottom:1px solid var(--b);position:relative;font-size:.9rem}
+  .checklist li::before{content:'☐';position:absolute;left:0;font-size:1.1rem;color:var(--blue)}
+  .person{display:flex;align-items:center;gap:.8rem;padding:.8rem;background:var(--s);border:1px solid var(--b);border-radius:8px;margin:.5rem 0}
+  .person-av{width:36px;height:36px;border-radius:50%;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+  .person-info{flex:1}
+  .person-name{font-weight:700;font-size:.88rem}
+  .person-role{font-size:.78rem;color:var(--d)}
+  .person-why{font-size:.78rem;color:var(--blue);margin-top:.1rem}
+  footer{text-align:center;padding:2rem;color:var(--d);font-size:.75rem;border-top:1px solid var(--b);margin-top:2rem}
+  .fade-in{opacity:0;transform:translateY(15px);transition:opacity .5s,transform .5s}
+  .fade-in.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-tag">EXECUTABLE ACTION PLAN</div>
+  <h1>P0アクション<em>実行マニュアル</em></h1>
+  <p class="sub">「今日から動ける」レベルに落とし込んだ2つのアクション。ヒアリング先リスト・質問テンプレート・技術顧問の募集文面・スカウト先まで全て用意。</p>
+</div>
+
+<div class="content">
+
+<!-- ============================================ -->
+<!-- ACTION 1: HEARING -->
+<!-- ============================================ -->
+
+<div class="ch fade-in" id="a1">
+  <div class="ch-head"><span class="ch-num">ACTION 1</span><h2>同業スクール経営者ヒアリング</h2></div>
+
+  <div class="callout cb">
+    <strong>目的: SaaS化の仮説検証</strong>
+    「受講生管理 + メンター管理 + 営業 + 決済 + LMSを統合したツールに需要があるか」を、実際のスクール経営者3名以上に確認する。PMF以前の最重要ステップ。
+  </div>
+
+  <h3>1-1. ヒアリング先リスト（優先順位付き）</h3>
+
+  <h4>Tier 1: 今すぐ連絡できる相手（今週中）</h4>
+
+  <div class="callout cy">
+    <strong>まず「知人経営者」から始める</strong>
+    ヒアリングの最初は、断られてもダメージのない知人から。キャリア支援事業のネットワーク（取引先、同業、勉強会で会った人等）を棚卸しする。
+  </div>
+
+  <ul class="checklist">
+    <li>キャリア支援事業の<strong>取引先/提携先</strong>でスクール事業をしている人</li>
+    <li>業界イベント/勉強会で名刺交換した<strong>同業の経営者</strong></li>
+    <li>SNS（X/Facebook）で繋がっている<strong>教育事業の代表</strong></li>
+    <li>MyVision等の<strong>コンサル転職エージェント</strong>の知り合い</li>
+  </ul>
+
+  <h4>Tier 2: 紹介・DMでアプローチ（来週）</h4>
+
+  <p>直接の知人がいない場合、以下のリストからDM/問い合わせフォーム経由でアプローチ。「同業の経営者として情報交換したい」というスタンスで。</p>
+
+  <table>
+    <tr><th>優先度</th><th>会社/サービス</th><th>規模感</th><th>アプローチ理由</th><th>連絡方法</th></tr>
+    <tr><td><span class="badge br">最優先</span></td><td><strong>考えるエンジン講座</strong><br>高松智史氏</td><td>累計3,000人、年間500人</td><td>独自LMS「Study99」を構築済み。ツールの課題を聞ける。X/noteで発信活発</td><td>X DM or note コメント</td></tr>
+    <tr><td><span class="badge br">最優先</span></td><td><strong>Abuild就活</strong><br>NINJAPAN社</td><td>成長期</td><td>2020年創業で成長中。独自ABUILDシート。LINE活用。管理の課題がありそう</td><td>問い合わせフォーム</td></tr>
+    <tr><td><span class="badge bo">高</span></td><td><strong>ホワイトアカデミー</strong><br>Avalon Consulting</td><td>累計876名+</td><td>保護者への報告書サービスあり=管理業務が多い。課題が深そう</td><td>問い合わせフォーム</td></tr>
+    <tr><td><span class="badge bo">高</span></td><td><strong>ポジウィルキャリア</strong></td><td>累計24,000名</td><td>キャリアコーチングNo.1。大規模なメンター管理の知見</td><td>X DM（経営者が発信活発）</td></tr>
+    <tr><td><span class="badge bo">高</span></td><td><strong>THE COACH ICP</strong></td><td>3年で1,000人+</td><td>コーチ養成スクール。段階的カリキュラム。LMS+メンター管理の課題</td><td>問い合わせフォーム</td></tr>
+    <tr><td><span class="badge bb">中</span></td><td><strong>RUNTEQ</strong></td><td>中規模</td><td>1,000時間カリキュラム。進捗管理が複雑。メンター制度あり</td><td>X DM</td></tr>
+    <tr><td><span class="badge bb">中</span></td><td><strong>キャリドラ</strong></td><td>成長中</td><td>短期集中3ヶ月。Slack/Zoom活用。急成長期の管理課題</td><td>問い合わせフォーム</td></tr>
+    <tr><td><span class="badge bb">中</span></td><td><strong>C-Academy</strong></td><td>小規模</td><td>LINE永久サポート。小規模ゆえにツール課題が顕在化しやすい</td><td>問い合わせフォーム</td></tr>
+  </table>
+
+  <h3>1-2. アポ取りメッセージ（テンプレート3種）</h3>
+
+  <h4>テンプレートA: 知人向け（カジュアル）</h4>
+  <div class="template">
+<span class="label">LINEまたはDM用</span>
+〇〇さん、お疲れ様です。トップティアの山本です。
+
+突然ですが、受講生の管理って何のツールを使っていますか？
+
+実はうちで自社用に受講生管理+LMS+売上管理を統合したシステムを作ったんですが、同業の方がどうしているのか気になっていて。
+
+もしよければ30分だけ情報交換させてもらえませんか？
+こちらの知見も全部シェアします。
+
+来週のどこかでZoomかお茶、ご都合いかがですか？</div>
+  <div class="copy-hint">↑ そのままコピーして使えます</div>
+
+  <h4>テンプレートB: 面識のない経営者向け（X DM）</h4>
+  <div class="template">
+<span class="label">X（Twitter）DM用</span>
+はじめまして。キャリア支援事業（ケース面接対策塾Strategists）を運営している山本と申します。
+
+〇〇さんの事業をいつも拝見しており、大変勉強になっています。
+
+一点お伺いしたいのですが、受講生の管理や進捗管理はどのようなツールをお使いですか？
+
+弊社では自社で管理システムを構築したのですが、同業の方がどのような課題を抱えているのかヒアリングさせていただけないかと思いご連絡しました。
+
+Zoomで30分程度、お時間いただけると大変ありがたいです。
+こちらの知見も全てシェアさせていただきます。
+
+突然のご連絡失礼いたしました。</div>
+
+  <h4>テンプレートC: 問い合わせフォーム向け（フォーマル）</h4>
+  <div class="template">
+<span class="label">問い合わせフォーム用</span>
+件名: 同業経営者としての情報交換のお願い
+
+〇〇様
+
+突然のご連絡失礼いたします。
+株式会社トップティア 代表取締役の山本雄大と申します。
+
+弊社はケース面接対策塾「Strategists」を運営しており、
+現在受講生約200名にキャリア支援サービスを提供しております。
+https://akagiconsulting.com/
+
+この度、教育事業における受講生管理・メンター管理の
+効率化について研究を進めており、
+同業界で事業を展開されている御社に
+ぜひお話を伺えないかとご連絡いたしました。
+
+具体的には、以下のようなテーマで
+30分程度の情報交換をお願いできればと存じます。
+
+・受講生の進捗管理方法
+・メンター/講師のアサイン管理
+・決済・売上管理の仕組み
+・運営で感じている課題
+
+もちろん、弊社での取り組みや知見も全てシェアさせていただきます。
+
+お忙しいところ恐縮ですが、ご検討いただけますと幸いです。
+
+株式会社トップティア
+代表取締役 山本雄大
+support@akagiconsulting.com</div>
+
+  <h3>1-3. ヒアリング質問リスト（30分用）</h3>
+
+  <div class="callout cp">
+    <strong>鉄則: 最初の15分は「聞く」に徹する。自社プロダクトの話は後半に</strong>
+    相手の課題を十分に理解する前にプロダクトのピッチをすると、バイアスがかかった回答しか得られない。
+  </div>
+
+  <h4>Phase 1: 現状把握（10分）</h4>
+  <table>
+    <tr><th>#</th><th>質問</th><th>意図</th></tr>
+    <tr><td>Q1</td><td>現在、受講生は何名くらいいますか？　メンター/講師は何名ですか？</td><td>規模感の把握。SaaSのプラン設計に直結</td></tr>
+    <tr><td>Q2</td><td>受講生の情報管理は何を使っていますか？（Excel? Notion? CRM?）</td><td>現状のツールスタック把握。置き換え対象の特定</td></tr>
+    <tr><td>Q3</td><td>受講生の進捗管理（どこまで学習が進んでいるか）はどうやって追っていますか？</td><td>LMS機能の需要検証</td></tr>
+    <tr><td>Q4</td><td>メンター/講師のアサインや指導記録はどう管理していますか？</td><td>メンター管理機能の需要検証</td></tr>
+    <tr><td>Q5</td><td>決済（入金確認、分割管理）はどうしていますか？</td><td>決済統合の需要検証</td></tr>
+  </table>
+
+  <h4>Phase 2: 課題の深掘り（10分）</h4>
+  <table>
+    <tr><th>#</th><th>質問</th><th>意図</th></tr>
+    <tr><td>Q6</td><td>今の運営で<strong>一番面倒/非効率だと感じる業務</strong>は何ですか？</td><td>最もペインが深いポイントの特定。SaaSの初期機能はここ</td></tr>
+    <tr><td>Q7</td><td>スタッフが辞めた時、引き継ぎで困ったことはありますか？</td><td>属人化の課題。SaaSの価値訴求に使える</td></tr>
+    <tr><td>Q8</td><td>月末の売上集計・KPIの確認にどれくらい時間がかかりますか？</td><td>経営管理機能の需要。自動化の価値</td></tr>
+    <tr><td>Q9</td><td>受講生数が2倍になったら、今の管理体制で回りますか？</td><td>スケーラビリティの課題。成長期の企業ほど刺さる</td></tr>
+    <tr><td>Q10</td><td>ツールに月いくらまでなら払えますか？（率直に）</td><td>価格感の検証。WTP（Willingness To Pay）の把握</td></tr>
+  </table>
+
+  <h4>Phase 3: ソリューション検証（10分）</h4>
+  <table>
+    <tr><th>#</th><th>質問</th><th>意図</th></tr>
+    <tr><td>Q11</td><td>もし、受講生管理+メンター管理+LMS+売上管理が全部1つのツールに入っていたら、使いたいですか？</td><td>統合プロダクトの需要検証（直球）</td></tr>
+    <tr><td>Q12</td><td>【デモを見せて】こういうシステムなんですが、率直にどう思いますか？</td><td>プロダクトの初期反応。顔の表情を見る</td></tr>
+    <tr><td>Q13</td><td>今すぐ使いたいですか？ それとも「いいね」止まりですか？</td><td>Sean Ellisテスト的な質問。「使いたい」→PMF兆候</td></tr>
+    <tr><td>Q14</td><td>足りない機能、「これがないと使えない」というものはありますか？</td><td>MVPに必要な機能の洗い出し</td></tr>
+    <tr><td>Q15</td><td>月額いくらなら導入を検討しますか？</td><td>価格設定の最終検証</td></tr>
+  </table>
+
+  <h3>1-4. ヒアリング後のアクション</h3>
+
+  <ul class="checklist">
+    <li>ヒアリングメモを30分以内にドキュメント化（Claude Codeに録音→要約させても良い）</li>
+    <li>3名分のヒアリング結果を横並びで比較 — <strong>共通する課題</strong>を抽出</li>
+    <li>「お金を払ってでも解決したい」と言った課題 = SaaSの<strong>初期機能</strong></li>
+    <li>「いいね」止まりだった機能 = <strong>後回し</strong></li>
+    <li>3名中2名以上が「使いたい」→ PMF仮説に自信を持ってPhase 1開発に着手</li>
+    <li>3名中0-1名が「使いたい」→ 仮説を修正。追加ヒアリング or ピボット</li>
+  </ul>
+
+  <div class="callout cg">
+    <strong>最高のシナリオ</strong>
+    ヒアリング相手が「それ、うちで使いたい。ベータテストに参加できる？」と言ってくれること。これが3名中1名でもいれば、SaaS事業は確実に前に進む。
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- ACTION 2: CTO HIRING -->
+<!-- ============================================ -->
+
+<div class="ch fade-in" id="a2">
+  <div class="ch-head"><span class="ch-num">ACTION 2</span><h2>技術顧問（業務委託CTO）の募集開始</h2></div>
+
+  <div class="callout cb">
+    <strong>目的: 技術判断・コードレビュー・品質保証を担うシニアエンジニアを確保する</strong>
+    受託案件の開始、SaaS化の着手、どちらも技術顧問なしでは進められない。全ての事業計画の前提条件。
+  </div>
+
+  <h3>2-1. 採用チャネル戦略（並行実行）</h3>
+
+  <table>
+    <tr><th>優先度</th><th>チャネル</th><th>コスト</th><th>期待値</th><th>アクション</th></tr>
+    <tr><td><span class="badge br">今日</span></td><td><strong>知人紹介</strong></td><td>無料</td><td>最もマッチング精度が高い</td><td>LINE/Slackで5名に「こういう人知らない？」と聞く</td></tr>
+    <tr><td><span class="badge br">今日</span></td><td><strong>X（Twitter）</strong></td><td>無料</td><td>Next.js/Supabase界隈に刺さる</td><td>募集ツイート投稿 + 該当者3名にDM</td></tr>
+    <tr><td><span class="badge bo">今週</span></td><td><strong>YOUTRUST</strong></td><td>月20〜50万</td><td>CTOクラス多い。副業意向が見える</td><td>アカウント作成 → 募集投稿</td></tr>
+    <tr><td><span class="badge bo">今週</span></td><td><strong>Wantedly</strong></td><td>月5〜10万</td><td>ストーリーで惹きつけ</td><td>募集記事を掲載</td></tr>
+    <tr><td><span class="badge bb">来週</span></td><td><strong>Findy Freelance</strong></td><td>成功報酬</td><td>GitHub解析でスキル可視化</td><td>登録 → 要件伝達</td></tr>
+    <tr><td><span class="badge bb">来週</span></td><td><strong>FLEXY</strong></td><td>マージン20-35%</td><td>CTO特化案件が豊富</td><td>登録 → 面談</td></tr>
+  </table>
+
+  <h3>2-2. 求人要件（確定版）</h3>
+
+  <table>
+    <tr><th colspan="2" style="background:var(--blue)">技術顧問 / 社外CTO（業務委託）</th></tr>
+    <tr><td style="width:25%"><strong>稼働</strong></td><td>週10〜15時間（フルリモート）</td></tr>
+    <tr><td><strong>報酬</strong></td><td>月額 30〜45万円（経験・稼働により応相談）</td></tr>
+    <tr><td><strong>契約</strong></td><td>業務委託（準委任）/ 3ヶ月更新</td></tr>
+    <tr><td><strong>定例</strong></td><td>週1回 30-60分 Zoom + Slack非同期</td></tr>
+  </table>
+
+  <table>
+    <tr><th style="width:25%">必須スキル</th><th>詳細</th></tr>
+    <tr><td>Next.js (App Router)</td><td>プロダクション開発2年以上。Server Components/Server Actions理解</td></tr>
+    <tr><td>Supabase or PostgreSQL</td><td>RLS設計、マイグレーション、パフォーマンスチューニング経験</td></tr>
+    <tr><td>TypeScript</td><td>strict mode での型安全な設計。any排除のコードレビュー経験</td></tr>
+    <tr><td>アーキテクチャ設計</td><td>SaaS/Webアプリの設計判断経験。monorepo経験あれば尚可</td></tr>
+    <tr><td>コードレビュー</td><td>PR単位でのレビュー+フィードバックの実務経験</td></tr>
+  </table>
+
+  <table>
+    <tr><th style="width:25%">歓迎スキル</th><th>詳細</th></tr>
+    <tr><td>マルチテナント設計</td><td>SaaS課金基盤（Stripe Billing等）の設計経験</td></tr>
+    <tr><td>受託PM経験</td><td>見積もり・要件定義・クライアント折衝の経験</td></tr>
+    <tr><td>AI開発ツール</td><td>Claude Code / Cursor / GitHub Copilot の利用経験</td></tr>
+    <tr><td>セキュリティ</td><td>OWASP Top10レベルの脆弱性レビュー経験</td></tr>
+  </table>
+
+  <table>
+    <tr><th style="width:25%">主な業務</th><th>配分</th></tr>
+    <tr><td>コードレビュー</td><td>40% — PRレビュー、設計フィードバック</td></tr>
+    <tr><td>アーキテクチャ設計</td><td>25% — マルチテナント設計、DB設計、API設計</td></tr>
+    <tr><td>設計相談 / 定例MTG</td><td>20% — 週次MTG、Slackでの質疑応答</td></tr>
+    <tr><td>セキュリティ / 品質</td><td>15% — セキュリティレビュー、テスト戦略</td></tr>
+  </table>
+
+  <h3>2-3. 募集文面（そのまま使えるテンプレート）</h3>
+
+  <h4>X（Twitter）投稿用</h4>
+  <div class="template">
+<span class="label">X 投稿用（280文字以内）</span>
+【業務委託CTO/技術顧問を探しています】
+
+当社はキャリア支援事業を運営する27歳の代表が、Claude Codeを使って22日間で5つのプロダクションシステムを構築した会社です。
+
+今、AIが書いたコードをレビューし、正しい設計判断をしてくれる技術パートナーを探しています。
+
+Next.js + Supabase + TypeScript
+週10-15h / フルリモート / 月30-45万
+
+「AIと人間のハイブリッド開発」に興味がある方、DMください。</div>
+
+  <h4>Wantedly 募集記事用</h4>
+  <div class="template">
+<span class="label">Wantedly 募集記事（WHAT / WHY / HOW 構成）</span>
+■ タイトル
+AIが書いたコードの"品質番人"になってくれる技術顧問を探しています
+
+■ WHAT — 何をしているのか
+
+キャリア支援事業（ケース面接対策塾Strategists）を運営する株式会社トップティアです。
+
+代表の山本は、プログラミング初心者でしたが、Claude Codeを使って22日間で以下のシステムを構築しました:
+・CRM/LMS（Next.js 14 + Supabase） — 1,166名の顧客を管理
+・採用管理システム（Node.js + Express）
+・CEO支援AI（Python/FastAPI + Whisper + Zoom Bot）
+・映画記録アプリ（Next.js）
+・GA4/Search Console分析環境
+
+合計305+コミット、15以上の外部API連携（Stripe, freee, Slack, Google Sheets, Zoom等）。
+
+現在、この自社ツールをSaaS化し、スクール運営者向けの統合管理プラットフォームとして展開することを計画しています。
+
+■ WHY — なぜあなたが必要なのか
+
+正直に言います。
+
+AIが書いたコードは「動く」。でも「正しい」とは限りません。
+- TypeScriptの `as any` が177箇所
+- テストが0件
+- console.logが121箇所
+
+速度は出せる。でも「壊れにくいプロダクト」を作るには、設計判断とコードレビューができる人が必要です。
+
+私たちが求めているのは、コードを書く人ではありません。
+AIが書いたコードを見て「この設計はダメ、こうすべき」と言える人です。
+
+2026年の新しいCTO像 — 「AIの監督者」として、一緒にこの実験をしませんか？
+
+■ HOW — どうやっているのか
+
+開発スタイル:
+- コードの80%はClaude Code / Cursorが生成
+- 人間の役割は「設計判断」と「品質保証」
+- 全プロジェクトにCLAUDE.md（AI向けプロジェクト指示書）を配備
+- フルリモート + Slack非同期コミュニケーション
+
+技術スタック:
+- Next.js 14 (App Router) + TypeScript strict
+- Supabase (PostgreSQL + Auth + Edge Functions)
+- shadcn/ui + Recharts
+- Vercel / Railway
+- GitHub Actions CI/CD
+
+やっていただくこと:
+- 週1回の設計相談MTG（30-60分）
+- PRのコードレビュー（非同期）
+- マルチテナント化の設計（SaaS化の核心）
+- セキュリティレビュー
+- インターンチームへの技術指導
+
+条件:
+- 週10-15時間 / フルリモート
+- 月額30-45万円（業務委託）
+- 3ヶ月更新
+
+「AIが人間の仕事を奪う」のではなく、
+「AIと人間がどう協業するか」を一緒に模索できる方を探しています。
+
+まずはカジュアルにお話ししましょう。</div>
+
+  <h4>知人への紹介依頼メッセージ</h4>
+  <div class="template">
+<span class="label">LINE / Slack DM用</span>
+〇〇さん、お疲れ様です！
+
+ちょっと相談なんですが、Next.js + Supabaseに詳しいシニアエンジニアで、
+週1-2日の業務委託に興味ありそうな人、周りにいませんか？
+
+うちの開発はClaude Code使ってAIにコード書かせてるんですが、
+「AIが書いたコードをレビューして正しい設計判断をしてくれる人」が
+どうしても必要で。
+
+月30-45万円、フルリモートで考えてます。
+心当たりあれば紹介してもらえると嬉しいです！</div>
+
+  <h3>2-4. 面談の進め方</h3>
+
+  <table>
+    <tr><th>ステップ</th><th>内容</th><th>所要時間</th></tr>
+    <tr><td><span class="badge bb">Step 1</span></td><td><strong>カジュアル面談</strong> — 自己紹介、事業説明、「22日で5システム」の話、AIネイティブ開発の説明。相手の経歴・興味を聞く</td><td>30分</td></tr>
+    <tr><td><span class="badge bo">Step 2</span></td><td><strong>技術面談（実技）</strong> — Strategists PlatformのPR 1本を見てもらい、レビューコメントをもらう。「as any 177箇所」をどう改善するか議論</td><td>45分</td></tr>
+    <tr><td><span class="badge bg">Step 3</span></td><td><strong>条件合意</strong> — 稼働時間、報酬、開始日、コミュニケーション方法を合意。3ヶ月のトライアル契約</td><td>15分</td></tr>
+  </table>
+
+  <div class="callout cr">
+    <strong>面談で見るべきポイント（不適合のサイン）</strong>
+    <ul style="padding-left:1rem;margin-top:.3rem;font-size:.85rem">
+      <li>「AIが書いたコードは信用できない」と全否定する → AIとの協業に向かない</li>
+      <li>「テストは後でいい」と言う → 品質への意識が低い</li>
+      <li>コードレビューで「なぜダメか」を説明できない → 教育力が低い</li>
+      <li>「全部作り直したほうがいい」と言う → 現実的でない。改善の優先順位をつけられる人が必要</li>
+    </ul>
+  </div>
+
+  <div class="callout cg">
+    <strong>面談で見るべきポイント（適合のサイン）</strong>
+    <ul style="padding-left:1rem;margin-top:.3rem;font-size:.85rem">
+      <li>「このas anyは〇〇型に置き換えられる」と具体的に言える</li>
+      <li>「まずここにテストを入れよう」と優先順位をつけられる</li>
+      <li>「Claude Codeに書かせるなら、こういうプロンプトがいい」とAI活用に積極的</li>
+      <li>「マルチテナント化はRLSでこうやる」と設計を語れる</li>
+      <li>「面白いですね、この実験に参加したい」と好奇心がある</li>
+    </ul>
+  </div>
+
+  <h3>2-5. X（Twitter）スカウト候補の探し方</h3>
+
+  <div class="callout cb">
+    <strong>検索キーワード（Xで今すぐ検索）</strong>
+    <ul style="padding-left:1rem;margin-top:.3rem;font-size:.85rem">
+      <li><code>Next.js Supabase 副業</code></li>
+      <li><code>業務委託 CTO フルリモート</code></li>
+      <li><code>Claude Code 開発</code></li>
+      <li><code>フリーランス Next.js TypeScript</code></li>
+      <li><code>技術顧問 募集</code>（他社の募集から候補者を逆引き）</li>
+    </ul>
+  </div>
+
+  <p>発見したアカウントに以下のDMを送る:</p>
+
+  <div class="template">
+<span class="label">X DM スカウト用</span>
+はじめまして。キャリア支援事業を経営している山本と申します。
+〇〇さんの技術発信、いつも参考にさせていただいています。
+
+現在、Claude Codeを使った「AIネイティブ開発」で
+自社のCRM/LMS（Next.js + Supabase）を構築しているのですが、
+設計判断とコードレビューを担っていただける
+技術顧問（週10-15h、月30-45万、フルリモート）を探しています。
+
+AIが書いたコードの品質を担保するという、
+2026年ならではの面白いポジションだと思っています。
+
+もしご興味があれば、30分だけカジュアルにお話しさせていただけませんか？</div>
+</div>
+
+<!-- ============================================ -->
+<!-- WEEKLY SCHEDULE -->
+<!-- ============================================ -->
+
+<div class="ch fade-in" id="schedule">
+  <div class="ch-head"><span class="ch-num">SCHEDULE</span><h2>今週のタイムライン</h2></div>
+
+  <table>
+    <tr><th>日</th><th>ACTION 1: ヒアリング</th><th>ACTION 2: 技術顧問</th></tr>
+    <tr><td><strong>今日</strong></td><td>知人リストを5名洗い出し、テンプレートAでメッセージ送信</td><td>知人5名に紹介依頼メッセージ送信。X検索でスカウト候補3名にDM</td></tr>
+    <tr><td><strong>明日</strong></td><td>Tier 2リストから3社にX DM or 問い合わせフォーム送信</td><td>X募集ツイートを投稿</td></tr>
+    <tr><td><strong>3日目</strong></td><td>返信のフォローアップ。アポ日程調整</td><td>Wantedly記事を掲載。YOUTRUST登録</td></tr>
+    <tr><td><strong>4-5日目</strong></td><td>ヒアリング1件目を実施</td><td>Findy/FLEXY登録。応募者カジュアル面談</td></tr>
+    <tr><td><strong>6-7日目</strong></td><td>ヒアリング2-3件目を実施</td><td>技術面談（PRレビュー実技）</td></tr>
+    <tr><td><strong>来週</strong></td><td>結果を横比較 → SaaS仮説を更新</td><td>条件合意 → 3ヶ月トライアル契約開始</td></tr>
+  </table>
+
+  <div class="callout cg">
+    <strong>成功の定義（この2週間で）</strong>
+    <ul style="padding-left:1rem;margin-top:.3rem;font-size:.88rem">
+      <li>ヒアリング: 3名以上の経営者と話し、うち<strong>1名以上が「ベータで使いたい」</strong>と言ってくれた</li>
+      <li>技術顧問: <strong>1名以上と面談完了</strong>し、トライアル契約の合意に至った</li>
+    </ul>
+    この2つが揃えば、SaaS事業の開発を正式にスタートできる。
+  </div>
+</div>
+
+</div>
+
+<footer>
+  <p>Generated by Claude Code (Opus 4.6) — March 2026</p>
+  <p>全4レポート: <a href="index.html" style="color:var(--blue)">成長レポート</a> | <a href="dx-business-report.html" style="color:var(--blue)">DX事業計画</a> | <a href="saas-opportunity.html" style="color:var(--blue)">SaaS化戦略</a> | <a href="action-plan.html" style="color:var(--blue)">実行マニュアル</a></p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
