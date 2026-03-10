@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Developer Growth Report — 22 Days with Claude Code</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a28;
+    --border: #2a2a3a;
+    --text: #e4e4ef;
+    --text-dim: #8888a0;
+    --accent: #6c63ff;
+    --accent2: #00d4aa;
+    --accent3: #ff6b9d;
+    --accent4: #ffa726;
+    --gradient1: linear-gradient(135deg, #6c63ff, #00d4aa);
+    --gradient2: linear-gradient(135deg, #ff6b9d, #ffa726);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* Hero Section */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding: 2rem;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(108,99,255,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(0,212,170,0.06) 0%, transparent 50%);
+    animation: pulse 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1) rotate(0deg); }
+    100% { transform: scale(1.1) rotate(3deg); }
+  }
+
+  .hero-badge {
+    display: inline-block;
+    padding: 0.4rem 1.2rem;
+    border: 1px solid var(--accent);
+    border-radius: 50px;
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    position: relative;
+    letter-spacing: 0.1em;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .hero h1 .highlight {
+    background: var(--gradient1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero .subtitle {
+    font-size: 1.3rem;
+    color: var(--text-dim);
+    max-width: 700px;
+    margin-bottom: 3rem;
+    position: relative;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    max-width: 900px;
+    width: 100%;
+    position: relative;
+  }
+
+  @media (max-width: 768px) {
+    .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+  }
+
+  .stat-card .number {
+    font-size: 2.8rem;
+    font-weight: 900;
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--gradient1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-card .label {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-top: 0.3rem;
+  }
+
+  /* Section Layout */
+  section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+  }
+
+  .section-header {
+    margin-bottom: 3rem;
+  }
+
+  .section-header h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-header h2 .num {
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+  }
+
+  .section-header p {
+    color: var(--text-dim);
+    font-size: 1rem;
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding-left: 3rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent2), var(--accent3), var(--accent4));
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: border-color 0.3s;
+  }
+
+  .timeline-item:hover {
+    border-color: var(--accent);
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.55rem;
+    top: 1.8rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    z-index: 1;
+  }
+
+  .timeline-item .date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-item h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-item p {
+    color: var(--text-dim);
+    font-size: 0.92rem;
+  }
+
+  .timeline-item .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.8rem;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .tag-node { background: rgba(104,159,56,0.2); color: #8bc34a; }
+  .tag-python { background: rgba(33,150,243,0.2); color: #64b5f6; }
+  .tag-next { background: rgba(255,255,255,0.1); color: #ccc; }
+  .tag-react { background: rgba(0,188,212,0.2); color: #4dd0e1; }
+  .tag-api { background: rgba(255,167,38,0.2); color: #ffa726; }
+  .tag-deploy { background: rgba(255,107,157,0.2); color: #ff6b9d; }
+  .tag-ai { background: rgba(108,99,255,0.2); color: #9c94ff; }
+  .tag-security { background: rgba(244,67,54,0.2); color: #e57373; }
+  .tag-db { background: rgba(0,212,170,0.2); color: #00d4aa; }
+
+  /* Projects Grid */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+  }
+
+  .project-card:nth-child(1)::before { background: var(--gradient1); }
+  .project-card:nth-child(2)::before { background: var(--gradient2); }
+  .project-card:nth-child(3)::before { background: linear-gradient(135deg, #00d4aa, #6c63ff); }
+  .project-card:nth-child(4)::before { background: linear-gradient(135deg, #ffa726, #ff6b9d); }
+  .project-card:nth-child(5)::before { background: linear-gradient(135deg, #e040fb, #536dfe); }
+
+  .project-card .project-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+
+  .project-card .project-desc {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .project-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+  }
+
+  .project-meta-item {
+    text-align: center;
+    padding: 0.6rem;
+    background: var(--surface2);
+    border-radius: 8px;
+  }
+
+  .project-meta-item .val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent2);
+  }
+
+  .project-meta-item .lbl {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  .project-stack {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+
+  /* Skills Radar (CSS-based) */
+  .skills-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .skills-section { grid-template-columns: 1fr; }
+  }
+
+  .skill-bar-group {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+  }
+
+  .skill-bar-group h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: var(--accent);
+  }
+
+  .skill-bar {
+    margin-bottom: 1.2rem;
+  }
+
+  .skill-bar .skill-name {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .skill-bar .bar-bg {
+    height: 8px;
+    background: var(--surface2);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .skill-bar .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: var(--gradient1);
+    transition: width 1.5s ease;
+  }
+
+  /* Integration Icons */
+  .integrations {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin: 2rem 0;
+  }
+
+  .integration-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    font-size: 0.85rem;
+    transition: border-color 0.3s;
+  }
+
+  .integration-badge:hover {
+    border-color: var(--accent2);
+  }
+
+  /* Growth Chart (CSS bar chart) */
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+    height: 250px;
+    padding: 1rem 0;
+    margin: 2rem 0;
+  }
+
+  .bar-chart .bar-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    justify-content: flex-end;
+  }
+
+  .bar-chart .bar {
+    width: 100%;
+    max-width: 60px;
+    border-radius: 6px 6px 0 0;
+    position: relative;
+    transition: height 1s ease;
+    min-height: 4px;
+  }
+
+  .bar-chart .bar-label {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    margin-top: 0.5rem;
+    text-align: center;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    height: 60px;
+  }
+
+  @media (min-width: 768px) {
+    .bar-chart .bar-label {
+      writing-mode: horizontal-tb;
+      height: auto;
+    }
+  }
+
+  .bar-chart .bar-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+
+  /* Insights */
+  .insight-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .insight-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+  }
+
+  .insight-card .icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .insight-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .insight-card p {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+  }
+
+  .insight-card ul {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    padding-left: 1.2rem;
+    margin-top: 0.5rem;
+  }
+
+  .insight-card li {
+    margin-bottom: 0.3rem;
+  }
+
+  /* Recommendations */
+  .rec-card {
+    background: var(--surface);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .rec-card h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent2);
+  }
+
+  .rec-card p {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+  }
+
+  .rec-card code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--surface2);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.82rem;
+    color: var(--accent);
+  }
+
+  /* Level Up */
+  .level-section {
+    text-align: center;
+    padding: 4rem 2rem;
+    position: relative;
+  }
+
+  .level-badge {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem;
+    background: var(--surface);
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    width: 250px;
+    height: 250px;
+    justify-content: center;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+
+  .level-badge::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1px solid rgba(108,99,255,0.3);
+  }
+
+  .level-badge .level-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 4rem;
+    font-weight: 900;
+    background: var(--gradient1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .level-badge .level-title {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+  }
+
+  .level-desc {
+    max-width: 600px;
+    margin: 0 auto;
+    color: var(--text-dim);
+    font-size: 1.05rem;
+    line-height: 2;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+  }
+
+  footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  /* Scroll Animations */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Comparison Table */
+  .compare-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 2rem 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .compare-table th {
+    background: var(--surface2);
+    padding: 1rem;
+    font-size: 0.85rem;
+    text-align: left;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .compare-table td {
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .compare-table tr:nth-child(even) td {
+    background: var(--surface);
+  }
+
+  .compare-table .before {
+    color: var(--text-dim);
+  }
+
+  .compare-table .after {
+    color: var(--accent2);
+    font-weight: 500;
+  }
+
+  /* Quote */
+  .quote-block {
+    border-left: 3px solid var(--accent);
+    padding: 1.5rem 2rem;
+    margin: 2rem 0;
+    background: var(--surface);
+    border-radius: 0 12px 12px 0;
+    font-style: italic;
+    color: var(--text-dim);
+    font-size: 1.1rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">DEVELOPMENT GROWTH REPORT</div>
+  <h1>
+    プログラミング<span class="highlight">初心者</span>の<br>
+    <span class="highlight">22日間</span>の軌跡
+  </h1>
+  <p class="subtitle">
+    2026年2月17日、Claude Codeを初めて起動してから22日間。
+    ゼロからプロダクション環境で稼働する5つのシステムを構築した記録。
+  </p>
+  <div class="hero-stats">
+    <div class="stat-card">
+      <div class="number">305+</div>
+      <div class="label">総コミット数</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">124</div>
+      <div class="label">Claude Codeセッション</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">5</div>
+      <div class="label">プロジェクト構築</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">15+</div>
+      <div class="label">外部API連携</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section>
+  <div class="section-header fade-in">
+    <h2><span class="num">01</span>構築したプロジェクト</h2>
+    <p>22日間で5つの本格的なプロダクションシステムを構築・運用開始</p>
+  </div>
+
+  <div class="projects-grid">
+    <div class="project-card fade-in">
+      <div class="project-name">Recruitment Manager</div>
+      <div class="project-desc">採用管理システム — Slack連携・AI抽出・日程提案アルゴリズム・書類管理</div>
+      <div class="project-meta">
+        <div class="project-meta-item">
+          <div class="val">50</div>
+          <div class="lbl">コミット</div>
+        </div>
+        <div class="project-meta-item">
+          <div class="val">VPS</div>
+          <div class="lbl">SSH Deploy</div>
+        </div>
+      </div>
+      <div class="project-stack">
+        <span class="tag tag-node">Node.js</span>
+        <span class="tag tag-react">React</span>
+        <span class="tag tag-ai">AI抽出</span>
+        <span class="tag tag-api">Slack API</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-in">
+      <div class="project-name">AIbou (CEO Cognitive Twin)</div>
+      <div class="project-desc">会議自動録音・文字起こし・AI分析・CEO脳内マトリクス220フィールド</div>
+      <div class="project-meta">
+        <div class="project-meta-item">
+          <div class="val">95</div>
+          <div class="lbl">コミット</div>
+        </div>
+        <div class="project-meta-item">
+          <div class="val">Railway</div>
+          <div class="lbl">Auto Deploy</div>
+        </div>
+      </div>
+      <div class="project-stack">
+        <span class="tag tag-python">Python/FastAPI</span>
+        <span class="tag tag-next">Next.js</span>
+        <span class="tag tag-ai">Whisper</span>
+        <span class="tag tag-api">Zoom Bot</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-in">
+      <div class="project-name">Strategists Platform</div>
+      <div class="project-desc">CRM (売上管理・パイプライン・freee連携) + LMS (教材・コース・招待フロー)</div>
+      <div class="project-meta">
+        <div class="project-meta-item">
+          <div class="val">200+</div>
+          <div class="lbl">コミット</div>
+        </div>
+        <div class="project-meta-item">
+          <div class="val">Vercel</div>
+          <div class="lbl">Auto Deploy</div>
+        </div>
+      </div>
+      <div class="project-stack">
+        <span class="tag tag-next">Next.js 14</span>
+        <span class="tag tag-db">Supabase</span>
+        <span class="tag tag-api">Stripe</span>
+        <span class="tag tag-api">freee</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-in">
+      <div class="project-name">映画手帖 (Cinema Archive)</div>
+      <div class="project-desc">映画記録・5軸レーダー評価・AI映画タイプ診断・Tier共有画像生成</div>
+      <div class="project-meta">
+        <div class="project-meta-item">
+          <div class="val">~30</div>
+          <div class="lbl">コミット</div>
+        </div>
+        <div class="project-meta-item">
+          <div class="val">Vercel</div>
+          <div class="lbl">Deploy</div>
+        </div>
+      </div>
+      <div class="project-stack">
+        <span class="tag tag-next">Next.js</span>
+        <span class="tag tag-ai">AI診断</span>
+        <span class="tag tag-react">TMDB API</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-in">
+      <div class="project-name">Google Ads Reporting</div>
+      <div class="project-desc">GA4・Search Console・Google Ads 自動分析レポーティング環境</div>
+      <div class="project-meta">
+        <div class="project-meta-item">
+          <div class="val">OAuth</div>
+          <div class="lbl">認証構築</div>
+        </div>
+        <div class="project-meta-item">
+          <div class="val">3</div>
+          <div class="lbl">分析スクリプト</div>
+        </div>
+      </div>
+      <div class="project-stack">
+        <span class="tag tag-python">Python</span>
+        <span class="tag tag-api">GA4 API</span>
+        <span class="tag tag-api">Search Console</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section>
+  <div class="section-header fade-in">
+    <h2><span class="num">02</span>22日間のタイムライン</h2>
+    <p>初日のJWT認証実装から、Zapier完全移管・セキュリティ監査まで</p>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item fade-in">
+      <div class="date">Week 1 — 2/17〜18</div>
+      <h3>Day 1-2: 最初の一歩 — Recruitment Manager</h3>
+      <p>Claude Codeを初めて起動。admin/admin123のハードコード認証をJWT+セッション管理に置き換えるところからスタート。ユーザー管理、招待機能、Slack連携、履歴書アップロードを実装。Render無料プランの限界に気づきVPS(PM2+Nginx)へ移行。</p>
+      <div class="tags">
+        <span class="tag tag-node">Node.js/Express</span>
+        <span class="tag tag-security">JWT認証</span>
+        <span class="tag tag-deploy">VPS Deploy</span>
+      </div>
+    </div>
+
+    <div class="timeline-item fade-in">
+      <div class="date">Week 1 — 2/19〜20</div>
+      <h3>Day 3-4: 爆速サイドプロジェクト — 映画手帖</h3>
+      <p>映画記録アプリを1日で開発。5軸レーダーチャート、感情タグ、Google/X OAuth、AI映画タイプ診断、Instagram Story向けTier画像生成、相互フォロー機能まで実装。同時にRecruitment Managerの大量UX修正(19件)も並行。</p>
+      <div class="tags">
+        <span class="tag tag-next">Next.js</span>
+        <span class="tag tag-ai">AI診断</span>
+        <span class="tag tag-react">OAuth</span>
+      </div>
+    </div>
+
+    <div class="timeline-item fade-in">
+      <div class="date">Week 2 — 2/22〜24</div>
+      <h3>Day 6-8: OpenClaw → AIbou 誕生</h3>
+      <p>会議録音→文字起こし→AI分析パイプラインのMVPを1日で構築しRailwayにデプロイ。Playwright+Whisperでのリアルタイム文字起こし、Zoomボットの参加速度を42秒→10秒に最適化、pyannote.audioで話者分離を実装。</p>
+      <div class="tags">
+        <span class="tag tag-python">Python/FastAPI</span>
+        <span class="tag tag-ai">Whisper</span>
+        <span class="tag tag-api">Zoom Bot</span>
+        <span class="tag tag-deploy">Railway</span>
+      </div>
+    </div>
+
+    <div class="timeline-item fade-in">
+      <div class="date">Week 2-3 — 2/26〜28</div>
+      <h3>Day 10-12: Strategists Platform 爆誕</h3>
+      <p>Next.js 14 monorepo (CRM+LMS) を新規構築。Supabaseに7,394件の実顧客データ移行、重大セキュリティ脆弱性の発見・修正（anon keyクライアント露出）、141カラムのExcel完全パリティ、3段階売上システムを実装。</p>
+      <div class="tags">
+        <span class="tag tag-next">Next.js 14</span>
+        <span class="tag tag-db">Supabase</span>
+        <span class="tag tag-security">Security Fix</span>
+      </div>
+    </div>
+
+    <div class="timeline-item fade-in">
+      <div class="date">Week 3 — 3/1〜3</div>
+      <h3>Day 13-15: 三面作戦</h3>
+      <p>CRM（マーケティング帰属システム・売上管理PL・AI経営示唆）、LMS（ログイン・コース管理）、AIbou（CEO脳内マトリクス220フィールド・ダッシュボード刷新・Slack議事録自動投稿）を3つ同時並行で開発。</p>
+      <div class="tags">
+        <span class="tag tag-ai">AI経営示唆</span>
+        <span class="tag tag-api">Google Sheets</span>
+        <span class="tag tag-api">Slack</span>
+      </div>
+    </div>
+
+    <div class="timeline-item fade-in">
+      <div class="date">Week 4 — 3/4〜6</div>
+      <h3>Day 17-19: LMS本格化 + Zapier移管開始</h3>
+      <p>LMS教材管理（Notion風エディタ）、プラン別アクセス制御、自動招待フロー（Google Forms→Slack承認→メール）。CRMではOrders統合テーブル、Webhook受信(Jicoo/Apps/Stripe)、GA4/Search Console分析環境を構築。</p>
+      <div class="tags">
+        <span class="tag tag-db">Orders DB統合</span>
+        <span class="tag tag-api">Webhook</span>
+        <span class="tag tag-api">GA4/SC</span>
+      </div>
+    </div>
+
+    <div class="timeline-item fade-in">
+      <div class="date">Week 4 — 3/9〜10</div>
+      <h3>Day 21-22: 完全移管 + セキュリティ監査</h3>
+      <p>120個のZapier Zapを16個のCron + 3個のWebhookに完全移管。セキュリティ監査で19件のHIGHバグ発見・修正。freee会計API連携、パフォーマンス改善(Suspense/SWR/スケルトン)、62名誤変更事件からの保護ルール実装。</p>
+      <div class="tags">
+        <span class="tag tag-security">19件HIGH修正</span>
+        <span class="tag tag-api">freee API</span>
+        <span class="tag tag-deploy">Zapier完全移管</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE/AFTER -->
+<section>
+  <div class="section-header fade-in">
+    <h2><span class="num">03</span>ビフォー・アフター</h2>
+    <p>22日前と今のスキル比較</p>
+  </div>
+
+  <table class="compare-table fade-in">
+    <thead>
+      <tr>
+        <th>スキル領域</th>
+        <th>2/17 (Day 1)</th>
+        <th>3/10 (Day 22)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>認証・セキュリティ</td>
+        <td class="before">admin/admin123 ハードコード</td>
+        <td class="after">JWT + OAuth 2.0 + Webhook署名検証 + RLS</td>
+      </tr>
+      <tr>
+        <td>デプロイ</td>
+        <td class="before">ローカルのみ</td>
+        <td class="after">VPS(SSH/PM2), Railway, Vercel, GitHub Pages を使い分け</td>
+      </tr>
+      <tr>
+        <td>データベース</td>
+        <td class="before">SQLite (ファイルDB)</td>
+        <td class="after">PostgreSQL (Supabase) 7,394顧客 + 22テーブル型定義</td>
+      </tr>
+      <tr>
+        <td>API連携</td>
+        <td class="before">未経験</td>
+        <td class="after">Stripe, freee, Slack, Google Sheets, Jicoo, Zoom, GA4, TMDB 等 15+</td>
+      </tr>
+      <tr>
+        <td>フロントエンド</td>
+        <td class="before">基本的なReact</td>
+        <td class="after">Next.js 14 monorepo + Suspense + SWR + 仮想スクロール + Recharts</td>
+      </tr>
+      <tr>
+        <td>AI統合</td>
+        <td class="before">なし</td>
+        <td class="after">Whisper文字起こし + Claude分析 + AI経営示唆 + AI映画診断</td>
+      </tr>
+      <tr>
+        <td>自動化</td>
+        <td class="before">Zapier (120個のZap)</td>
+        <td class="after">16個のCron + 3 Webhook (コード管理・完全制御)</td>
+      </tr>
+      <tr>
+        <td>アーキテクチャ</td>
+        <td class="before">単一ファイル構成</td>
+        <td class="after">Monorepo + 共有DBパッケージ + マイクロサービス</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- SKILLS ASSESSMENT -->
+<section>
+  <div class="section-header fade-in">
+    <h2><span class="num">04</span>スキル習得度</h2>
+    <p>22日間で身につけた技術スキルの深さ</p>
+  </div>
+
+  <div class="skills-section">
+    <div class="skill-bar-group fade-in">
+      <h3>バックエンド</h3>
+      <div class="skill-bar">
+        <div class="skill-name"><span>REST API設計</span><span>85%</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:85%"></div></div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-name"><span>認証 (JWT/OAuth)</span><span>80%</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:80%"></div></div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-name"><span>Webhook/Cron自動化</span><span>90%</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:90%"></div></div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-name"><span>外部API連携</span><span>85%</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:85%"></div></div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-name"><span>データベース設計</span><span>70%</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:70%"></div></div>
+      </div>
+    </div>
+
+    <div class="skill-bar-group fade-in">
+      <h3>フロントエンド</h3>
+      <div class="skill-bar">
+        <div class="skill-name"><span>React/Next.js</span><span>75%</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:75%"></div></div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-name"><span>UI/UXデザイン</span><span>70%</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:70%"></div></div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-name"><span>状態管理/データフロー</span><span>65%</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:65%"></div></div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-name"><span>パフォーマンス最適化</span><span>60%</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:60%"></div></div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-name"><span>TypeScript</span><span>50%</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:50%"></div></div>
+      </div>
+    </div>
+
+    <div class="skill-bar-group fade-in">
+      <h3>DevOps/インフラ</h3>
+      <div class="skill-bar">
+        <div class="skill-name"><span>Git/GitHub</span><span>80%</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:80%"></div></div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-name"><span>Vercel/Railwayデプロイ</span><span>85%</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:85%"></div></div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-name"><span>VPS/SSH/PM2</span><span>65%</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:65%"></div></div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-name"><span>環境変数管理</span><span>75%</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:75%"></div></div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-name"><span>CI/CD</span><span>40%</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:40%"></div></div>
+      </div>
+    </div>
+
+    <div class="skill-bar-group fade-in">
+      <h3>AI/データ</h3>
+      <div class="skill-bar">
+        <div class="skill-name"><span>Claude Code活用</span><span>95%</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:95%"></div></div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-name"><span>プロンプトエンジニアリング</span><span>80%</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:80%"></div></div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-name"><span>AI API統合</span><span>75%</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:75%"></div></div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-name"><span>データ分析/可視化</span><span>65%</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:65%"></div></div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-name"><span>テスト/品質保証</span><span>15%</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:15%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRATIONS -->
+<section>
+  <div class="section-header fade-in">
+    <h2><span class="num">05</span>連携した外部サービス</h2>
+    <p>22日間で統合した外部API・サービス一覧</p>
+  </div>
+
+  <div class="integrations fade-in">
+    <div class="integration-badge">Stripe (決済)</div>
+    <div class="integration-badge">freee (会計)</div>
+    <div class="integration-badge">Slack (通知/Bot)</div>
+    <div class="integration-badge">Google Sheets</div>
+    <div class="integration-badge">Google Calendar</div>
+    <div class="integration-badge">GA4 (Analytics)</div>
+    <div class="integration-badge">Search Console</div>
+    <div class="integration-badge">Jicoo (予約)</div>
+    <div class="integration-badge">Zoom (Bot参加)</div>
+    <div class="integration-badge">Whisper (文字起こし)</div>
+    <div class="integration-badge">Claude API (AI分析)</div>
+    <div class="integration-badge">TMDB (映画DB)</div>
+    <div class="integration-badge">Supabase (DB)</div>
+    <div class="integration-badge">Resend (メール)</div>
+    <div class="integration-badge">Notion API</div>
+    <div class="integration-badge">pyannote (話者分離)</div>
+  </div>
+</section>
+
+<!-- COMMITS BAR CHART -->
+<section>
+  <div class="section-header fade-in">
+    <h2><span class="num">06</span>日別コミット推移</h2>
+    <p>ほぼ毎日コードを書き続けた22日間</p>
+  </div>
+
+  <div class="bar-chart fade-in">
+    <div class="bar-wrapper">
+      <div class="bar-value">5</div>
+      <div class="bar" style="height:10%; background: var(--accent);"></div>
+      <div class="bar-label">2/17</div>
+    </div>
+    <div class="bar-wrapper">
+      <div class="bar-value">18</div>
+      <div class="bar" style="height:35%; background: var(--accent);"></div>
+      <div class="bar-label">2/18</div>
+    </div>
+    <div class="bar-wrapper">
+      <div class="bar-value">12</div>
+      <div class="bar" style="height:23%; background: var(--accent);"></div>
+      <div class="bar-label">2/19</div>
+    </div>
+    <div class="bar-wrapper">
+      <div class="bar-value">22</div>
+      <div class="bar" style="height:43%; background: var(--accent2);"></div>
+      <div class="bar-label">2/20</div>
+    </div>
+    <div class="bar-wrapper">
+      <div class="bar-value">8</div>
+      <div class="bar" style="height:15%; background: var(--accent);"></div>
+      <div class="bar-label">2/22</div>
+    </div>
+    <div class="bar-wrapper">
+      <div class="bar-value">10</div>
+      <div class="bar" style="height:19%; background: var(--accent);"></div>
+      <div class="bar-label">2/23</div>
+    </div>
+    <div class="bar-wrapper">
+      <div class="bar-value">14</div>
+      <div class="bar" style="height:27%; background: var(--accent);"></div>
+      <div class="bar-label">2/24</div>
+    </div>
+    <div class="bar-wrapper">
+      <div class="bar-value">16</div>
+      <div class="bar" style="height:31%; background: var(--accent);"></div>
+      <div class="bar-label">2/26</div>
+    </div>
+    <div class="bar-wrapper">
+      <div class="bar-value">12</div>
+      <div class="bar" style="height:23%; background: var(--accent);"></div>
+      <div class="bar-label">2/27</div>
+    </div>
+    <div class="bar-wrapper">
+      <div class="bar-value">20</div>
+      <div class="bar" style="height:39%; background: var(--accent2);"></div>
+      <div class="bar-label">2/28</div>
+    </div>
+    <div class="bar-wrapper">
+      <div class="bar-value">15</div>
+      <div class="bar" style="height:29%; background: var(--accent);"></div>
+      <div class="bar-label">3/1</div>
+    </div>
+    <div class="bar-wrapper">
+      <div class="bar-value">10</div>
+      <div class="bar" style="height:19%; background: var(--accent);"></div>
+      <div class="bar-label">3/2</div>
+    </div>
+    <div class="bar-wrapper">
+      <div class="bar-value">12</div>
+      <div class="bar" style="height:23%; background: var(--accent);"></div>
+      <div class="bar-label">3/3</div>
+    </div>
+    <div class="bar-wrapper">
+      <div class="bar-value">25</div>
+      <div class="bar" style="height:49%; background: var(--accent2);"></div>
+      <div class="bar-label">3/4</div>
+    </div>
+    <div class="bar-wrapper">
+      <div class="bar-value">30</div>
+      <div class="bar" style="height:58%; background: var(--accent3);"></div>
+      <div class="bar-label">3/5</div>
+    </div>
+    <div class="bar-wrapper">
+      <div class="bar-value">15</div>
+      <div class="bar" style="height:29%; background: var(--accent);"></div>
+      <div class="bar-label">3/6</div>
+    </div>
+    <div class="bar-wrapper">
+      <div class="bar-value">12</div>
+      <div class="bar" style="height:23%; background: var(--accent);"></div>
+      <div class="bar-label">3/7</div>
+    </div>
+    <div class="bar-wrapper">
+      <div class="bar-value">5</div>
+      <div class="bar" style="height:10%; background: var(--accent);"></div>
+      <div class="bar-label">3/9</div>
+    </div>
+    <div class="bar-wrapper">
+      <div class="bar-value">52</div>
+      <div class="bar" style="height:100%; background: var(--accent3);"></div>
+      <div class="bar-label">3/10</div>
+    </div>
+  </div>
+</section>
+
+<!-- ANALYSIS & RECOMMENDATIONS -->
+<section>
+  <div class="section-header fade-in">
+    <h2><span class="num">07</span>分析 & 成長予測</h2>
+    <p>現在地と今後の成長ロードマップ</p>
+  </div>
+
+  <div class="quote-block fade-in">
+    「プログラミング初心者が22日間でここまで到達するのは、Claude Codeの有無に関わらず異常なスピード。ただし、スピードに品質が追いついていない領域がある。次の30日で"壊れにくい"コードを書けるようになるかが分岐点。」
+  </div>
+
+  <div class="insight-grid">
+    <div class="insight-card fade-in">
+      <div class="icon">&#9889;</div>
+      <h3>圧倒的な強み</h3>
+      <ul>
+        <li><strong>実装速度</strong>: MVP → プロダクションを数日で達成</li>
+        <li><strong>並行開発力</strong>: 3プロジェクト同時進行を管理</li>
+        <li><strong>外部連携力</strong>: 15+のAPIを統合する設計力</li>
+        <li><strong>事業理解</strong>: 技術を事業価値に直結させる判断力</li>
+        <li><strong>障害対応</strong>: 62名誤変更事件→即座にルール策定・実装</li>
+      </ul>
+    </div>
+
+    <div class="insight-card fade-in">
+      <div class="icon">&#9888;</div>
+      <h3>要改善エリア</h3>
+      <ul>
+        <li><strong>テスト 0件</strong>: 全プロジェクトにユニットテストがない</li>
+        <li><strong>as any 177箇所</strong>: TypeScript型安全性が弱い</li>
+        <li><strong>console.log 121箇所</strong>: ログ戦略が未整備</li>
+        <li><strong>ESLint未設定</strong>: コード品質の自動チェックなし</li>
+        <li><strong>エラーハンドリング</strong>: サイレントfailが各所に存在</li>
+      </ul>
+    </div>
+
+    <div class="insight-card fade-in">
+      <div class="icon">&#128200;</div>
+      <h3>30日後の予測 (このペースの場合)</h3>
+      <ul>
+        <li>CRM/LMS: 完全Zapier離脱 + freee/銀行口座自動連携</li>
+        <li>AIbou: Mac miniで24h稼働、全会議自動参加・分析</li>
+        <li>テスト導入: 主要APIの統合テスト</li>
+        <li>モニタリング: Sentry/ログ基盤構築</li>
+        <li>外部公開: LMS受講生が実際に利用開始</li>
+      </ul>
+    </div>
+
+    <div class="insight-card fade-in">
+      <div class="icon">&#127919;</div>
+      <h3>90日後の予測</h3>
+      <ul>
+        <li>エンジニアとして: ジュニアレベル突破 → ミドル相当の設計判断力</li>
+        <li>プロダクト: 全社システムをコード管理下で一元運用</li>
+        <li>自動化: 手作業ゼロに近い業務フロー</li>
+        <li>AI活用: Claude Code + Mac mini常時稼働で24h開発体制</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- RECOMMENDATIONS -->
+<section>
+  <div class="section-header fade-in">
+    <h2><span class="num">08</span>今すぐやるべき10のこと</h2>
+    <p>Claude Code + 開発体制の最適化提案</p>
+  </div>
+
+  <div class="rec-card fade-in">
+    <h4>1. Mac mini を「夜間ワーカー」にする</h4>
+    <p>Mac miniにClaude Codeをインストールし、<code>claude -p "タスク" --allowedTools Edit,Write,Bash</code> でヘッドレス実行。GitHub Issueに「寝る前タスク」を書いておき、cronで起動 → 朝にPRが立っている状態を作る。SSH経由で外出先からも指示可能。</p>
+  </div>
+
+  <div class="rec-card fade-in">
+    <h4>2. スマホ連携: GitHub Mobile + Termius</h4>
+    <p>GitHub Mobileアプリで外出先からPRレビュー・Issue作成。<strong>Termius</strong>（iOSアプリ）でSSH接続し、Mac miniのClaude Codeにスマホから指示を出す。Slack Botにコマンドを送って開発タスクをキックする仕組みも作れる。</p>
+  </div>
+
+  <div class="rec-card fade-in">
+    <h4>3. Claude Code の Agent Teams 機能を活用</h4>
+    <p><code>claude agents</code> でリサーチ・コーディング・テストを並列実行。例: 「CRMの全APIエンドポイントにテストを書いて」と指示すれば、Agent Teamsが並列にテスト生成。1つの指示で複数ファイルを同時に修正できる。</p>
+  </div>
+
+  <div class="rec-card fade-in">
+    <h4>4. CLAUDE.md をプロジェクトルートに設置</h4>
+    <p>各プロジェクトのルートに <code>CLAUDE.md</code> を置くことで、そのプロジェクト固有のルール・構造をClaude Codeに毎回教えなくて済む。現在のホームディレクトリのCLAUDE.mdは素晴らしいが、プロジェクト別にも作ると精度が上がる。</p>
+  </div>
+
+  <div class="rec-card fade-in">
+    <h4>5. テストを書く習慣をつける (テスト0件 → まず10件)</h4>
+    <p><code>"このAPIエンドポイントのテストを書いて"</code> とClaude Codeに指示するだけでOK。最初は主要なCron/Webhook APIの統合テストから。壊れやすい箇所（ステージ自動遷移、売上計算）を優先。</p>
+  </div>
+
+  <div class="rec-card fade-in">
+    <h4>6. <code>/review</code> コマンドで自己レビュー</h4>
+    <p>コミット前に <code>claude /review</code> を実行し、セキュリティ問題・パフォーマンス問題・バグを自動検出。19件のHIGHバグは事前に防げた可能性がある。Git hooksに組み込むことも可能。</p>
+  </div>
+
+  <div class="rec-card fade-in">
+    <h4>7. 「作業のムラ」を解消する構造</h4>
+    <p>GitHub Issuesにタスクを全て書き出し → 優先度ラベル (P0/P1/P2) を付ける → 1日3タスクを目標。PCの前にいない時間も、スマホからIssueのトリアージやPRレビューができる。作業は「やる/やらない」ではなく「何をやるか」の選択に。</p>
+  </div>
+
+  <div class="rec-card fade-in">
+    <h4>8. OpenCrawler (Mac mini) の活用計画</h4>
+    <p>Mac miniでOpenCrawlerを常時稼働させ、競合サイト・求人データ・業界ニュースを自動収集 → CRMのマーケ分析ダッシュボードに統合。AIbouのBrainMatrixに外部データを流し込み、CEOの意思決定を支援。</p>
+  </div>
+
+  <div class="rec-card fade-in">
+    <h4>9. Sentry + 構造化ログの導入</h4>
+    <p><code>console.log</code> 121箇所 → <strong>pino</strong> (構造化ログ) + <strong>Sentry</strong> (エラー監視) に置き換え。本番環境のエラーがSlackに即通知される体制を構築。これまでの「バグ発見→修正」サイクルを「バグ検知→自動通知→修正」に。</p>
+  </div>
+
+  <div class="rec-card fade-in">
+    <h4>10. Claude Code Hooks で開発フロー自動化</h4>
+    <p>Claude Code の <strong>Hooks</strong> 機能で、ファイル保存時に自動lint、コミット前に自動テスト、デプロイ前にセキュリティチェックを設定。<code>.claude/hooks.json</code> に定義するだけで、開発品質が自動的に担保される。</p>
+  </div>
+</section>
+
+<!-- LEVEL -->
+<section class="level-section">
+  <div class="fade-in">
+    <div class="level-badge">
+      <div class="level-title">DEVELOPER LEVEL</div>
+      <div class="level-num">Lv.22</div>
+      <div class="level-title">RAPID BUILDER</div>
+    </div>
+
+    <div class="level-desc">
+      <p>
+        22日間でLv.0からLv.22へ。<br>
+        あなたは「Rapid Builder」— 圧倒的なスピードでプロダクションシステムを構築できる段階に到達した。<br><br>
+        次のレベルは <strong>「Reliable Engineer」(Lv.40)</strong>。<br>
+        テスト・監視・型安全性を身につけ、「壊れにくい」システムを作れるようになること。<br>
+        このペースなら<strong>あと30日</strong>で到達可能。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Generated by Claude Code (Opus 4.6) on 2026-03-10</p>
+  <p>Data: 124 sessions, 305+ commits, 10 memory files analyzed</p>
+  <p><a href="https://github.com/yyamamoto-alt">github.com/yyamamoto-alt</a></p>
+</footer>
+
+<script>
+  // Scroll animation
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
