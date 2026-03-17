@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIレバレッジ × マネタイズ戦略ブレスト</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0A0A0A;--card:#0F0F0F;--card2:#141414;--accent:#C13028;--accent2:#E8453C;--text:#E8E8E8;--text2:#999;--text3:#666;--border:#1A1A1A;--border2:#252525;--green:#22C55E;--yellow:#EAB308;--orange:#F97316;--blue:#3B82F6;--purple:#A855F7}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans JP','Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.8;-webkit-font-smoothing:antialiased}
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+/* Hero */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:linear-gradient(135deg,#0A0A0A 0%,#1a0a0a 50%,#0A0A0A 100%)}
+.hero::before{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(193,48,40,0.08) 0%,transparent 70%);top:-100px;right:-100px;border-radius:50%}
+.hero::after{content:'';position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(193,48,40,0.05) 0%,transparent 70%);bottom:-50px;left:-50px;border-radius:50%}
+.hero-content{text-align:center;position:relative;z-index:1;padding:40px 20px}
+.hero-badge{display:inline-block;padding:6px 16px;border:1px solid var(--accent);color:var(--accent);font-size:12px;letter-spacing:3px;text-transform:uppercase;border-radius:20px;margin-bottom:24px;font-family:'Inter',sans-serif}
+.hero h1{font-size:clamp(32px,6vw,64px);font-weight:900;letter-spacing:-1px;line-height:1.1;margin-bottom:16px;background:linear-gradient(135deg,#fff 0%,#ccc 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero h1 span{background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:clamp(14px,2vw,18px);color:var(--text2);max-width:600px;margin:0 auto 32px}
+.hero-date{font-family:'Inter',sans-serif;font-size:13px;color:var(--text3);letter-spacing:2px}
+/* Profile */
+.profile-section{padding:80px 0;border-bottom:1px solid var(--border)}
+.profile-card{background:var(--card);border:1px solid var(--border2);border-radius:16px;padding:40px;display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.profile-left h2{font-size:28px;font-weight:800;margin-bottom:8px}
+.profile-left .role{color:var(--accent);font-size:14px;font-weight:600;margin-bottom:20px}
+.profile-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.profile-tag{padding:4px 12px;background:var(--card2);border:1px solid var(--border2);border-radius:6px;font-size:12px;color:var(--text2)}
+.profile-tag.accent{border-color:var(--accent);color:var(--accent)}
+.profile-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stat-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.stat-box .num{font-family:'Inter',sans-serif;font-size:28px;font-weight:800;color:#fff}
+.stat-box .num span{color:var(--accent);font-size:16px}
+.stat-box .label{font-size:12px;color:var(--text3);margin-top:4px}
+/* Section */
+.section{padding:80px 0}
+.section-header{margin-bottom:48px}
+.section-num{font-family:'Inter',sans-serif;font-size:13px;color:var(--accent);letter-spacing:3px;font-weight:600;margin-bottom:8px}
+.section-title{font-size:clamp(24px,4vw,36px);font-weight:800;letter-spacing:-0.5px}
+.section-desc{color:var(--text2);margin-top:8px;font-size:15px}
+/* Table */
+.table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border2)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead{background:var(--card2)}
+th{padding:12px 14px;text-align:left;font-weight:600;color:var(--text2);font-size:11px;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--border2);white-space:nowrap}
+td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:hover{background:rgba(193,48,40,0.03)}
+.cat-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;white-space:nowrap}
+.cat-juutaku{background:rgba(59,130,246,0.15);color:var(--blue)}
+.cat-saas{background:rgba(168,85,247,0.15);color:var(--purple)}
+.cat-content{background:rgba(234,179,8,0.15);color:var(--yellow)}
+.cat-media{background:rgba(249,115,22,0.15);color:var(--orange)}
+.cat-consul{background:rgba(34,197,94,0.15);color:var(--green)}
+.cat-platform{background:rgba(193,48,40,0.15);color:var(--accent2)}
+.cat-auto{background:rgba(99,102,241,0.15);color:#818CF8}
+.cat-data{background:rgba(20,184,166,0.15);color:#2DD4BF}
+/* Score */
+.score-bar{display:flex;gap:2px;align-items:center}
+.score-dot{width:16px;height:6px;border-radius:3px;background:var(--border)}
+.score-dot.filled{background:var(--accent)}
+.score-dot.filled.high{background:var(--green)}
+.score-dot.filled.mid{background:var(--yellow)}
+.score-dot.filled.low{background:var(--accent)}
+.total-score{font-family:'Inter',sans-serif;font-weight:800;font-size:15px;padding:2px 8px;border-radius:6px}
+.ts-s{background:rgba(34,197,94,0.15);color:var(--green)}
+.ts-a{background:rgba(59,130,246,0.15);color:var(--blue)}
+.ts-b{background:rgba(234,179,8,0.15);color:var(--yellow)}
+.ts-c{background:rgba(249,115,22,0.15);color:var(--orange)}
+.ts-d{background:rgba(193,48,40,0.15);color:var(--accent2)}
+/* TOP5 Detail */
+.top5-card{background:var(--card);border:1px solid var(--border2);border-radius:16px;margin-bottom:40px;overflow:hidden}
+.top5-header{padding:32px 40px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.top5-rank{width:56px;height:56px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-weight:900;font-size:24px;color:#fff;flex-shrink:0}
+.top5-rank.gold{background:linear-gradient(135deg,#B8860B,#FFD700)}
+.top5-rank.silver{background:linear-gradient(135deg,#708090,#C0C0C0)}
+.top5-rank.bronze{background:linear-gradient(135deg,#8B4513,#CD853F)}
+.top5-title-area h3{font-size:22px;font-weight:800}
+.top5-title-area .score-inline{font-family:'Inter',sans-serif;font-size:14px;color:var(--accent);font-weight:700;margin-top:4px}
+.top5-body{padding:40px}
+.top5-body h4{font-size:17px;font-weight:700;margin:28px 0 12px;padding-left:14px;border-left:3px solid var(--accent);color:#fff}
+.top5-body h4:first-child{margin-top:0}
+.top5-body p{color:var(--text2);font-size:14px;line-height:2;margin-bottom:12px}
+.top5-body ul{list-style:none;margin:0 0 16px 0;padding:0}
+.top5-body ul li{padding:6px 0 6px 20px;position:relative;color:var(--text2);font-size:14px;line-height:1.8}
+.top5-body ul li::before{content:'';position:absolute;left:0;top:14px;width:8px;height:8px;border-radius:50%;background:var(--accent);opacity:0.6}
+.revenue-table{width:100%;margin:16px 0;font-size:13px}
+.revenue-table th{background:var(--bg);padding:10px 12px;font-size:11px}
+.revenue-table td{padding:8px 12px;background:var(--card2);border:1px solid var(--border)}
+/* Timeline */
+.timeline{position:relative;padding-left:30px;margin:20px 0}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--border2)}
+.tl-item{position:relative;margin-bottom:20px}
+.tl-item::before{content:'';position:absolute;left:-26px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+.tl-item .tl-period{font-family:'Inter',sans-serif;font-size:12px;color:var(--accent);font-weight:600}
+.tl-item .tl-text{font-size:13px;color:var(--text2);margin-top:4px}
+/* Risk */
+.risk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.risk-card{background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:24px}
+.risk-card h4{font-size:15px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.risk-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.risk-icon.legal{background:rgba(193,48,40,0.15);color:var(--accent2)}
+.risk-icon.compete{background:rgba(234,179,8,0.15);color:var(--yellow)}
+.risk-icon.time{background:rgba(249,115,22,0.15);color:var(--orange)}
+.risk-icon.tech{background:rgba(59,130,246,0.15);color:var(--blue)}
+.risk-icon.blind{background:rgba(168,85,247,0.15);color:var(--purple)}
+.risk-card ul{list-style:none;padding:0}
+.risk-card ul li{padding:6px 0;font-size:13px;color:var(--text2);border-bottom:1px solid var(--border);line-height:1.7}
+.risk-card ul li:last-child{border:none}
+.risk-card ul li strong{color:var(--text);font-weight:600}
+/* Action */
+.action-block{background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:32px;margin-bottom:20px}
+.action-block h4{font-size:17px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.action-urgency{padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;font-family:'Inter',sans-serif}
+.urgency-now{background:rgba(193,48,40,0.2);color:var(--accent2)}
+.urgency-month{background:rgba(234,179,8,0.15);color:var(--yellow)}
+.urgency-no{background:rgba(102,102,102,0.2);color:var(--text3)}
+.action-list{list-style:none;padding:0;counter-reset:act}
+.action-list li{counter-increment:act;padding:12px 0 12px 36px;position:relative;font-size:14px;color:var(--text2);border-bottom:1px solid var(--border);line-height:1.8}
+.action-list li::before{content:counter(act);position:absolute;left:0;top:12px;width:24px;height:24px;background:var(--card2);border:1px solid var(--border2);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;color:var(--text3)}
+/* Dont */
+.dont-card{background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:24px;margin-bottom:16px}
+.dont-card h4{font-size:15px;font-weight:700;margin-bottom:8px;color:var(--text)}
+.dont-card .reason{font-size:13px;color:var(--text2);line-height:1.8}
+.dont-badge{display:inline-block;padding:2px 8px;background:rgba(193,48,40,0.15);color:var(--accent2);border-radius:4px;font-size:10px;font-weight:700;margin-right:8px}
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,10,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 0;transform:translateY(-100%);transition:transform 0.3s}
+.nav.visible{transform:translateY(0)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:24px;overflow-x:auto}
+.nav a{color:var(--text3);font-size:12px;text-decoration:none;white-space:nowrap;transition:color 0.2s}
+.nav a:hover,.nav a.active{color:var(--accent)}
+/* Footer */
+.footer{padding:60px 0;border-top:1px solid var(--border);text-align:center}
+.footer p{color:var(--text3);font-size:12px}
+/* TOC */
+.toc{background:var(--card);border:1px solid var(--border2);border-radius:16px;padding:32px;margin-bottom:60px}
+.toc h3{font-size:18px;font-weight:700;margin-bottom:20px}
+.toc-list{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.toc-list a{color:var(--text2);text-decoration:none;font-size:14px;padding:8px 12px;border-radius:8px;display:block;transition:all 0.2s}
+.toc-list a:hover{background:var(--card2);color:var(--accent)}
+.toc-list a .toc-num{color:var(--accent);font-family:'Inter',sans-serif;font-weight:700;margin-right:8px;font-size:12px}
+/* Responsive */
+@media(max-width:768px){
+.profile-card{grid-template-columns:1fr}
+.profile-stats{grid-template-columns:1fr 1fr}
+.top5-header{padding:20px;flex-direction:column;align-items:flex-start}
+.top5-body{padding:20px}
+.toc-list{grid-template-columns:1fr}
+.risk-grid{grid-template-columns:1fr}
+table{font-size:11px}
+th,td{padding:8px 6px}
+.section{padding:40px 0}
+}
+</style>
+</head>
+<body>
+<nav class="nav" id="nav">
+<div class="nav-inner">
+<a href="#ideas">40 Ideas</a>
+<a href="#matrix">評価マトリクス</a>
+<a href="#top5">TOP5 詳細</a>
+<a href="#dont">やらないもの</a>
+<a href="#risks">リスク・盲点</a>
+<a href="#actions">アクション</a>
+</div>
+</nav>
+
+<section class="hero">
+<div class="hero-content">
+<div class="hero-badge">Strategic Brainstorm 2026</div>
+<h1>AIレバレッジ ×<br><span>マネタイズ戦略</span></h1>
+<p class="hero-sub">40のビジネスアイデアを6軸で評価し、最適な次の一手を特定する</p>
+<p class="hero-date">2026.03.17 — Top Tier Inc.</p>
+</div>
+</section>
+
+<section class="profile-section">
+<div class="container">
+<div class="profile-card">
+<div class="profile-left">
+<h2>山本 雄大</h2>
+<p class="role">Top Tier Inc. CEO / AI-Driven Entrepreneur</p>
+<p style="font-size:14px;color:var(--text2);line-height:1.8">慶應義塾大学法学部卒、25歳。Claude Codeを駆使したAIバイブコーディングで複数プロダクトを開発・運用。デザイン/UX/ビジュアライズに高いセンスを持ち、戦略的思考とクリエイティビティを両立。</p>
+<div class="profile-tags">
+<span class="profile-tag accent">着想</span>
+<span class="profile-tag accent">アレンジ</span>
+<span class="profile-tag accent">最上志向</span>
+<span class="profile-tag accent">内省</span>
+<span class="profile-tag accent">競争性</span>
+<span class="profile-tag">Claude Code</span>
+<span class="profile-tag">AI Vibe Coding</span>
+<span class="profile-tag">UX Design</span>
+</div>
+</div>
+<div class="profile-stats">
+<div class="stat-box"><div class="num">1,000<span>万</span></div><div class="label">月商</div></div>
+<div class="stat-box"><div class="num">200-300<span>万</span></div><div class="label">月利</div></div>
+<div class="stat-box"><div class="num">3<span>+</span></div><div class="label">運用プロダクト</div></div>
+<div class="stat-box"><div class="num">25<span>歳</span></div><div class="label">Age</div></div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="container">
+<div class="toc">
+<h3>目次</h3>
+<ol class="toc-list">
+<li><a href="#ideas"><span class="toc-num">01</span>40個のアイデア一覧</a></li>
+<li><a href="#matrix"><span class="toc-num">02</span>6軸評価マトリクス</a></li>
+<li><a href="#top5"><span class="toc-num">03</span>TOP5 詳細分析</a></li>
+<li><a href="#dont"><span class="toc-num">04</span>やらない方がいいもの</a></li>
+<li><a href="#risks"><span class="toc-num">05</span>リスクと盲点</a></li>
+<li><a href="#actions"><span class="toc-num">06</span>推奨アクション</a></li>
+</ol>
+</div>
+</div>
+</section>
+
+<!-- ===== SECTION 1: 40 IDEAS ===== -->
+<section class="section" id="ideas">
+<div class="container">
+<div class="section-header">
+<div class="section-num">SECTION 01</div>
+<div class="section-title">40個のアイデア一覧</div>
+<p class="section-desc">8カテゴリに分類した全マネタイズアイデア</p>
+</div>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>#</th><th>カテゴリ</th><th>アイデア名</th><th>概要</th></tr>
+</thead>
+<tbody>
+<!-- 受託系 8 -->
+<tr><td>1</td><td><span class="cat-badge cat-juutaku">受託</span></td><td>AI業務自動化受託</td><td>中小企業のバックオフィス業務（請求書処理、データ入力、レポート生成）をAIで自動化する受託開発</td></tr>
+<tr><td>2</td><td><span class="cat-badge cat-juutaku">受託</span></td><td>AIチャットボット構築</td><td>企業のカスタマーサポート・社内FAQをAIチャットボットで置換する受託案件</td></tr>
+<tr><td>3</td><td><span class="cat-badge cat-juutaku">受託</span></td><td>AIエージェント常駐サービス</td><td>Claude Code等を活用し、クライアント企業にAI開発力を月額で提供する準委任型サービス</td></tr>
+<tr><td>4</td><td><span class="cat-badge cat-juutaku">受託</span></td><td>LP/Webサイト高速制作</td><td>AIバイブコーディングを活かし、LP・コーポレートサイトを圧倒的スピードで納品</td></tr>
+<tr><td>5</td><td><span class="cat-badge cat-juutaku">受託</span></td><td>AI動画編集受託</td><td>AI動画生成・編集ツールを活用した動画制作の受託サービス</td></tr>
+<tr><td>6</td><td><span class="cat-badge cat-juutaku">受託</span></td><td>AIデータ分析受託</td><td>企業のデータをAIで分析し、レポートとインサイトを提供するスポット案件</td></tr>
+<tr><td>7</td><td><span class="cat-badge cat-juutaku">受託</span></td><td>AIプロトタイプ開発</td><td>スタートアップ向けにMVPをAIバイブコーディングで2週間で構築する受託サービス</td></tr>
+<tr><td>8</td><td><span class="cat-badge cat-juutaku">受託</span></td><td>ノーコード/AIアプリ開発代行</td><td>非エンジニア経営者向けにAI+ノーコードで業務アプリを構築する代行サービス</td></tr>
+<!-- SaaS系 8 -->
+<tr><td>9</td><td><span class="cat-badge cat-saas">SaaS</span></td><td>AI面接練習SaaS</td><td>AIが面接官となり、リアルタイムフィードバック付きの模擬面接を提供するSaaS</td></tr>
+<tr><td>10</td><td><span class="cat-badge cat-saas">SaaS</span></td><td>マーケ分析SaaS外販</td><td>自社で構築したGoogle Ads/Meta Ads分析基盤を汎用SaaSとして外販</td></tr>
+<tr><td>11</td><td><span class="cat-badge cat-saas">SaaS</span></td><td>AI採用管理SaaS</td><td>Agent Deskを汎用化し、中小人材紹介会社向けのAI搭載採用管理SaaSとして展開</td></tr>
+<tr><td>12</td><td><span class="cat-badge cat-saas">SaaS</span></td><td>AI議事録SaaS</td><td>会議音声をリアルタイム文字起こし＋要約＋タスク抽出するSaaS</td></tr>
+<tr><td>13</td><td><span class="cat-badge cat-saas">SaaS</span></td><td>AI提案書自動生成SaaS</td><td>業種・課題を入力すると提案書ドラフトをAIが自動生成するBtoBツール</td></tr>
+<tr><td>14</td><td><span class="cat-badge cat-saas">SaaS</span></td><td>AI契約書レビューSaaS</td><td>NDA・業務委託契約書をAIがリスクチェックし修正案を提示するリーガルテック</td></tr>
+<tr><td>15</td><td><span class="cat-badge cat-saas">SaaS</span></td><td>AIカスタマーサクセスSaaS</td><td>ユーザー行動データからチャーン予測・介入タイミングをAIで提示するCS支援ツール</td></tr>
+<tr><td>16</td><td><span class="cat-badge cat-saas">SaaS</span></td><td>AI日報・週報自動化SaaS</td><td>Slack/Teams連携で活動ログから自動的に日報・週報を生成するBtoB SaaS</td></tr>
+<!-- コンテンツ系 6 -->
+<tr><td>17</td><td><span class="cat-badge cat-content">コンテンツ</span></td><td>Claude Code有料コミュニティ</td><td>AIバイブコーディングの実践ノウハウを共有する月額制オンラインコミュニティ</td></tr>
+<tr><td>18</td><td><span class="cat-badge cat-content">コンテンツ</span></td><td>AI開発実況YouTube</td><td>Claude Codeでプロダクトを作る過程を実況するYouTubeチャンネル</td></tr>
+<tr><td>19</td><td><span class="cat-badge cat-content">コンテンツ</span></td><td>AIプロンプトテンプレ販売</td><td>業種別・用途別のAIプロンプトテンプレートをデジタル商品として販売</td></tr>
+<tr><td>20</td><td><span class="cat-badge cat-content">コンテンツ</span></td><td>AI×ビジネスUdemy講座</td><td>非エンジニア向け「AIで事業を作る方法」のオンライン講座をUdemyで販売</td></tr>
+<tr><td>21</td><td><span class="cat-badge cat-content">コンテンツ</span></td><td>AI恋愛コーチコンテンツ</td><td>AI活用の恋愛・マッチングアプリ攻略コンテンツ（情報商材）</td></tr>
+<tr><td>22</td><td><span class="cat-badge cat-content">コンテンツ</span></td><td>AI×起業ロードマップ教材</td><td>25歳月商1,000万の実体験ベースの起業ノウハウをコンテンツ化</td></tr>
+<!-- メディア系 5 -->
+<tr><td>23</td><td><span class="cat-badge cat-media">メディア</span></td><td>AIツールレビューメディア</td><td>AIツールを実際に使い倒してレビューする特化型Webメディア</td></tr>
+<tr><td>24</td><td><span class="cat-badge cat-media">メディア</span></td><td>AIアフィリエイトブログ</td><td>AI関連サービスのアフィリエイト記事を量産するSEOメディア</td></tr>
+<tr><td>25</td><td><span class="cat-badge cat-media">メディア</span></td><td>AIニュースレター</td><td>AI業界の最新動向を週次でキュレーションする有料ニュースレター</td></tr>
+<tr><td>26</td><td><span class="cat-badge cat-media">メディア</span></td><td>AIポッドキャスト</td><td>AI活用の実践者をゲストに迎えるポッドキャスト番組</td></tr>
+<tr><td>27</td><td><span class="cat-badge cat-media">メディア</span></td><td>AI事例データベース</td><td>業種別AI導入事例を集積したデータベースサイト（リード獲得型）</td></tr>
+<!-- コンサル系 4 -->
+<tr><td>28</td><td><span class="cat-badge cat-consul">コンサル</span></td><td>AI導入月額顧問</td><td>中小企業のAI導入をハンズオンで支援する月額制顧問契約サービス</td></tr>
+<tr><td>29</td><td><span class="cat-badge cat-consul">コンサル</span></td><td>AI×採用コンサルティング</td><td>自社の採用ノウハウ＋AIツールを組み合わせた人材採用支援コンサル</td></tr>
+<tr><td>30</td><td><span class="cat-badge cat-consul">コンサル</span></td><td>AIスタートアップメンタリング</td><td>AI活用で起業する若手向けのメンタリング・アドバイザリーサービス</td></tr>
+<tr><td>31</td><td><span class="cat-badge cat-consul">コンサル</span></td><td>DX戦略コンサルティング</td><td>従来型企業のDX戦略策定とAIツール選定を支援するコンサルサービス</td></tr>
+<!-- プラットフォーム系 4 -->
+<tr><td>32</td><td><span class="cat-badge cat-platform">PF</span></td><td>AIフリーランスマッチング</td><td>AI人材とAI導入したい企業をマッチングするプラットフォーム</td></tr>
+<tr><td>33</td><td><span class="cat-badge cat-platform">PF</span></td><td>AIテンプレートマーケットプレイス</td><td>AIプロンプト・ワークフロー・ボットのマーケットプレイス運営</td></tr>
+<tr><td>34</td><td><span class="cat-badge cat-platform">PF</span></td><td>My-Tier（映画レビューSNS）</td><td>映画のティア評価を共有するSNSプラットフォーム</td></tr>
+<tr><td>35</td><td><span class="cat-badge cat-platform">PF</span></td><td>AIスキル認定プラットフォーム</td><td>AIスキルを体系的にテスト・認定するプラットフォーム</td></tr>
+<!-- 自動化系 3 -->
+<tr><td>36</td><td><span class="cat-badge cat-auto">自動化</span></td><td>AI SNS運用自動化</td><td>X/Instagram投稿をAIで自動生成・スケジュール配信するサービス</td></tr>
+<tr><td>37</td><td><span class="cat-badge cat-auto">自動化</span></td><td>AIメール営業自動化</td><td>見込み客リストからパーソナライズドメールをAI生成・自動送信するツール</td></tr>
+<tr><td>38</td><td><span class="cat-badge cat-auto">自動化</span></td><td>AIバックオフィス自動化パッケージ</td><td>経理・人事・法務の定型業務をAIで自動化するパッケージソリューション</td></tr>
+<!-- データ活用系 2 -->
+<tr><td>39</td><td><span class="cat-badge cat-data">データ</span></td><td>AI市場調査レポート販売</td><td>特定業界の市場調査をAIで高速に行い、レポートとして販売</td></tr>
+<tr><td>40</td><td><span class="cat-badge cat-data">データ</span></td><td>AI競合分析ダッシュボード</td><td>競合企業のWeb/SNS/広告活動をAIで自動モニタリングするダッシュボード</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+
+<!-- ===== SECTION 2: MATRIX ===== -->
+<section class="section" id="matrix">
+<div class="container">
+<div class="section-header">
+<div class="section-num">SECTION 02</div>
+<div class="section-title">6軸評価マトリクス</div>
+<p class="section-desc">初期コスト / 月50万到達期間 / スケーラビリティ / 強み適合 / 競合少なさ / AIレバレッジ — 各5段階</p>
+</div>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>#</th><th>アイデア</th><th>初期コスト</th><th>50万到達</th><th>スケール</th><th>強み適合</th><th>競合少</th><th>AIレバ</th><th>総合</th></tr>
+</thead>
+<tbody>
+<tr><td>17</td><td>Claude Code有料コミュニティ</td><td>5</td><td>5</td><td>4</td><td>5</td><td>5</td><td>4</td><td><span class="total-score ts-s">4.7</span></td></tr>
+<tr><td>9</td><td>AI面接練習SaaS</td><td>3</td><td>4</td><td>5</td><td>5</td><td>4</td><td>5</td><td><span class="total-score ts-s">4.3</span></td></tr>
+<tr><td>28</td><td>AI導入月額顧問</td><td>5</td><td>5</td><td>3</td><td>5</td><td>4</td><td>4</td><td><span class="total-score ts-s">4.3</span></td></tr>
+<tr><td>3</td><td>AIエージェント常駐サービス</td><td>5</td><td>5</td><td>3</td><td>5</td><td>4</td><td>4</td><td><span class="total-score ts-s">4.3</span></td></tr>
+<tr><td>10</td><td>マーケ分析SaaS外販</td><td>4</td><td>3</td><td>5</td><td>5</td><td>4</td><td>4</td><td><span class="total-score ts-a">4.2</span></td></tr>
+<tr><td>22</td><td>AI×起業ロードマップ教材</td><td>5</td><td>4</td><td>4</td><td>4</td><td>3</td><td>4</td><td><span class="total-score ts-a">4.0</span></td></tr>
+<tr><td>4</td><td>LP/Webサイト高速制作</td><td>5</td><td>5</td><td>2</td><td>5</td><td>2</td><td>5</td><td><span class="total-score ts-a">4.0</span></td></tr>
+<tr><td>7</td><td>AIプロトタイプ開発</td><td>5</td><td>4</td><td>2</td><td>5</td><td>3</td><td>5</td><td><span class="total-score ts-a">4.0</span></td></tr>
+<tr><td>18</td><td>AI開発実況YouTube</td><td>5</td><td>2</td><td>5</td><td>4</td><td>3</td><td>4</td><td><span class="total-score ts-b">3.8</span></td></tr>
+<tr><td>1</td><td>AI業務自動化受託</td><td>5</td><td>4</td><td>2</td><td>4</td><td>2</td><td>5</td><td><span class="total-score ts-b">3.7</span></td></tr>
+<tr><td>29</td><td>AI×採用コンサルティング</td><td>5</td><td>4</td><td>2</td><td>5</td><td>3</td><td>3</td><td><span class="total-score ts-b">3.7</span></td></tr>
+<tr><td>11</td><td>AI採用管理SaaS</td><td>3</td><td>3</td><td>5</td><td>4</td><td>3</td><td>4</td><td><span class="total-score ts-b">3.7</span></td></tr>
+<tr><td>19</td><td>AIプロンプトテンプレ販売</td><td>5</td><td>3</td><td>4</td><td>3</td><td>2</td><td>4</td><td><span class="total-score ts-b">3.5</span></td></tr>
+<tr><td>36</td><td>AI SNS運用自動化</td><td>4</td><td>3</td><td>4</td><td>3</td><td>2</td><td>5</td><td><span class="total-score ts-b">3.5</span></td></tr>
+<tr><td>2</td><td>AIチャットボット構築</td><td>4</td><td>4</td><td>2</td><td>3</td><td>2</td><td>5</td><td><span class="total-score ts-b">3.3</span></td></tr>
+<tr><td>25</td><td>AIニュースレター</td><td>5</td><td>2</td><td>3</td><td>3</td><td>3</td><td>4</td><td><span class="total-score ts-b">3.3</span></td></tr>
+<tr><td>6</td><td>AIデータ分析受託</td><td>5</td><td>3</td><td>2</td><td>3</td><td>3</td><td>4</td><td><span class="total-score ts-b">3.3</span></td></tr>
+<tr><td>20</td><td>AI×ビジネスUdemy講座</td><td>4</td><td>2</td><td>4</td><td>4</td><td>2</td><td>3</td><td><span class="total-score ts-b">3.2</span></td></tr>
+<tr><td>39</td><td>AI市場調査レポート販売</td><td>5</td><td>2</td><td>3</td><td>3</td><td>3</td><td>4</td><td><span class="total-score ts-b">3.3</span></td></tr>
+<tr><td>8</td><td>ノーコード/AIアプリ開発代行</td><td>5</td><td>4</td><td>2</td><td>3</td><td>2</td><td>4</td><td><span class="total-score ts-b">3.3</span></td></tr>
+<tr><td>30</td><td>AIスタートアップメンタリング</td><td>5</td><td>2</td><td>2</td><td>4</td><td>3</td><td>3</td><td><span class="total-score ts-b">3.2</span></td></tr>
+<tr><td>38</td><td>AIバックオフィス自動化PK</td><td>3</td><td>3</td><td>4</td><td>3</td><td>2</td><td>4</td><td><span class="total-score ts-b">3.2</span></td></tr>
+<tr><td>37</td><td>AIメール営業自動化</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>4</td><td><span class="total-score ts-b">3.2</span></td></tr>
+<tr><td>13</td><td>AI提案書自動生成SaaS</td><td>3</td><td>3</td><td>4</td><td>3</td><td>2</td><td>4</td><td><span class="total-score ts-b">3.2</span></td></tr>
+<tr><td>40</td><td>AI競合分析ダッシュボード</td><td>3</td><td>2</td><td>4</td><td>3</td><td>3</td><td>4</td><td><span class="total-score ts-b">3.2</span></td></tr>
+<tr><td>27</td><td>AI事例データベース</td><td>4</td><td>2</td><td>3</td><td>3</td><td>3</td><td>4</td><td><span class="total-score ts-b">3.2</span></td></tr>
+<tr><td>31</td><td>DX戦略コンサルティング</td><td>5</td><td>3</td><td>2</td><td>3</td><td>2</td><td>3</td><td><span class="total-score ts-c">3.0</span></td></tr>
+<tr><td>16</td><td>AI日報・週報自動化SaaS</td><td>3</td><td>2</td><td>4</td><td>2</td><td>2</td><td>4</td><td><span class="total-score ts-c">2.8</span></td></tr>
+<tr><td>15</td><td>AIカスタマーサクセスSaaS</td><td>2</td><td>2</td><td>4</td><td>2</td><td>3</td><td>4</td><td><span class="total-score ts-c">2.8</span></td></tr>
+<tr><td>23</td><td>AIツールレビューメディア</td><td>4</td><td>2</td><td>3</td><td>3</td><td>2</td><td>3</td><td><span class="total-score ts-c">2.8</span></td></tr>
+<tr><td>26</td><td>AIポッドキャスト</td><td>4</td><td>1</td><td>3</td><td>3</td><td>2</td><td>3</td><td><span class="total-score ts-c">2.7</span></td></tr>
+<tr><td>5</td><td>AI動画編集受託</td><td>3</td><td>3</td><td>2</td><td>2</td><td>2</td><td>4</td><td><span class="total-score ts-c">2.7</span></td></tr>
+<tr><td>14</td><td>AI契約書レビューSaaS</td><td>2</td><td>2</td><td>4</td><td>2</td><td>2</td><td>4</td><td><span class="total-score ts-c">2.7</span></td></tr>
+<tr><td>35</td><td>AIスキル認定プラットフォーム</td><td>2</td><td>1</td><td>4</td><td>2</td><td>3</td><td>3</td><td><span class="total-score ts-c">2.5</span></td></tr>
+<tr><td>12</td><td>AI議事録SaaS</td><td>3</td><td>2</td><td>3</td><td>2</td><td>1</td><td>4</td><td><span class="total-score ts-c">2.5</span></td></tr>
+<tr><td>32</td><td>AIフリーランスマッチング</td><td>2</td><td>1</td><td>4</td><td>2</td><td>2</td><td>3</td><td><span class="total-score ts-d">2.3</span></td></tr>
+<tr><td>33</td><td>AIテンプレートマーケットプレイス</td><td>2</td><td>1</td><td>4</td><td>2</td><td>2</td><td>3</td><td><span class="total-score ts-d">2.3</span></td></tr>
+<tr><td>24</td><td>AIアフィリエイトブログ</td><td>4</td><td>1</td><td>2</td><td>2</td><td>1</td><td>3</td><td><span class="total-score ts-d">2.2</span></td></tr>
+<tr><td>34</td><td>My-Tier（映画レビューSNS）</td><td>3</td><td>1</td><td>3</td><td>3</td><td>2</td><td>2</td><td><span class="total-score ts-d">2.3</span></td></tr>
+<tr><td>21</td><td>AI恋愛コーチコンテンツ</td><td>4</td><td>2</td><td>2</td><td>1</td><td>2</td><td>2</td><td><span class="total-score ts-d">2.2</span></td></tr>
+</tbody>
+</table>
+</div>
+
+<p style="margin-top:16px;font-size:12px;color:var(--text3)">※ 各軸5段階評価。総合スコアは加重平均（強み適合・AIレバレッジを1.2倍加重）。緑=S(4.0+) / 青=A(3.5+) / 黄=B(3.0+) / 橙=C(2.5+) / 赤=D(2.5未満)</p>
+</div>
+</section>
+
+<!-- ===== SECTION 3: TOP5 DETAIL ===== -->
+<section class="section" id="top5">
+<div class="container">
+<div class="section-header">
+<div class="section-num">SECTION 03</div>
+<div class="section-title">TOP5 詳細分析</div>
+<p class="section-desc">総合スコア上位5つのアイデアを深掘りし、実行可能性を検証する</p>
+</div>
+
+<!-- TOP 1 -->
+<div class="top5-card">
+<div class="top5-header">
+<div class="top5-rank gold">1</div>
+<div class="top5-title-area">
+<h3>Claude Code有料コミュニティ</h3>
+<div class="score-inline">総合スコア 4.7 / 5.0 — カテゴリ: コンテンツ</div>
+</div>
+</div>
+<div class="top5-body">
+<h4>なぜ1位なのか</h4>
+<p>このアイデアが40個の中で最高評価を獲得した理由は、山本氏の強みとの適合度が群を抜いて高い点にある。Claude Codeを日常的に使いこなし、複数のプロダクトを実際に開発・運用している「実践者」としてのポジションは、日本市場において極めて希少である。2026年3月現在、Claude Codeの日本語コミュニティは事実上存在しておらず、ファーストムーバーアドバンテージを取れる最後のタイミングと言える。</p>
+<p>初期コストがほぼゼロである点も大きい。Discord（または専用プラットフォーム）の開設、自身の実践ノウハウの体系化、そしてStripe決済の設定のみで立ち上げ可能だ。既存事業を止めることなく、並行して育てられるビジネスモデルであることが、現在の月商1,000万という本業を持つ山本氏にとって最適解となる。</p>
+<p>さらに、コミュニティは他のすべてのビジネスへの「ハブ」となる。ここで築いた信頼関係が、コンサルティング案件の獲得、SaaS製品のベータテスター確保、受託案件の紹介など、複合的な収益源につながる。単独のマネタイズではなく、エコシステムの中核としての機能を果たすことが、このアイデアの真の価値だ。</p>
+
+<h4>具体的実行プラン</h4>
+<div class="timeline">
+<div class="tl-item">
+<div class="tl-period">Week 1 — 基盤構築</div>
+<div class="tl-text">Discordサーバー開設。チャンネル構成を設計（#入門 / #実践Tips / #質問 / #成果共有 / #ライブ告知）。Stripe連携で月額課金を設定。LPをAIバイブコーディングで1日で構築。自身のX（旧Twitter）アカウントでClaude Code活用の実践投稿を開始し、認知を獲得。</div>
+</div>
+<div class="tl-item">
+<div class="tl-period">Week 2-4 — 初期コンテンツ整備</div>
+<div class="tl-text">CLAUDE.mdの書き方ガイド、プロジェクト別セットアップテンプレート、AIバイブコーディングのワークフロー解説動画（5本）を作成。Xで週3回の実践Tips投稿を継続し、初期メンバー30名を目標に集客。無料のウェビナーを1回開催し、コミュニティの価値を見せる。</div>
+</div>
+<div class="tl-item">
+<div class="tl-period">Month 2-3 — 運営安定化</div>
+<div class="tl-text">週1回の「ライブコーディング配信」を定例化。メンバー同士のプロジェクト共有文化を醸成。月1回のゲスト講師招聘。上位プラン（月額19,800円・個別相談付き）の導入。メンバー100名を突破し、月額収益50万円超を安定させる。</div>
+</div>
+</div>
+
+<h4>収益シミュレーション</h4>
+<table class="revenue-table">
+<thead><tr><th>フェーズ</th><th>メンバー数</th><th>月額単価</th><th>月間売上</th><th>粗利率</th><th>月間利益</th></tr></thead>
+<tbody>
+<tr><td>1ヶ月目</td><td>30名</td><td>4,980円</td><td>149,400円</td><td>95%</td><td>141,930円</td></tr>
+<tr><td>3ヶ月目</td><td>100名</td><td>4,980円</td><td>498,000円</td><td>95%</td><td>473,100円</td></tr>
+<tr><td>6ヶ月目</td><td>200名 + 上位20名</td><td>4,980円 / 19,800円</td><td>1,392,000円</td><td>93%</td><td>1,294,560円</td></tr>
+<tr><td>12ヶ月目</td><td>500名 + 50名</td><td>4,980円 / 19,800円</td><td>3,480,000円</td><td>90%</td><td>3,132,000円</td></tr>
+</tbody>
+</table>
+
+<h4>リスクと対策</h4>
+<ul>
+<li><strong>リスク: Claude Codeの仕様変更・競合ツール台頭</strong> — 対策: 特定ツールに依存せず「AIバイブコーディング全般」にスコープを広げる柔軟性を持たせる。Cursor、GitHub Copilot Workspace等もカバーし、ツール横断的な価値を提供する</li>
+<li><strong>リスク: 無料情報の氾濫</strong> — 対策: 「実践者のリアルなノウハウ」と「コミュニティの相互支援」という、情報単体では代替できない価値で差別化。動画コンテンツや個別相談などを通じて「体験」を売る</li>
+<li><strong>リスク: 運営負荷の増大</strong> — 対策: 初期はDiscord上でメンバー同士の自走を促す仕組みを構築。モデレーターを早期に任命。FAQ対応はAIボットで自動化し、自身は週2時間のライブ配信と月1回のコンテンツ制作に集中</li>
+<li><strong>リスク: チャーン率の上昇</strong> — 対策: 毎月のコンテンツ更新ロードマップを提示。3ヶ月・6ヶ月の継続特典を設計。メンバーの成功事例を可視化し、コミュニティにいる価値を常に感じさせる。年額プラン（割引）を用意してLTVを伸ばす</li>
+</ul>
+</div>
+</div>
+
+<!-- TOP 2 -->
+<div class="top5-card">
+<div class="top5-header">
+<div class="top5-rank silver">2</div>
+<div class="top5-title-area">
+<h3>AI面接練習SaaS</h3>
+<div class="score-inline">総合スコア 4.3 / 5.0 — カテゴリ: SaaS</div>
+</div>
+</div>
+<div class="top5-body">
+<h4>なぜ2位なのか</h4>
+<p>AI面接練習SaaSが2位に入った最大の理由は、山本氏が既に採用管理システム（Agent Desk）を運用しており、採用ドメインの深い知見を持っている点にある。面接官と候補者の双方の心理を理解した上でプロダクトを設計できるのは、人材ビジネスの実務経験者ならではの強みだ。加えて、AIのリアルタイム対話能力が飛躍的に向上している2026年において、技術的な実現可能性と市場ニーズが完璧に合致するタイミングである。</p>
+<p>スケーラビリティの観点でも最高評価を得た。SaaSモデルであるため、ユーザー数の増加に比例して限界費用が下がり、一度プロダクトが完成すれば利益率が劇的に向上する。BtoC（個人の就活生・転職者）とBtoB（企業の採用研修）の両面で市場が存在し、季節要因（就活シーズン）でも安定した需要が見込める。</p>
+<p>競合の少なさも重要だ。日本市場でAI面接練習に特化したSaaSはまだ本格的なプレイヤーが不在であり、先行者利益を取れる余地が大きい。英語圏にはIntervueやPrampなどの類似サービスがあるが、日本語の敬語や日本特有のビジネスマナーを考慮した面接練習ツールは未開拓領域である。</p>
+
+<h4>具体的実行プラン</h4>
+<div class="timeline">
+<div class="tl-item">
+<div class="tl-period">Week 1 — 市場検証</div>
+<div class="tl-text">既存の採用支援クライアントに面接練習ニーズをヒアリング。就活生向けXアカウントで「AI面接練習ツール欲しいですか？」のアンケート実施。競合分析（英語圏含む）を完了。ペルソナ3パターン確定（新卒/中途/外資系）。</div>
+</div>
+<div class="tl-item">
+<div class="tl-period">Week 2-4 — MVP開発</div>
+<div class="tl-text">Claude APIを活用した面接シミュレーション機能のMVP開発。音声入力（Whisper API）→ AI面接官の質問→リアルタイムフィードバックの基本フローを実装。Next.js + Supabaseで認証・データ管理。Claude Codeを使い2週間でMVP完成を目指す。</div>
+</div>
+<div class="tl-item">
+<div class="tl-period">Month 2 — ベータテスト</div>
+<div class="tl-text">コミュニティメンバーや自社クライアント経由でベータユーザー50名を獲得。フィードバックを収集し、面接評価のスコアリングロジック、業種別質問テンプレート、改善提案の精度を向上。フリーミアムモデルの設計。</div>
+</div>
+<div class="tl-item">
+<div class="tl-period">Month 3 — 正式ローンチ</div>
+<div class="tl-text">Product Huntでの公開、X/noteでの発信強化。月額2,980円（個人）/ 月額29,800円（企業5アカウント）の2プラン。就活メディアへのPR配信。初月100ユーザー、3ヶ月で500ユーザーを目標。</div>
+</div>
+</div>
+
+<h4>収益シミュレーション</h4>
+<table class="revenue-table">
+<thead><tr><th>フェーズ</th><th>個人ユーザー</th><th>企業プラン</th><th>月間売上</th><th>粗利率</th><th>月間利益</th></tr></thead>
+<tbody>
+<tr><td>3ヶ月目</td><td>200名 × 2,980円</td><td>5社 × 29,800円</td><td>745,000円</td><td>80%</td><td>596,000円</td></tr>
+<tr><td>6ヶ月目</td><td>800名 × 2,980円</td><td>20社 × 29,800円</td><td>2,980,000円</td><td>82%</td><td>2,443,600円</td></tr>
+<tr><td>12ヶ月目</td><td>2,000名 × 2,980円</td><td>50社 × 29,800円</td><td>7,450,000円</td><td>85%</td><td>6,332,500円</td></tr>
+</tbody>
+</table>
+
+<h4>リスクと対策</h4>
+<ul>
+<li><strong>リスク: AI回答の品質問題</strong> — 面接は人生を左右する場面であり、AIの不適切なフィードバックがユーザーの面接結果に悪影響を与えるリスクがある。対策として、プロの面接官による監修を初期段階で入れ、フィードバックの品質チェックプロセスを確立する</li>
+<li><strong>リスク: API費用の増大</strong> — 音声入力（Whisper）+ 長時間対話（Claude）のAPI費用がユーザーあたり高額になる可能性。対策として、1回の練習時間を30分に制限、頻繁な練習はプレミアムプランに誘導、キャッシュ活用で同一質問パターンのAPI呼び出しを削減する</li>
+<li><strong>リスク: 大手参入</strong> — リクルートやマイナビなどの大手就活プラットフォームが同様の機能を実装するリスク。対策として、先行者利益で口コミとブランドを築き、特化型の品質で差別化。大手は汎用的になりがちで、特定業界・職種に特化した深い練習体験では負けない</li>
+<li><strong>リスク: 季節変動</strong> — 就活シーズン（10月-4月）に需要が集中しやすい。対策として、転職市場向け機能と企業研修プランを強化し、通年で安定した収益を確保する</li>
+</ul>
+</div>
+</div>
+
+<!-- TOP 3 -->
+<div class="top5-card">
+<div class="top5-header">
+<div class="top5-rank bronze">3</div>
+<div class="top5-title-area">
+<h3>AI導入月額顧問</h3>
+<div class="score-inline">総合スコア 4.3 / 5.0 — カテゴリ: コンサル</div>
+</div>
+</div>
+<div class="top5-body">
+<h4>なぜ3位なのか</h4>
+<p>AI導入月額顧問が3位に入った理由は、即座に実行可能でありながら高単価を実現できるモデルだからだ。SaaSのような開発期間が不要で、自身の知見を直接提供するサービスであるため、明日からでも始められる。月額20-50万円の顧問契約は、既存事業の延長線上にあり、新たなリスクを取ることなく収益を積み上げられる。</p>
+<p>山本氏の強みである「AI×ビジネス」の交差点にいるポジショニングが最大限に活きる。多くの中小企業経営者はAIの可能性を感じていても、具体的に何をどう導入すべきか分からず立ち止まっている。そこに「自社でAIを使って月商1,000万を達成している25歳の経営者」が顧問として入ることの説得力は圧倒的だ。理論ではなく実践者としての信頼性が、大手コンサルファームとの差別化になる。</p>
+<p>加えて、顧問契約から派生して受託開発やSaaS導入支援のアップセルが見込める。顧問として入り込むことで企業の課題を深く理解し、自社の他サービス（Agent Desk、マーケ分析ツール等）への誘導や、AIエージェント常駐サービスへのステップアップが自然に起こる。いわば「入口商材」としての機能を果たす。</p>
+
+<h4>具体的実行プラン</h4>
+<div class="timeline">
+<div class="tl-item">
+<div class="tl-period">Week 1 — サービス設計</div>
+<div class="tl-text">顧問サービスの3つのプランを設計。ライト（月15万/月2回MTG+チャット相談）、スタンダード（月30万/週1MTG+Slack常駐+月次レポート）、プレミアム（月50万/週2MTG+ハンズオン導入支援+ツール選定代行）。LP作成。自社事例をケーススタディとして整理。</div>
+</div>
+<div class="tl-item">
+<div class="tl-period">Week 2-4 — 初期クライアント獲得</div>
+<div class="tl-text">既存のビジネスネットワーク（Strategists受講生、採用クライアント）にDM。LinkedInでの発信開始。初期3社をライトプランで獲得し、成功事例を作る。Xでの「AI導入で実際にこう変わった」系投稿を週2回。</div>
+</div>
+<div class="tl-item">
+<div class="tl-period">Month 2-3 — 拡大・仕組み化</div>
+<div class="tl-text">初期クライアントの成功事例を元にnote記事を3本公開。紹介プログラム（既存クライアントの紹介で1ヶ月無料）を開始。月5社まで拡大。定型のAI導入診断テンプレートを整備し、初回コンサルの効率化を図る。</div>
+</div>
+</div>
+
+<h4>収益シミュレーション</h4>
+<table class="revenue-table">
+<thead><tr><th>フェーズ</th><th>クライアント数</th><th>平均単価</th><th>月間売上</th><th>粗利率</th><th>月間利益</th></tr></thead>
+<tbody>
+<tr><td>1ヶ月目</td><td>2社</td><td>200,000円</td><td>400,000円</td><td>95%</td><td>380,000円</td></tr>
+<tr><td>3ヶ月目</td><td>5社</td><td>250,000円</td><td>1,250,000円</td><td>95%</td><td>1,187,500円</td></tr>
+<tr><td>6ヶ月目</td><td>8社</td><td>300,000円</td><td>2,400,000円</td><td>93%</td><td>2,232,000円</td></tr>
+<tr><td>12ヶ月目</td><td>10社</td><td>350,000円</td><td>3,500,000円</td><td>90%</td><td>3,150,000円</td></tr>
+</tbody>
+</table>
+
+<h4>リスクと対策</h4>
+<ul>
+<li><strong>リスク: 時間の上限</strong> — 顧問業は自分の時間を売るモデルであり、本業との兼ね合いでスケールに限界がある。対策として、1社あたりの工数を最小化するテンプレート・フレームワークを整備。将来的にはジュニアコンサルを採用して自身は監督に回る体制を構築</li>
+<li><strong>リスク: 成果の可視化が難しい</strong> — AI導入の効果は短期では測りにくく、クライアントが「コスト対効果が分からない」と解約するリスク。対策として、初月に「クイックウィン」（明確に効果が出る小さな自動化）を必ず1つ実行し、早期に成果を見せる</li>
+<li><strong>リスク: クライアントの期待値ギャップ</strong> — 「AIを入れれば全部自動化できる」という過大な期待。対策として、初回面談で「AI導入診断」を行い、現実的なロードマップと期待値を設定。契約書にスコープを明記する</li>
+<li><strong>リスク: ドメイン知識の不足</strong> — 製造業、医療、法律など専門性が高い業界では業界知識が足りない可能性。対策として、初期は自身が深い知見を持つ「人材」「マーケティング」「SaaS」領域に特化し、横展開は段階的に行う</li>
+</ul>
+</div>
+</div>
+
+<!-- TOP 4 -->
+<div class="top5-card">
+<div class="top5-header">
+<div class="top5-rank">4</div>
+<div class="top5-title-area">
+<h3>AIエージェント常駐サービス</h3>
+<div class="score-inline">総合スコア 4.3 / 5.0 — カテゴリ: 受託</div>
+</div>
+</div>
+<div class="top5-body">
+<h4>なぜ4位なのか</h4>
+<p>AIエージェント常駐サービスが4位に位置する理由は、受託モデルの中で最もストック性が高く、月額契約による安定収益が見込めるからだ。従来のSES（エンジニア常駐派遣）は人材確保が最大のボトルネックだったが、このモデルでは「AIエージェント＋山本氏の監督」という形で人材採用なしにサービスを提供できる。Claude Codeを使いこなす山本氏の能力そのものが商品となる。</p>
+<p>具体的には、クライアント企業のSlack/Teamsに常駐するAIボットを構築し、日常的な開発タスク、データ分析、レポート生成、カスタマーサポートの自動応答などを代行する。人間のエンジニアを1名雇うよりも安価で、24時間稼働し、退職リスクもない。中小企業にとって「AI社員を月額で雇う」という分かりやすいコンセプトは、意思決定の心理的ハードルを大幅に下げる。</p>
+<p>山本氏がAgent Desk（採用管理）やAIbou（CEO Twin）の開発を通じて蓄積した、AIエージェント設計のノウハウが直接活きる分野でもある。特にAIbouのDACI（Decision, Action, Context, Insight）設計やメモリシステムの知見は、企業向けAIエージェント構築において他社が簡単に真似できない差別化要因だ。また、Claude Code有料コミュニティやAI導入月額顧問との相乗効果が極めて高く、顧問契約の中で必要性が明らかになったクライアントに自然にアップセルできる流れが作れる。</p>
+
+<h4>具体的実行プラン</h4>
+<div class="timeline">
+<div class="tl-item">
+<div class="tl-period">Week 1-2 — サービスパッケージ設計</div>
+<div class="tl-text">3つのエージェントパッケージを設計。A: チャットサポートBot（月15万/Slack常駐FAQ応答+エスカレーション）、B: 開発アシスタント（月30万/コードレビュー+小タスク実装+テスト自動化）、C: フルスタックAI社員（月50万/日次タスク実行+レポート+意思決定支援）。サービス仕様書とSLAを策定。</div>
+</div>
+<div class="tl-item">
+<div class="tl-period">Week 3-4 — パイロット導入</div>
+<div class="tl-text">既存クライアント1社にパイロット導入（無料〜割引価格）。実際の業務フローにAIエージェントを組み込み、効果測定を実施。導入時の課題やクライアントの反応を記録し、サービス改善に反映。ケーススタディ資料を作成。</div>
+</div>
+<div class="tl-item">
+<div class="tl-period">Month 2-3 — 営業開始・拡大</div>
+<div class="tl-text">パイロット成果をもとに本格営業開始。既存のビジネスネットワーク、顧問クライアントからのアップセル、X/LinkedIn発信を通じて月3社ペースで新規獲得。初期設定のテンプレート化により、オンボーディングを3日以内に短縮。</div>
+</div>
+<div class="tl-item">
+<div class="tl-period">Month 4-6 — 仕組み化・チーム構築</div>
+<div class="tl-text">10社到達を機に、ジュニアメンバー（AIに強い業務委託）を1名採用。自身はアーキテクチャ設計とクライアント対応に専念。標準AIエージェントテンプレートの整備で新規導入の効率を80%向上。</div>
+</div>
+</div>
+
+<h4>収益シミュレーション</h4>
+<table class="revenue-table">
+<thead><tr><th>フェーズ</th><th>クライアント数</th><th>平均単価</th><th>月間売上</th><th>粗利率</th><th>月間利益</th></tr></thead>
+<tbody>
+<tr><td>1ヶ月目</td><td>1社（パイロット）</td><td>150,000円</td><td>150,000円</td><td>90%</td><td>135,000円</td></tr>
+<tr><td>3ヶ月目</td><td>4社</td><td>300,000円</td><td>1,200,000円</td><td>88%</td><td>1,056,000円</td></tr>
+<tr><td>6ヶ月目</td><td>8社</td><td>350,000円</td><td>2,800,000円</td><td>85%</td><td>2,380,000円</td></tr>
+<tr><td>12ヶ月目</td><td>15社</td><td>350,000円</td><td>5,250,000円</td><td>80%</td><td>4,200,000円</td></tr>
+</tbody>
+</table>
+
+<h4>リスクと対策</h4>
+<ul>
+<li><strong>リスク: AIエージェントの品質保証</strong> — AIが誤った処理を行った場合のクライアントへの影響が大きい。特にデータ操作やメール送信などの不可逆な操作でのミスは致命的。対策として、全ての重要操作に人間の承認フローを組み込み、初期は監視強化で信頼を構築する。SLAに品質基準と障害時対応を明記する</li>
+<li><strong>リスク: セキュリティ・情報漏洩</strong> — クライアントのSlack/システムにアクセスするため、機密情報の取り扱いリスクが高い。対策として、NDA締結、データアクセス範囲の最小化、監査ログの記録、定期的なセキュリティレビューを標準プロセスに組み込む</li>
+<li><strong>リスク: 属人化</strong> — 山本氏個人の技術力に依存するため、体調不良や多忙時にサービス品質が低下する。対策として、エージェントの動作をコード化・テンプレート化し、マニュアルを整備。段階的にチームメンバーを育成する</li>
+<li><strong>リスク: API費用の上振れ</strong> — クライアントの利用量が想定を超えた場合、API費用が利益を圧迫する。対策として、プランごとに月間処理量の上限を設定。超過分は従量課金とする契約形態にする</li>
+</ul>
+</div>
+</div>
+
+<!-- TOP 5 -->
+<div class="top5-card">
+<div class="top5-header">
+<div class="top5-rank">5</div>
+<div class="top5-title-area">
+<h3>マーケ分析SaaS外販</h3>
+<div class="score-inline">総合スコア 4.2 / 5.0 — カテゴリ: SaaS</div>
+</div>
+</div>
+<div class="top5-body">
+<h4>なぜ5位なのか</h4>
+<p>マーケ分析SaaS外販が5位に入った最大の理由は、「既に動いている自社ツールを外販する」というアプローチにより、ゼロからの開発リスクが大幅に低減されている点だ。山本氏はStrategists PlatformにおいてGoogle Ads/Meta Adsの分析基盤を構築・運用しており、そのダッシュボード、ROI計算ロジック、キャンペーン最適化のアルゴリズムは実戦で検証済みである。これを汎用化して外販するのは、技術的にもビジネス的にも合理的だ。</p>
+<p>マーケティング分析市場は巨大だが、中小企業にとって既存ツール（HubSpot、Databox等）は高額で機能過多であるという課題がある。月額1-3万円の価格帯で、Google Ads/Meta Adsの統合ダッシュボード＋AIによる改善提案というシンプルな機能に絞ったSaaSは、明確な市場ニーズが存在する。特にAIが「次に何をすべきか」を自然言語で提案する機能は、マーケティングの専門知識がない中小企業経営者にとって圧倒的な価値がある。</p>
+<p>スケーラビリティは全40アイデアの中でも最高クラスだ。SaaSモデルの本質である「一度作れば何社にも売れる」利点に加え、マーケティングデータは業種を問わず共通のフレームワークで分析できるため、横展開が容易。自社のGoogle Ads運用ノウハウ（戦略策定からキーワード選定まで）がプロダクトに直接反映されることで、単なるデータ可視化ツールではなく「AIマーケティングアドバイザー」としてのポジションを確立できる。</p>
+
+<h4>具体的実行プラン</h4>
+<div class="timeline">
+<div class="tl-item">
+<div class="tl-period">Week 1-2 — 既存資産の棚卸し</div>
+<div class="tl-text">Strategists Platformのマーケ分析機能を精査し、外販可能な機能を特定。マルチテナント対応に必要な改修箇所をリストアップ。競合分析（Databox, Cyfe, Geckoboard等）を実施し、差別化ポイントを明確化。</div>
+</div>
+<div class="tl-item">
+<div class="tl-period">Week 3 - Month 2 — 汎用化開発</div>
+<div class="tl-text">Google Ads / Meta Ads APIのOAuth連携機能を汎用化。マルチテナント対応のDB設計。AIによる改善提案エンジン（Claude API連携）の実装。ダッシュボードUIのホワイトラベル化。決済機能（Stripe）の統合。</div>
+</div>
+<div class="tl-item">
+<div class="tl-period">Month 2-3 — ベータリリース</div>
+<div class="tl-text">既存クライアント・顧問先を中心に10社のベータユーザーを獲得（無料〜月額5,000円）。利用データを元にAI提案精度を改善。UXの洗練。利用者インタビューでプロダクトマーケットフィットを検証。</div>
+</div>
+<div class="tl-item">
+<div class="tl-period">Month 3-6 — 正式ローンチ・成長</div>
+<div class="tl-text">月額9,800円（スタンダード）/ 月額29,800円（プロ・複数媒体+詳細AI分析）の2プラン。Product Hunt、X、noteでの発信。マーケティング系メディアへのPR。広告代理店向けパートナープログラムの設計。半年で100社を目標。</div>
+</div>
+</div>
+
+<h4>収益シミュレーション</h4>
+<table class="revenue-table">
+<thead><tr><th>フェーズ</th><th>契約社数</th><th>ARPU</th><th>月間売上</th><th>粗利率</th><th>月間利益</th></tr></thead>
+<tbody>
+<tr><td>3ヶ月目（ベータ）</td><td>20社</td><td>9,800円</td><td>196,000円</td><td>75%</td><td>147,000円</td></tr>
+<tr><td>6ヶ月目</td><td>80社</td><td>14,000円</td><td>1,120,000円</td><td>80%</td><td>896,000円</td></tr>
+<tr><td>12ヶ月目</td><td>250社</td><td>16,000円</td><td>4,000,000円</td><td>85%</td><td>3,400,000円</td></tr>
+<tr><td>24ヶ月目</td><td>800社</td><td>18,000円</td><td>14,400,000円</td><td>88%</td><td>12,672,000円</td></tr>
+</tbody>
+</table>
+
+<h4>リスクと対策</h4>
+<ul>
+<li><strong>リスク: Google/Meta APIの制約変更</strong> — プラットフォームのAPI仕様変更やレートリミット強化により、サービスの根幹が影響を受ける可能性がある。対策として、API変更への迅速な対応体制を整え、データ取得のバッファリング戦略を設計。複数のデータソースに対応し、特定プラットフォームへの依存度を分散する</li>
+<li><strong>リスク: 開発リソースの分散</strong> — 既存の3プロジェクト（Agent Desk, AIbou, Strategists Platform）に加えて新規SaaSの開発・運用が加わることで、リソースが過度に分散する。対策として、MVP段階では既存のStrategists Platform基盤を最大限活用し、新規開発を最小化。成長フェーズで専任エンジニアの採用を検討</li>
+<li><strong>リスク: 大手ツールのAI機能追加</strong> — Google自身がGoogle Ads管理画面にAI分析機能を強化する動き。対策として、「複数媒体の統合分析」と「中小企業向けの分かりやすいUI」で差別化。大手ツールは一般的に機能過多で使いにくいため、シンプルさで勝負する</li>
+<li><strong>リスク: データプライバシー</strong> — クライアントの広告データ（費用、コンバージョン等）を預かるため、データ漏洩リスクが大きい。対策として、SOC2相当のセキュリティ基準を採用。データの暗号化、アクセスログ、定期的な脆弱性診断を実施。プライバシーポリシーを弁護士監修で作成</li>
+</ul>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- ===== SECTION 4: DONT DO ===== -->
+<section class="section" id="dont">
+<div class="container">
+<div class="section-header">
+<div class="section-num">SECTION 04</div>
+<div class="section-title">やらない方がいいもの</div>
+<p class="section-desc">時間と労力の浪費になるリスクが高いアイデアとその理由</p>
+</div>
+
+<div class="dont-card">
+<h4><span class="dont-badge">SKIP</span>AI議事録SaaS</h4>
+<p class="reason">レッドオーシャンの極致。CLOVA Note、notta、Otter.ai、tl;dv、Fireflies.ai等、資金力のある競合がひしめく。技術的な差別化が困難で、品質勝負になるとAPI費用の体力勝負になる。後発参入で勝てるビジョンが描けない。さらに、GoogleやMicrosoftがMeet/Teamsに同等機能を無料で組み込む流れがあり、市場全体が縮小するリスクすらある。山本氏の強み（デザイン、UX、AI活用）が活きる領域ではなく、音声認識精度という技術的な戦場では勝負にならない。</p>
+</div>
+
+<div class="dont-card">
+<h4><span class="dont-badge">SKIP</span>AIアフィリエイトメディア</h4>
+<p class="reason">2026年のSEO環境は、AI生成コンテンツの氾濫によりGoogleのアルゴリズムが「オリジナルな実体験」を重視する方向に大きくシフトしている。量産型アフィリエイトブログは検索順位を維持することが極めて困難になっている。加えて、アフィリエイト報酬単価は年々下落傾向にあり、月50万円の収益を達成するには膨大なトラフィックが必要。数千記事を作っても月収10万円に届かないケースが多い。山本氏の限られた時間を、低単価・不安定なストックに投下する合理性がない。</p>
+</div>
+
+<div class="dont-card">
+<h4><span class="dont-badge">SKIP</span>AI恋愛コーチコンテンツ</h4>
+<p class="reason">StrengthsFinder的にも強み適合が最も低い（1/5）。恋愛系コンテンツは法的リスク（景品表示法、特商法違反のグレーゾーン）が高く、ブランド毀損のリスクも大きい。「慶應卒25歳CEO」としてのパーソナルブランドを、情報商材的なイメージで汚す可能性がある。また、ターゲット層（恋愛に悩む男性）はLTVが低く、継続課金モデルが成立しにくい。一発屋のコンテンツ販売は安定収益にはならず、本業の顧客との信頼関係にも悪影響を与えかねない。</p>
+</div>
+
+<div class="dont-card">
+<h4><span class="dont-badge">SKIP</span>My-Tier（映画レビューSNS）の収益化</h4>
+<p class="reason">SNS型プラットフォームの収益化は「鶏と卵」問題が深刻。ユーザーがいなければコンテンツが生まれず、コンテンツがなければユーザーが来ない。ネットワーク効果が働くまでの「冷たい起動」フェーズに、マーケティング費用と時間を大量に投下する必要がある。映画レビュー市場はFilmarks、Letterboxdが既に強固なポジションを確立しており、後発として差別化するには「ティア評価」だけでは不十分。趣味プロジェクトとして継続するのは良いが、収益の柱として期待するのは非合理的。</p>
+</div>
+
+<div class="dont-card">
+<h4><span class="dont-badge">SKIP</span>プラットフォーム系全般（マッチング・マーケットプレイス）</h4>
+<p class="reason">AIフリーランスマッチング、AIテンプレートマーケットプレイス、AIスキル認定プラットフォームの3つは、いずれも「二面性市場の構築」が必要であり、個人〜少人数チームで立ち上げるには不向き。供給側（フリーランス/テンプレ制作者）と需要側（企業/ユーザー）の両方を同時に集客する必要があり、初期の集客コストが膨大。加えて、プラットフォームの価値はユーザー数に比例するため、臨界量に達するまで赤字が続く。VCの資金がなければ成立しにくいビジネスモデルであり、ブートストラップ型の山本氏の経営スタイルとは相性が悪い。</p>
+</div>
+</div>
+</section>
+
+<!-- ===== SECTION 5: RISKS ===== -->
+<section class="section" id="risks">
+<div class="container">
+<div class="section-header">
+<div class="section-num">SECTION 05</div>
+<div class="section-title">見落としているリスクと盲点</div>
+<p class="section-desc">戦略実行前に認識すべき5カテゴリのリスク</p>
+</div>
+
+<div class="risk-grid">
+
+<div class="risk-card">
+<h4><span class="risk-icon legal">!</span>法的リスク（5つ）</h4>
+<ul>
+<li><strong>1. 個人情報保護法違反</strong> — AI面接SaaSで個人の音声・回答データを処理する場合、個人情報保護法における「要配慮個人情報」に該当する可能性。プライバシーポリシーの不備で罰則対象になるリスク</li>
+<li><strong>2. 景品表示法の「優良誤認」</strong> — AIの分析結果を「確実に成果が出る」と表現すると優良誤認に該当。コミュニティやコンサルの販促で「必ず稼げる」等のNGワードを使わない厳格な管理が必要</li>
+<li><strong>3. 電気通信事業法の届出</strong> — SaaSでユーザー間のメッセージ機能を提供する場合、電気通信事業の届出が必要になる可能性。無届営業は罰則あり</li>
+<li><strong>4. 特定商取引法の遵守</strong> — オンラインコミュニティはサブスクリプション型の「通信販売」に該当。解約方法の明示義務、クーリングオフの適用可否など、法令遵守が必要</li>
+<li><strong>5. AI生成物の著作権・責任</strong> — AIが生成したコード・レポートの著作権帰属が曖昧。クライアントの機密データをAIに入力した場合の責任範囲を契約で明確化する必要</li>
+</ul>
+</div>
+
+<div class="risk-card">
+<h4><span class="risk-icon compete">!</span>競合リスク（3つ）</h4>
+<ul>
+<li><strong>1. Anthropic/OpenAI自身の参入</strong> — Claude Codeのコミュニティや教材ビジネスは、Anthropic自身が公式チュートリアルや認定プログラムを立ち上げた瞬間に価値が大幅に毀損する。常にプラットフォーマーリスクを意識し、「コミュニティの絆」という代替困難な価値を構築する必要がある</li>
+<li><strong>2. インフルエンサーの参入</strong> — AI界隈の有名インフルエンサー（フォロワー10万人超）が同様のコミュニティを開始した場合、知名度で劣る。対策として「深さ」と「実践者としての信頼」で差別化する戦略が必須</li>
+<li><strong>3. 大手SIerのAIサービス展開</strong> — NTTデータ、アクセンチュア等がAI導入コンサルを本格化すると、中小企業向け市場にも波及。ただし大手は高単価なので、月額15-50万円の価格帯は直接競合しにくい</li>
+</ul>
+</div>
+
+<div class="risk-card">
+<h4><span class="risk-icon time">!!</span>時間管理リスク（最も深刻）</h4>
+<ul>
+<li><strong>最大の盲点は「現在の事業で既に手一杯」という事実</strong> — Agent Desk、AIbou、Strategists Platformの3プロダクト運用に加え、月商1,000万の事業運営。ここに新規事業を加えると、全てが中途半端になるリスクが極めて高い</li>
+<li><strong>「週10時間ルール」の設定</strong> — 新規事業に割ける時間は週10時間が上限。これを超えると本業に影響する。TOP5の中から「1つだけ」を選び、集中する覚悟が必要</li>
+<li><strong>「やらないこと」を決める勇気</strong> — 着想×アレンジの強みは、次々と新しいアイデアを生む反面、どれも中途半端にする危険性がある。最上志向が「完璧にできないなら始めない」と作用するか、「始めたら完璧を求めて時間を溶かす」と作用するか、自覚が必要</li>
+</ul>
+</div>
+
+<div class="risk-card">
+<h4><span class="risk-icon tech">!</span>技術的リスク（3つ）</h4>
+<ul>
+<li><strong>1. AIバイブコーディングの限界</strong> — Claude Codeに依存した開発は、複雑なアーキテクチャ設計やパフォーマンス最適化において限界がある。SaaSが成長フェーズに入った時、技術的負債が一気に顕在化する可能性。定期的なコードレビューと、必要に応じた専門エンジニアの招聘が重要</li>
+<li><strong>2. API依存リスク</strong> — Claude API、Whisper API、Google Ads APIなど、外部APIに大きく依存するビジネスモデルは、APIの料金改定・仕様変更・サービス終了に脆弱。代替APIの調査と、コア機能のAPI非依存化を段階的に進める必要がある</li>
+<li><strong>3. スケーリングの壁</strong> — 個人開発でMVPは作れても、ユーザー数が1,000を超えた時のインフラ設計、監視体制、障害対応は別次元の課題。この壁を越えるためのチーム構築計画を事前に持つべき</li>
+</ul>
+</div>
+
+<div class="risk-card">
+<h4><span class="risk-icon blind">!</span>構造的盲点（3つ）</h4>
+<ul>
+<li><strong>1. 「作る」と「売る」は別の能力</strong> — AIバイブコーディングで高品質なプロダクトを作れても、それを市場に届けるマーケティング・セールスの能力は別物。特にBtoB SaaSの営業プロセス（リード獲得→商談→クロージング→オンボーディング→リテンション）は、プロダクト開発とは全く異なるスキルセット。早期にセールス/マーケ人材との協業を検討すべき</li>
+<li><strong>2. サポートコストの過小評価</strong> — コミュニティもSaaSもコンサルも、顧客が増えるとサポート工数が指数関数的に増大する。「問い合わせ対応」「バグ修正」「個別要望への対応」が開発・コンテンツ制作の時間を奪う。セルフサービス化（FAQ、動画チュートリアル、AIチャットボット）を初期から設計に組み込む</li>
+<li><strong>3. 燃え尽きリスク</strong> — 25歳で月商1,000万は素晴らしい成果だが、新規事業を次々と立ち上げるハイペースは、精神的・肉体的な燃え尽きにつながりやすい。「競争性」の強みは、自分自身との競争にも向きやすい。意図的な休息と、事業数の上限設定が長期的な成功には不可欠</li>
+</ul>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- ===== SECTION 6: ACTIONS ===== -->
+<section class="section" id="actions">
+<div class="container">
+<div class="section-header">
+<div class="section-num">SECTION 06</div>
+<div class="section-title">推奨アクションの優先順位</div>
+<p class="section-desc">具体的な次のステップを時間軸で整理</p>
+</div>
+
+<div class="action-block">
+<h4><span class="action-urgency urgency-now">THIS WEEK</span>今週中にやること</h4>
+<ol class="action-list">
+<li><strong>Claude Code有料コミュニティのDiscordサーバーを開設する。</strong> チャンネル構成（#入門、#実践Tips、#質問箱、#成果共有、#ライブ告知、#雑談）を設計し、初期のウェルカムメッセージとルールを策定。これは30分で完了する作業であり、「行動を起こした」という事実が重要</li>
+<li><strong>Xアカウントで「Claude Codeで作ったもの」シリーズの投稿を3本作成・予約投稿する。</strong> Agent Desk、AIbou、Strategists Platformの開発エピソード。スクリーンショット付き。プロダクトの完成度とAIバイブコーディングの実用性を見せる</li>
+<li><strong>コミュニティの月額課金をStripeで設定する。</strong> 月額4,980円。決済ページとLPを1日で作成（Claude Codeで）。初期は「先行メンバー限定価格」として3,980円で募集し、希少性を演出</li>
+<li><strong>既存クライアント3社にAI導入顧問の提案メールを送る。</strong> 「月額15万円から、御社のAI導入をハンズオンで支援します」という簡潔な提案書をA4一枚で作成し、既存の信頼関係を活用する</li>
+<li><strong>「やらないことリスト」を紙に書き、デスクに貼る。</strong> AI議事録SaaS、アフィリメディア、恋愛コンテンツ、My-Tier収益化、プラットフォーム系。これを明文化して視覚的に目に入る場所に置くことで、着想の強みによる「あれもやりたい」衝動を制御する</li>
+</ol>
+</div>
+
+<div class="action-block">
+<h4><span class="action-urgency urgency-month">1 MONTH</span>1ヶ月以内にやること</h4>
+<ol class="action-list">
+<li><strong>コミュニティの初期コンテンツを5本制作する。</strong> (1)CLAUDE.md完全ガイド、(2)プロジェクト別セットアップテンプレート、(3)エラー対処パターン集、(4)実践ワークフロー動画、(5)よくある質問FAQ。これが「入会して最初に見るコンテンツ」として機能する</li>
+<li><strong>無料ウェビナー「Claude Codeで月商1,000万の事業を作った方法」を開催する。</strong> X、note、Peatixで告知。参加者100名を目標。ウェビナーの最後にコミュニティへの招待を行い、コンバージョン率20%（20名入会）を狙う</li>
+<li><strong>AI導入顧問の初回コンサルを2社以上実施する。</strong> 初回は「AI導入診断」として無料〜1万円で実施し、現状の業務フローの中でAIが即効性を発揮できるポイントを3つ提案。そこから月額契約への転換を図る</li>
+<li><strong>AI面接練習SaaSのMVP仕様書を策定する。</strong> 画面遷移図、技術スタック、API設計、データベース設計を1ドキュメントにまとめる。開発は2ヶ月目以降に着手。仕様策定だけで技術的な課題と必要工数が見えてくる</li>
+<li><strong>note記事「25歳でAIを使って月商1,000万を達成した話」を公開する。</strong> パーソナルブランディングの起点として、実体験ベースのストーリーを発信。コミュニティとコンサルへの導線を自然に設計する</li>
+</ol>
+</div>
+
+<div class="action-block">
+<h4><span class="action-urgency urgency-no">DECIDE NOT TO</span>やらないことを決める</h4>
+<ol class="action-list">
+<li><strong>同時に3つ以上の新規事業を走らせない。</strong> 既存3プロダクト + 新規1-2が上限。それ以上はすべて「いつかやるリスト」に格納し、四半期ごとに見直す</li>
+<li><strong>VC調達を前提としたビジネスモデルは選ばない。</strong> プラットフォーム型、大規模マーケットプレイス型はブートストラップでは成立しない。キャッシュフロー正のモデルのみ選択</li>
+<li><strong>完璧なプロダクトを目指さない。</strong> 最上志向を「完璧な初版」に向けるのではなく「最速のフィードバックループ」に向ける。MVPを2週間で出し、顧客の声で磨く</li>
+<li><strong>自分が100%手を動かすモデルに固執しない。</strong> 成長フェーズでは業務委託・パートナーの活用を躊躇しない。「自分でやった方が速い」は短期的には正しくても長期的には間違い</li>
+<li><strong>バズりを目的にしない。</strong> X/YouTubeでバズることとビジネスの収益は別物。フォロワー数ではなく「課金してくれるファンの数」を指標にする。100人の熱狂的なファンは10万人のフォロワーより価値がある</li>
+</ol>
+</div>
+
+</div>
+</section>
+
+<footer class="footer">
+<div class="container">
+<p style="margin-bottom:8px;font-size:14px;color:var(--text3)">AIレバレッジ × マネタイズ戦略ブレスト</p>
+<p>Generated 2026.03.17 — Top Tier Inc. Strategic Planning</p>
+<p style="margin-top:12px;font-size:11px;color:var(--text3)">本レポートは戦略的ブレインストーミングの記録であり、事業判断の最終的な意思決定は別途行うこと</p>
+</div>
+</footer>
+
+<script>
+// Nav visibility on scroll
+const nav = document.getElementById('nav');
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  const current = window.scrollY;
+  if (current > 400) {
+    nav.classList.add('visible');
+  } else {
+    nav.classList.remove('visible');
+  }
+  lastScroll = current;
+});
+
+// Active nav link
+const sections = document.querySelectorAll('.section[id], section[id]');
+const navLinks = document.querySelectorAll('.nav a');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+      });
+    }
+  });
+}, { threshold: 0.2 });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

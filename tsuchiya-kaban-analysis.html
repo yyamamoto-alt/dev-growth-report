@@ -1,0 +1,2380 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>土屋鞄製造所 マーケティング構造分析 & マーケ分析SaaS戦略</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-primary: #0A0A0A;
+  --bg-card: #0F0F0F;
+  --bg-card-hover: #141414;
+  --bg-elevated: #1A1A1A;
+  --accent: #C13028;
+  --accent-light: #E8453D;
+  --accent-dark: #8B1F19;
+  --accent-glow: rgba(193, 48, 40, 0.15);
+  --text-primary: #F0F0F0;
+  --text-secondary: #A0A0A0;
+  --text-muted: #666666;
+  --border: #1E1E1E;
+  --border-hover: #2A2A2A;
+  --success: #22C55E;
+  --warning: #F59E0B;
+  --info: #3B82F6;
+  --purple: #A855F7;
+  --gradient-accent: linear-gradient(135deg, #C13028, #E8453D);
+  --gradient-dark: linear-gradient(180deg, #0F0F0F, #0A0A0A);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans JP', 'Inter', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 0%, rgba(193,48,40,0.08) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 80%, rgba(193,48,40,0.04) 0%, transparent 50%),
+              var(--bg-primary);
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 800px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(193,48,40,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  background: rgba(193,48,40,0.1);
+  border: 1px solid rgba(193,48,40,0.3);
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent-light);
+  letter-spacing: 0.05em;
+  margin-bottom: 32px;
+  text-transform: uppercase;
+}
+
+.hero-badge::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.hero h1 {
+  font-family: 'Inter', 'Noto Sans JP', sans-serif;
+  font-size: clamp(32px, 5vw, 64px);
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 24px;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 1;
+}
+
+.hero h1 .brand { color: var(--accent); }
+
+.hero-sub {
+  font-size: clamp(16px, 2vw, 22px);
+  color: var(--text-secondary);
+  max-width: 700px;
+  line-height: 1.7;
+  margin-bottom: 48px;
+  font-weight: 300;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-meta-item {
+  text-align: center;
+}
+
+.hero-meta-item .value {
+  font-family: 'Inter', sans-serif;
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.hero-meta-item .label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 6px;
+}
+
+/* ===== NAV ===== */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,10,10,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 20px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sticky-nav::-webkit-scrollbar { height: 0; }
+
+.sticky-nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 4px;
+  padding: 8px 0;
+}
+
+.sticky-nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 8px;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.sticky-nav a:hover {
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+}
+
+/* ===== MAIN ===== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+section {
+  padding: 80px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+section:last-child { border-bottom: none; }
+
+/* ===== SECTION HEADERS ===== */
+.section-header {
+  margin-bottom: 48px;
+}
+
+.section-number {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-number::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-dark), transparent);
+  max-width: 200px;
+}
+
+.section-header h2 {
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.section-header p {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin-top: 12px;
+  max-width: 700px;
+  line-height: 1.7;
+}
+
+/* ===== CARDS ===== */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-hover);
+}
+
+.card-accent {
+  border-left: 3px solid var(--accent);
+}
+
+.card h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.card p, .card li {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.card ul li {
+  padding: 6px 0;
+  padding-left: 20px;
+  position: relative;
+}
+
+.card ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 14px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* ===== GRID LAYOUTS ===== */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+/* ===== STAT CARDS ===== */
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.stat-card:hover {
+  border-color: var(--accent-dark);
+  background: var(--bg-card-hover);
+}
+
+.stat-card .stat-value {
+  font-family: 'Inter', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.stat-card .stat-value.accent { color: var(--accent); }
+.stat-card .stat-value.success { color: var(--success); }
+.stat-card .stat-value.warning { color: var(--warning); }
+.stat-card .stat-value.info { color: var(--info); }
+
+.stat-card .stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+.stat-card .stat-detail {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* ===== DATA TABLE ===== */
+.data-table-wrap {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.data-table th {
+  background: var(--bg-elevated);
+  padding: 14px 20px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.data-table td {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.data-table tr:last-child td { border-bottom: none; }
+
+.data-table tr:hover td {
+  background: rgba(255,255,255,0.02);
+}
+
+/* ===== TAG / BADGE ===== */
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.tag-red { background: rgba(193,48,40,0.15); color: var(--accent-light); }
+.tag-green { background: rgba(34,197,94,0.15); color: var(--success); }
+.tag-blue { background: rgba(59,130,246,0.15); color: var(--info); }
+.tag-yellow { background: rgba(245,158,11,0.15); color: var(--warning); }
+.tag-purple { background: rgba(168,85,247,0.15); color: var(--purple); }
+
+/* ===== TIER CARDS ===== */
+.tier-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.tier-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+}
+
+.tier-header {
+  padding: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tier-header.tier-1 { background: linear-gradient(135deg, rgba(193,48,40,0.15), rgba(193,48,40,0.05)); }
+.tier-header.tier-2 { background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(59,130,246,0.05)); }
+.tier-header.tier-3 { background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(168,85,247,0.05)); }
+
+.tier-body {
+  padding: 24px;
+}
+
+.tier-body ul {
+  list-style: none;
+  padding: 0;
+}
+
+.tier-body ul li {
+  padding: 10px 0;
+  padding-left: 24px;
+  position: relative;
+  font-size: 14px;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+}
+
+.tier-body ul li:last-child { border-bottom: none; }
+
+.tier-body ul li::before {
+  content: '>';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-family: 'Inter', monospace;
+  font-weight: 700;
+}
+
+/* ===== FLOW / PIPELINE ===== */
+.flow-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+
+.flow-step {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.flow-arrow {
+  color: var(--accent);
+  font-size: 20px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ===== COMPARISON TABLE ===== */
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.compare-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.compare-card-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.compare-card-header.kaban { background: linear-gradient(135deg, rgba(193,48,40,0.12), transparent); }
+.compare-card-header.randoseru { background: linear-gradient(135deg, rgba(59,130,246,0.12), transparent); }
+
+.compare-card-body {
+  padding: 24px;
+}
+
+.compare-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+
+.compare-row:last-child { border-bottom: none; }
+
+.compare-row .compare-label { color: var(--text-muted); }
+.compare-row .compare-value { color: var(--text-primary); font-weight: 600; }
+
+/* ===== PRICING ===== */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.pricing-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.pricing-card.featured {
+  border-color: var(--accent);
+  box-shadow: 0 0 40px rgba(193,48,40,0.1);
+}
+
+.pricing-card.featured::before {
+  content: 'RECOMMENDED';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 16px;
+  background: var(--accent);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  border-radius: 100px;
+}
+
+.pricing-card h3 {
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.pricing-price {
+  font-family: 'Inter', sans-serif;
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 16px 0;
+}
+
+.pricing-price span {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.pricing-features {
+  list-style: none;
+  padding: 0;
+  margin-top: 24px;
+  text-align: left;
+}
+
+.pricing-features li {
+  padding: 8px 0;
+  padding-left: 24px;
+  position: relative;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.pricing-features li::before {
+  content: '+';
+  position: absolute;
+  left: 4px;
+  color: var(--success);
+  font-weight: 700;
+}
+
+/* ===== AGENDA ===== */
+.agenda-item {
+  display: flex;
+  gap: 24px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.agenda-item:last-child { border-bottom: none; }
+
+.agenda-time {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+  min-width: 80px;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.agenda-content h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.agenda-content p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ===== TECH STACK GRID ===== */
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.tech-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  transition: all 0.3s;
+}
+
+.tech-item:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
+}
+
+.tech-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.tech-icon.shopify { background: rgba(150,191,72,0.15); color: #96BF48; }
+.tech-icon.gtm { background: rgba(59,130,246,0.15); color: #3B82F6; }
+.tech-icon.klaviyo { background: rgba(168,85,247,0.15); color: #A855F7; }
+.tech-icon.clarity { background: rgba(245,158,11,0.15); color: #F59E0B; }
+.tech-icon.judge { background: rgba(34,197,94,0.15); color: #22C55E; }
+.tech-icon.pay { background: rgba(255,255,255,0.1); color: #F0F0F0; }
+.tech-icon.wish { background: rgba(244,63,94,0.15); color: #F43F5E; }
+.tech-icon.inv { background: rgba(14,165,233,0.15); color: #0EA5E9; }
+
+.tech-info h4 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.tech-info p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ===== CHANNEL CARDS ===== */
+.channel-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  transition: all 0.3s;
+}
+
+.channel-card:hover {
+  border-color: var(--border-hover);
+}
+
+.channel-card h4 {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.channel-tag {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-weight: 600;
+}
+
+/* ===== KPI BAR ===== */
+.kpi-bar {
+  margin: 12px 0;
+}
+
+.kpi-bar-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+.kpi-bar-label { color: var(--text-secondary); }
+.kpi-bar-value { color: var(--text-primary); font-weight: 600; font-family: 'Inter', sans-serif; }
+
+.kpi-bar-track {
+  width: 100%;
+  height: 8px;
+  background: var(--bg-elevated);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.kpi-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.8s ease;
+}
+
+.kpi-bar-fill.red { background: var(--gradient-accent); }
+.kpi-bar-fill.green { background: linear-gradient(90deg, #16A34A, #22C55E); }
+.kpi-bar-fill.blue { background: linear-gradient(90deg, #2563EB, #3B82F6); }
+.kpi-bar-fill.yellow { background: linear-gradient(90deg, #D97706, #F59E0B); }
+.kpi-bar-fill.purple { background: linear-gradient(90deg, #7C3AED, #A855F7); }
+
+/* ===== API PIPELINE ===== */
+.api-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.api-endpoint {
+  font-family: 'Inter', monospace;
+  font-size: 13px;
+  color: var(--accent-light);
+  background: rgba(193,48,40,0.08);
+  padding: 4px 10px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.api-method {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'Inter', monospace;
+  margin-right: 8px;
+}
+
+.api-method.get { background: rgba(34,197,94,0.15); color: var(--success); }
+.api-method.post { background: rgba(59,130,246,0.15); color: var(--info); }
+
+/* ===== HIGHLIGHT BOX ===== */
+.highlight-box {
+  background: var(--accent-glow);
+  border: 1px solid rgba(193,48,40,0.3);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 24px 0;
+}
+
+.highlight-box h4 {
+  color: var(--accent-light);
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.highlight-box p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  padding: 48px 20px;
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+
+.footer p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .grid-2, .grid-3, .grid-4, .compare-grid, .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-meta { gap: 20px; }
+  .hero-meta-item .value { font-size: 28px; }
+
+  section { padding: 48px 0; }
+
+  .card { padding: 20px; }
+
+  .stat-card .stat-value { font-size: 24px; }
+
+  .flow-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .flow-arrow { transform: rotate(90deg); }
+
+  .agenda-item { flex-direction: column; gap: 8px; }
+
+  .data-table { font-size: 12px; }
+  .data-table th, .data-table td { padding: 10px 12px; }
+}
+
+@media (max-width: 480px) {
+  .hero { padding: 24px 16px; }
+  .container { padding: 0 16px; }
+  .card { padding: 16px; }
+  .pricing-card { padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== HERO ==================== -->
+<div class="hero">
+  <div class="hero-badge">Confidential Analysis Report</div>
+  <h1>
+    <span class="brand">土屋鞄製造所</span><br>
+    マーケティング構造分析<br>
+    &amp; マーケ分析SaaS戦略
+  </h1>
+  <p class="hero-sub">
+    D2C先駆者のマーケティングインフラを解剖し、<br>
+    緑川氏との協業による分析SaaSプロダクト構想を提案する
+  </p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <div class="value">1965</div>
+      <div class="label">創業年</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="value">7,672</div>
+      <div class="label">SKU数</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="value">31</div>
+      <div class="label">直営店舗</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="value">753</div>
+      <div class="label">従業員</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== NAVIGATION ==================== -->
+<nav class="sticky-nav">
+  <div class="sticky-nav-inner">
+    <a href="#overview">事業概要</a>
+    <a href="#ec">EC構造</a>
+    <a href="#tech">技術スタック</a>
+    <a href="#marketing">マーケティング</a>
+    <a href="#comparison">ランドセル vs KABAN</a>
+    <a href="#kpi">KPI詳細</a>
+    <a href="#dashboard">ダッシュボード提案</a>
+    <a href="#shopify-api">Shopify連携</a>
+    <a href="#saas">SaaS構想</a>
+    <a href="#agenda">会議アジェンダ</a>
+  </div>
+</nav>
+
+<!-- ==================== 1. 事業概要 ==================== -->
+<section id="overview">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">Section 01</div>
+      <h2>土屋鞄製造所の事業概要</h2>
+      <p>1965年創業、ランドセル製造から始まり、日本を代表するD2Cレザーブランドへ成長。「品質と物語」で勝負するブランド経営の先駆者。</p>
+    </div>
+
+    <div class="grid-4" style="margin-bottom: 32px;">
+      <div class="stat-card">
+        <div class="stat-value accent">100-150億</div>
+        <div class="stat-label">推定年商</div>
+        <div class="stat-detail">EC比率 40-50%</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">31</div>
+        <div class="stat-label">直営店舗</div>
+        <div class="stat-detail">全国主要都市</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">753</div>
+        <div class="stat-label">従業員数</div>
+        <div class="stat-detail">職人含む</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value success">D2C</div>
+        <div class="stat-label">ビジネスモデル</div>
+        <div class="stat-detail">直販 / 卸なし</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card card-accent">
+        <h3>企業プロフィール</h3>
+        <ul>
+          <li><strong>正式名称:</strong> 株式会社 土屋鞄製造所</li>
+          <li><strong>創業:</strong> 1965年（昭和40年）</li>
+          <li><strong>代表:</strong> 土屋成範（3代目）</li>
+          <li><strong>本社:</strong> 東京都足立区（西新井工房）</li>
+          <li><strong>事業:</strong> 鞄・革小物の企画・製造・販売</li>
+          <li><strong>販路:</strong> 直営店31店舗 + 自社EC（Shopify）</li>
+          <li><strong>特徴:</strong> 中間マージンゼロの完全D2Cモデル</li>
+          <li><strong>ブランド:</strong> 土屋鞄、grirose、depsoa、objcts.io</li>
+        </ul>
+      </div>
+      <div class="card card-accent">
+        <h3>商品ラインナップ</h3>
+        <ul>
+          <li><strong>バッグ:</strong> ビジネス、トート、ショルダー、バックパック（324 SKU）</li>
+          <li><strong>財布:</strong> 長財布、二つ折り、コンパクト（160 SKU）</li>
+          <li><strong>革小物:</strong> 名刺入れ、キーケース、ペンケース等（237 SKU）</li>
+          <li><strong>ランドセル:</strong> 3ブランド展開、約110モデル</li>
+          <li><strong>objcts.io:</strong> テック系レザーブランド（PC/タブレットケース等）</li>
+          <li><strong>リユース事業:</strong> 自社製品の買取・再販</li>
+          <li><strong>オトナランドセル:</strong> 大人向けランドセル型バッグ</li>
+          <li><strong>ギフト:</strong> 名入れ・刻印サービス対応</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top: 24px;">
+      <h4>なぜ土屋鞄がマーケ分析SaaSの理想的なパートナーなのか</h4>
+      <p>
+        D2C完全直販モデルにより、顧客接点からCVまでの全データを自社で保有。Shopify+Klaviyoの標準的なスタックを使用しており、
+        同業他社への水平展開が容易。さらに「ランドセル」と「大人向け革製品」という全く異なる購買行動を持つ2事業を運営しており、
+        分析ツールの汎用性を証明する最良のテストケースとなる。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 2. EC構造 ==================== -->
+<section id="ec">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">Section 02</div>
+      <h2>ECサイト構造（実データ分析）</h2>
+      <p>Shopify Prestige v10.0.2を基盤とした大規模EC。7,672 SKU、約300コレクションという日本のD2Cブランドとしては最大級の規模。</p>
+    </div>
+
+    <div class="grid-3" style="margin-bottom: 32px;">
+      <div class="stat-card">
+        <div class="stat-value accent">7,672</div>
+        <div class="stat-label">全商品SKU</div>
+        <div class="stat-detail">アクティブ商品数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value info">~300</div>
+        <div class="stat-label">コレクション数</div>
+        <div class="stat-detail">カテゴリ/特集/季節</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value warning">~110</div>
+        <div class="stat-label">ランドセルモデル</div>
+        <div class="stat-detail">3ブランド合計</div>
+      </div>
+    </div>
+
+    <h3 style="font-size: 20px; margin-bottom: 20px; font-weight: 700;">商品SKU内訳</h3>
+    <div class="data-table-wrap" style="margin-bottom: 32px;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>カテゴリ</th>
+            <th>SKU数</th>
+            <th>構成比</th>
+            <th>価格帯</th>
+            <th>特徴</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>バッグ</strong></td>
+            <td>324</td>
+            <td>4.2%</td>
+            <td>30,000 - 150,000円</td>
+            <td>ビジネス/カジュアル/トラベル</td>
+          </tr>
+          <tr>
+            <td><strong>財布</strong></td>
+            <td>160</td>
+            <td>2.1%</td>
+            <td>15,000 - 60,000円</td>
+            <td>長財布/二つ折り/コンパクト</td>
+          </tr>
+          <tr>
+            <td><strong>革小物</strong></td>
+            <td>237</td>
+            <td>3.1%</td>
+            <td>5,000 - 25,000円</td>
+            <td>名刺入れ/キーケース/ペンケース</td>
+          </tr>
+          <tr>
+            <td><strong>ランドセル</strong></td>
+            <td>~550</td>
+            <td>7.2%</td>
+            <td>59,000 - 190,000円</td>
+            <td>3ブランド(土屋鞄/grirose/depsoa)</td>
+          </tr>
+          <tr>
+            <td><strong>objcts.io</strong></td>
+            <td>~120</td>
+            <td>1.6%</td>
+            <td>10,000 - 80,000円</td>
+            <td>テック系レザーアクセサリー</td>
+          </tr>
+          <tr>
+            <td><strong>リユース</strong></td>
+            <td>~200</td>
+            <td>2.6%</td>
+            <td>10,000 - 80,000円</td>
+            <td>自社製品のリセール</td>
+          </tr>
+          <tr>
+            <td><strong>その他</strong></td>
+            <td>~6,081</td>
+            <td>79.3%</td>
+            <td>-</td>
+            <td>カラーバリエーション/限定/アーカイブ</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-size: 20px; margin-bottom: 20px; font-weight: 700;">CVポイント（コンバージョン導線）</h3>
+    <div class="grid-3">
+      <div class="card">
+        <h4>購入CV</h4>
+        <ul>
+          <li>商品ページ → カート → チェックアウト</li>
+          <li>Apple Pay / Google Pay（1クリック決済）</li>
+          <li>Shopify Payments 標準フロー</li>
+          <li>ギフトラッピング追加オプション</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>マイクロCV</h4>
+        <ul>
+          <li>ウィッシュリスト追加（hulkapps）</li>
+          <li>会員登録 / アカウント作成</li>
+          <li>Klaviyoメール登録（ポップアップ）</li>
+          <li>商品レビュー投稿（Judge.me）</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>エンゲージメントCV</h4>
+        <ul>
+          <li>ギフト専用導線（贈り物検索）</li>
+          <li>名入れ/刻印カスタマイズ</li>
+          <li>店舗来店予約（ランドセル）</li>
+          <li>LINE友だち追加</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 3. 技術スタック ==================== -->
+<section id="tech">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">Section 03</div>
+      <h2>技術スタック</h2>
+      <p>Shopifyを中心に、分析・CRM・UXツールを統合した堅実なスタック構成。SaaS連携の土台として極めて標準的。</p>
+    </div>
+
+    <div class="tech-grid">
+      <div class="tech-item">
+        <div class="tech-icon shopify">S</div>
+        <div class="tech-info">
+          <h4>Shopify (Prestige v10.0.2)</h4>
+          <p>EC基盤。Prestige テーマはハイエンドD2C向け。7,672 SKU を運用。Shopify Plus の可能性あり。</p>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon gtm">G</div>
+        <div class="tech-info">
+          <h4>Google Tag Manager (GTM-9MQ6)</h4>
+          <p>タグ管理の中核。GA4、Google Ads、Meta Pixel 等の全トラッキングタグを統合管理。</p>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon klaviyo">K</div>
+        <div class="tech-info">
+          <h4>Klaviyo</h4>
+          <p>メールマーケティング / CRM。セグメント配信、フロー自動化、購買データ連携。開封率30-40%。</p>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon clarity">C</div>
+        <div class="tech-info">
+          <h4>Microsoft Clarity (dxmcutx5p9)</h4>
+          <p>ヒートマップ・セッション録画。無料でUX分析。スクロール深度、クリック分布、レイジクリック検出。</p>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon judge">J</div>
+        <div class="tech-info">
+          <h4>Judge.me</h4>
+          <p>商品レビュープラットフォーム。写真レビュー、Q&A機能。SEO向けリッチスニペット出力。</p>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon pay">P</div>
+        <div class="tech-info">
+          <h4>Apple Pay / Google Pay / Shopify Payments</h4>
+          <p>1クリック決済で購入CVR向上。カート離脱率の削減に直結する決済インフラ。</p>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon wish">W</div>
+        <div class="tech-info">
+          <h4>hulkapps Wishlist</h4>
+          <p>ウィッシュリスト機能。非購入時のマイクロCV。リマインドメールとの連動でCV率向上。</p>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon inv">I</div>
+        <div class="tech-info">
+          <h4>Inventory Info App</h4>
+          <p>在庫情報管理。在庫切れ通知、入荷予定表示。需要予測データの基盤。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top: 32px;">
+      <h4>SaaS連携観点での評価</h4>
+      <p>
+        Shopify + Klaviyo + GTM は日本のD2C/ECブランドの「標準スタック」であり、
+        このスタックに対応するダッシュボードSaaSは極めて水平展開しやすい。
+        Shopify Admin API でほぼ全データを取得可能で、Klaviyo API も充実。
+        Microsoft Clarity はデータエクスポートが限定的だが、Clarity API（プレビュー）を活用する余地がある。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 4. マーケティングチャネル ==================== -->
+<section id="marketing">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">Section 04</div>
+      <h2>マーケティングチャネル詳細</h2>
+      <p>「売らない投稿」に代表される独自のコンテンツ戦略と、データドリブンな広告運用の両輪。</p>
+    </div>
+
+    <div class="grid-2" style="margin-bottom: 24px;">
+      <div class="channel-card">
+        <h4>Google Ads <span class="channel-tag tag tag-blue">Paid</span></h4>
+        <ul>
+          <li><strong>ブランド系:</strong> 「土屋鞄」指名検索（月5-10万回）。CPC低め、ROAS高め</li>
+          <li><strong>一般系:</strong> 「本革 バッグ」「ビジネスバッグ おすすめ」等。競合多く CPC 200-500円</li>
+          <li><strong>PMAX:</strong> Shopify商品フィードと連携。全チャネル自動最適化</li>
+          <li><strong>リマケ:</strong> カート離脱者へのリターゲティング。CVR 3-5%</li>
+        </ul>
+        <div class="kpi-bar">
+          <div class="kpi-bar-header">
+            <span class="kpi-bar-label">推定 ROAS</span>
+            <span class="kpi-bar-value">400-800%</span>
+          </div>
+          <div class="kpi-bar-track"><div class="kpi-bar-fill red" style="width: 65%"></div></div>
+        </div>
+      </div>
+      <div class="channel-card">
+        <h4>Meta Ads <span class="channel-tag tag tag-purple">Paid</span></h4>
+        <ul>
+          <li><strong>Instagram:</strong> 170Kフォロワー。ブランド世界観の構築拠点</li>
+          <li><strong>クリエイティブ:</strong> 職人の手仕事、革のエイジング、ライフスタイル</li>
+          <li><strong>ターゲティング:</strong> LAL（購入者類似）、リタゲ（サイト訪問者）</li>
+          <li><strong>フォーマット:</strong> カルーセル、リール、コレクション広告</li>
+        </ul>
+        <div class="kpi-bar">
+          <div class="kpi-bar-header">
+            <span class="kpi-bar-label">推定 ROAS</span>
+            <span class="kpi-bar-value">300-600%</span>
+          </div>
+          <div class="kpi-bar-track"><div class="kpi-bar-fill purple" style="width: 50%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom: 24px;">
+      <div class="channel-card">
+        <h4>SEO <span class="channel-tag tag tag-green">Organic</span></h4>
+        <ul>
+          <li><strong>ドメイン分離戦略:</strong> tsuchiya-kaban.jp（大人向け）と randoseru 専用サブドメイン/サイト</li>
+          <li><strong>コンテンツSEO:</strong> 革の手入れ、選び方ガイド、職人インタビュー</li>
+          <li><strong>指名検索:</strong> 月5-10万回。ブランド認知の高さを示す</li>
+          <li><strong>ランドセルSEO:</strong> 「ランドセル 2026」等の季節KWで上位</li>
+        </ul>
+        <div class="kpi-bar">
+          <div class="kpi-bar-header">
+            <span class="kpi-bar-label">指名検索ボリューム</span>
+            <span class="kpi-bar-value">50,000-100,000/月</span>
+          </div>
+          <div class="kpi-bar-track"><div class="kpi-bar-fill green" style="width: 80%"></div></div>
+        </div>
+      </div>
+      <div class="channel-card">
+        <h4>SNS / コンテンツ <span class="channel-tag tag tag-green">Organic</span></h4>
+        <ul>
+          <li><strong>Instagram:</strong> 170K followers — 「売らない投稿」戦略。革の質感、光、季節感</li>
+          <li><strong>X (Twitter):</strong> 新商品情報、キャンペーン告知</li>
+          <li><strong>YouTube:</strong> 職人ドキュメンタリー、製品紹介</li>
+          <li><strong>LINE:</strong> 会員向けクーポン、入荷通知、1:1チャット</li>
+        </ul>
+        <div class="kpi-bar">
+          <div class="kpi-bar-header">
+            <span class="kpi-bar-label">Instagram エンゲージメント率</span>
+            <span class="kpi-bar-value">2.5-4.0%</span>
+          </div>
+          <div class="kpi-bar-track"><div class="kpi-bar-fill blue" style="width: 55%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-accent">
+      <h3>「売らない投稿」戦略の本質</h3>
+      <p>
+        土屋鞄のInstagram戦略の核心は、直接的な販促投稿を極力避け、
+        <strong>革素材の美しさ、職人の手仕事、製品が使われるライフシーン</strong>にフォーカスしたコンテンツを発信し続けること。
+        これにより「憧れ」と「信頼」のブランドエクイティを構築し、購入検討時の第一想起を獲得する。
+        広告ROASでは測れない、ブランド資産の積み上げ。
+      </p>
+      <p style="margin-top: 12px;">
+        SaaS としてこの「ブランド指標」をどう定量化するかが差別化ポイント。
+        指名検索ボリューム、UGC数、NPS推移をダッシュボード化する価値がここにある。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 5. ランドセル vs KABAN ==================== -->
+<section id="comparison">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">Section 05</div>
+      <h2>ランドセル事業 vs KABAN事業</h2>
+      <p>全く異なる購買行動、季節性、ターゲット。1社で2つのビジネスモデルを持つ稀有なケース。</p>
+    </div>
+
+    <div class="compare-grid" style="margin-bottom: 32px;">
+      <div class="compare-card">
+        <div class="compare-card-header kaban">KABAN事業（大人向け革製品）</div>
+        <div class="compare-card-body">
+          <div class="compare-row">
+            <span class="compare-label">ターゲット</span>
+            <span class="compare-value">25-55歳 男女</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-label">価格帯</span>
+            <span class="compare-value">5,000 - 150,000円</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-label">AOV</span>
+            <span class="compare-value">25,000 - 40,000円</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-label">季節性</span>
+            <span class="compare-value">ギフト時期にピーク</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-label">リピート率</span>
+            <span class="compare-value">30-40%（3年以内）</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-label">CVR</span>
+            <span class="compare-value">1.5-2.5%</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-label">購入決定</span>
+            <span class="compare-value">個人（自分 or ギフト）</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-label">広告戦略</span>
+            <span class="compare-value">通年運用 / ブランド重視</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-label">LTV (3年)</span>
+            <span class="compare-value">80,000 - 120,000円</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="compare-card">
+        <div class="compare-card-header randoseru">ランドセル事業</div>
+        <div class="compare-card-body">
+          <div class="compare-row">
+            <span class="compare-label">ターゲット</span>
+            <span class="compare-value">30-45歳 母親（+祖父母）</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-label">価格帯</span>
+            <span class="compare-value">59,000 - 190,000円</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-label">AOV</span>
+            <span class="compare-value">80,000 - 120,000円</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-label">季節性</span>
+            <span class="compare-value">3-8月に集中（ラン活）</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-label">リピート率</span>
+            <span class="compare-value">兄弟で2-3回</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-label">CVR</span>
+            <span class="compare-value">3-5%（高検討度）</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-label">購入決定</span>
+            <span class="compare-value">家族（3世代関与）</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-label">広告戦略</span>
+            <span class="compare-value">季節集中 / 早期予約誘導</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-label">LTV (3年)</span>
+            <span class="compare-value">80,000-240,000円</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size: 20px; margin-bottom: 20px; font-weight: 700;">ランドセル 3ブランド詳細</h3>
+    <div class="grid-3">
+      <div class="card" style="border-top: 3px solid var(--accent);">
+        <h4>土屋鞄ランドセル</h4>
+        <p style="margin-bottom: 12px;"><span class="tag tag-red">フラッグシップ</span></p>
+        <ul>
+          <li>価格帯: 75,000 - 190,000円</li>
+          <li>牛革 / コードバン / クラリーノ</li>
+          <li>伝統的デザイン、職人仕立て</li>
+          <li>ターゲット: 品質重視の保護者</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--info);">
+        <h4>RECO（レコ）</h4>
+        <p style="margin-bottom: 12px;"><span class="tag tag-blue">ユニバーサル</span></p>
+        <ul>
+          <li>24色展開、89,000円均一</li>
+          <li>シンプル&ジェンダーレス</li>
+          <li>「自分で選ぶ」をコンセプトに</li>
+          <li>ターゲット: 個性重視の家庭</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--purple);">
+        <h4>grirose（グリローズ）</h4>
+        <p style="margin-bottom: 12px;"><span class="tag tag-purple">女の子向け</span></p>
+        <ul>
+          <li>女の子の「好き」を形に</li>
+          <li>パステルカラー、花モチーフ</li>
+          <li>専用サイト/ブランド展開</li>
+          <li>ターゲット: 女児とその母親</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top: 20px;">
+      <div class="card" style="border-top: 3px solid var(--success);">
+        <h4>depsoa（デプソア）</h4>
+        <p style="margin-bottom: 12px;"><span class="tag tag-green">エントリー</span></p>
+        <ul>
+          <li>低価格帯ライン（59,000-69,000円）</li>
+          <li>土屋鞄品質をより手頃に</li>
+          <li>シンプルで軽量な設計</li>
+          <li>ターゲット: コスパ重視層</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--warning);">
+        <h4>ランドセルリメイク事業</h4>
+        <p style="margin-bottom: 12px;"><span class="tag tag-yellow">サステナビリティ</span></p>
+        <ul>
+          <li>使い終わったランドセルをミニチュアやパスケースに</li>
+          <li>卒業後のブランド接点維持</li>
+          <li>SNS映えコンテンツの自然発生</li>
+          <li>ブランドロイヤルティの頂点</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top: 24px;">
+      <h4>SaaS設計への示唆</h4>
+      <p>
+        ランドセル事業は「季節性」「家族意思決定」「高AOV・低頻度」という特殊な購買パターンを持つ。
+        一方KABAN事業は「通年」「個人意思決定」「中AOV・中頻度」。
+        ダッシュボードは<strong>事業部別ビュー</strong>を標準装備し、
+        KPI定義（CVR、ROAS目標値等）を事業部ごとにカスタマイズ可能にする必要がある。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 6. KPI詳細 ==================== -->
+<section id="kpi">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">Section 06</div>
+      <h2>グロースチームのKPI（詳細版）</h2>
+      <p>EC運営、広告、CRM、ブランド、在庫の5領域にわたるKPIフレームワーク。全てをダッシュボード化対象として設計。</p>
+    </div>
+
+    <!-- EC指標 -->
+    <div class="card card-accent" style="margin-bottom: 24px;">
+      <h3>EC指標（日次/週次モニタリング）</h3>
+      <div class="grid-4" style="margin: 20px 0;">
+        <div class="stat-card">
+          <div class="stat-value accent">1.5-2.5%</div>
+          <div class="stat-label">CVR</div>
+          <div class="stat-detail">業界平均 1.5%</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value warning">60-70%</div>
+          <div class="stat-label">カート離脱率</div>
+          <div class="stat-detail">業界平均 70%</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value info">25-40K</div>
+          <div class="stat-label">AOV</div>
+          <div class="stat-detail">大人向け商品</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value success">80-120K</div>
+          <div class="stat-label">LTV (3年)</div>
+          <div class="stat-detail">KABAN事業</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <div class="kpi-bar">
+            <div class="kpi-bar-header">
+              <span class="kpi-bar-label">日別売上トレンド</span>
+              <span class="kpi-bar-value">日次追跡</span>
+            </div>
+            <div class="kpi-bar-track"><div class="kpi-bar-fill red" style="width: 75%"></div></div>
+          </div>
+          <div class="kpi-bar">
+            <div class="kpi-bar-header">
+              <span class="kpi-bar-label">モバイル比率</span>
+              <span class="kpi-bar-value">推定 65-75%</span>
+            </div>
+            <div class="kpi-bar-track"><div class="kpi-bar-fill blue" style="width: 70%"></div></div>
+          </div>
+        </div>
+        <div>
+          <div class="kpi-bar">
+            <div class="kpi-bar-header">
+              <span class="kpi-bar-label">新規 vs リピーター比率</span>
+              <span class="kpi-bar-value">60:40</span>
+            </div>
+            <div class="kpi-bar-track"><div class="kpi-bar-fill green" style="width: 60%"></div></div>
+          </div>
+          <div class="kpi-bar">
+            <div class="kpi-bar-header">
+              <span class="kpi-bar-label">ギフト購入比率</span>
+              <span class="kpi-bar-value">推定 20-30%</span>
+            </div>
+            <div class="kpi-bar-track"><div class="kpi-bar-fill yellow" style="width: 25%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 広告指標 -->
+    <div class="card card-accent" style="margin-bottom: 24px;">
+      <h3>広告指標（チャネル別）</h3>
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>チャネル</th>
+              <th>ROAS目安</th>
+              <th>CPA目安</th>
+              <th>CPM目安</th>
+              <th>フリクエンシー</th>
+              <th>備考</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Google ブランド</strong></td>
+              <td><span class="tag tag-green">800-1500%</span></td>
+              <td>2,000-5,000円</td>
+              <td>-</td>
+              <td>-</td>
+              <td>指名検索。高効率</td>
+            </tr>
+            <tr>
+              <td><strong>Google 一般</strong></td>
+              <td><span class="tag tag-yellow">200-400%</span></td>
+              <td>5,000-15,000円</td>
+              <td>-</td>
+              <td>-</td>
+              <td>競合多い領域</td>
+            </tr>
+            <tr>
+              <td><strong>Google PMAX</strong></td>
+              <td><span class="tag tag-blue">400-800%</span></td>
+              <td>3,000-8,000円</td>
+              <td>300-600円</td>
+              <td>-</td>
+              <td>Shopifyフィード連動</td>
+            </tr>
+            <tr>
+              <td><strong>Meta (Instagram)</strong></td>
+              <td><span class="tag tag-purple">300-600%</span></td>
+              <td>3,000-10,000円</td>
+              <td>500-1,500円</td>
+              <td>2-4回/週</td>
+              <td>ビジュアル訴求に強い</td>
+            </tr>
+            <tr>
+              <td><strong>リターゲティング</strong></td>
+              <td><span class="tag tag-green">600-1200%</span></td>
+              <td>1,500-4,000円</td>
+              <td>200-500円</td>
+              <td>3-6回/週</td>
+              <td>高CVR。頻度管理が鍵</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- CRM指標 -->
+    <div class="card card-accent" style="margin-bottom: 24px;">
+      <h3>CRM指標（Klaviyo中心）</h3>
+      <div class="grid-4" style="margin: 20px 0;">
+        <div class="stat-card">
+          <div class="stat-value success">25-35%</div>
+          <div class="stat-label">F2転換率</div>
+          <div class="stat-detail">初回→2回目</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value info">30-40%</div>
+          <div class="stat-label">リピート率</div>
+          <div class="stat-detail">3年以内</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value warning">12-18M</div>
+          <div class="stat-label">購入間隔</div>
+          <div class="stat-detail">中央値</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value accent">30-40%</div>
+          <div class="stat-label">メール開封率</div>
+          <div class="stat-detail">業界平均 20%</div>
+        </div>
+      </div>
+      <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.8;">
+        土屋鞄のCRM指標は業界平均を大幅に上回る。特にメール開封率30-40%は、
+        ブランドへの高いロイヤルティを反映。F2転換率25-35%は、高価格帯D2Cとしては優秀。
+        購入間隔12-18ヶ月は革製品の特性上やむを得ないが、
+        小物・ギフト訴求で短縮する余地がある。
+      </p>
+    </div>
+
+    <!-- ブランド指標 & 在庫指標 -->
+    <div class="grid-2">
+      <div class="card card-accent">
+        <h3>ブランド指標</h3>
+        <div class="kpi-bar">
+          <div class="kpi-bar-header">
+            <span class="kpi-bar-label">NPS (Net Promoter Score)</span>
+            <span class="kpi-bar-value">推定 50-70</span>
+          </div>
+          <div class="kpi-bar-track"><div class="kpi-bar-fill green" style="width: 70%"></div></div>
+        </div>
+        <div class="kpi-bar">
+          <div class="kpi-bar-header">
+            <span class="kpi-bar-label">指名検索ボリューム</span>
+            <span class="kpi-bar-value">5-10万/月</span>
+          </div>
+          <div class="kpi-bar-track"><div class="kpi-bar-fill red" style="width: 80%"></div></div>
+        </div>
+        <div class="kpi-bar">
+          <div class="kpi-bar-header">
+            <span class="kpi-bar-label">Instagram UGC投稿</span>
+            <span class="kpi-bar-value">500-1,000/月</span>
+          </div>
+          <div class="kpi-bar-track"><div class="kpi-bar-fill purple" style="width: 55%"></div></div>
+        </div>
+        <div class="kpi-bar">
+          <div class="kpi-bar-header">
+            <span class="kpi-bar-label">Judge.me レビュー評価</span>
+            <span class="kpi-bar-value">4.5-4.8/5.0</span>
+          </div>
+          <div class="kpi-bar-track"><div class="kpi-bar-fill blue" style="width: 92%"></div></div>
+        </div>
+      </div>
+      <div class="card card-accent">
+        <h3>在庫指標</h3>
+        <div class="kpi-bar">
+          <div class="kpi-bar-header">
+            <span class="kpi-bar-label">在庫回転率（年間）</span>
+            <span class="kpi-bar-value">4-6回</span>
+          </div>
+          <div class="kpi-bar-track"><div class="kpi-bar-fill yellow" style="width: 50%"></div></div>
+        </div>
+        <div class="kpi-bar">
+          <div class="kpi-bar-header">
+            <span class="kpi-bar-label">欠品率</span>
+            <span class="kpi-bar-value">5-10%</span>
+          </div>
+          <div class="kpi-bar-track"><div class="kpi-bar-fill red" style="width: 8%"></div></div>
+        </div>
+        <div class="kpi-bar">
+          <div class="kpi-bar-header">
+            <span class="kpi-bar-label">死に筋率</span>
+            <span class="kpi-bar-value">推定 10-15%</span>
+          </div>
+          <div class="kpi-bar-track"><div class="kpi-bar-fill yellow" style="width: 12%"></div></div>
+        </div>
+        <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.8; margin-top: 16px;">
+          7,672 SKU のうち、アクティブに販売されているのは推定 2,000-3,000 SKU。
+          残りはカラーバリエーション、限定品、アーカイブ。
+          在庫最適化ダッシュボードは確実にニーズがある。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 7. ダッシュボード提案 ==================== -->
+<section id="dashboard">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">Section 07</div>
+      <h2>マーケ分析ダッシュボードの提案</h2>
+      <p>3段階のTier構成で、導入ハードルを下げつつ、段階的に分析深度を上げていく設計。</p>
+    </div>
+
+    <div class="grid-3" style="margin-bottom: 32px;">
+      <!-- Tier 1 -->
+      <div class="tier-card">
+        <div class="tier-header tier-1">
+          <span class="tag tag-red" style="margin-bottom: 8px; display: inline-block;">Tier 1 / 必須</span>
+          <h3 style="font-size: 22px; font-weight: 800; margin: 0;">Daily Dashboard</h3>
+          <p style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">毎朝チェック / リアルタイム</p>
+        </div>
+        <div class="tier-body">
+          <ul>
+            <li><strong>売上ダッシュボード</strong> — 日別/週別/月別売上、前年比、目標進捗</li>
+            <li><strong>チャネル別ROAS</strong> — Google/Meta/Organic の費用対効果リアルタイム</li>
+            <li><strong>商品別パフォーマンス</strong> — 売れ筋TOP20、在庫アラート、カテゴリ別推移</li>
+            <li><strong>CVRファネル</strong> — 訪問→PDP→カート→購入の各ステップ転換率</li>
+            <li><strong>カート離脱分析</strong> — 離脱ポイント特定、リカバリーメール効果</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Tier 2 -->
+      <div class="tier-card">
+        <div class="tier-header tier-2">
+          <span class="tag tag-blue" style="margin-bottom: 8px; display: inline-block;">Tier 2 / 週次</span>
+          <h3 style="font-size: 22px; font-weight: 800; margin: 0;">Growth Analytics</h3>
+          <p style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">週次レビュー / 施策効果測定</p>
+        </div>
+        <div class="tier-body">
+          <ul>
+            <li><strong>コホート分析</strong> — 月別獲得コホートの継続率・LTV推移</li>
+            <li><strong>LTV予測</strong> — 購入回数ベースの将来LTV予測モデル</li>
+            <li><strong>RFM分析</strong> — Recency/Frequency/Monetary セグメント</li>
+            <li><strong>クリエイティブ分析</strong> — 広告クリエイティブ別のCTR/CVR/ROAS</li>
+            <li><strong>Klaviyoフロー効果</strong> — 各自動メールフローのCV貢献</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Tier 3 -->
+      <div class="tier-card">
+        <div class="tier-header tier-3">
+          <span class="tag tag-purple" style="margin-bottom: 8px; display: inline-block;">Tier 3 / 月次</span>
+          <h3 style="font-size: 22px; font-weight: 800; margin: 0;">Strategic Insights</h3>
+          <p style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">月次経営会議 / 中長期戦略</p>
+        </div>
+        <div class="tier-body">
+          <ul>
+            <li><strong>ブランド指標</strong> — NPS、指名検索推移、UGC数、メディア露出</li>
+            <li><strong>競合ベンチマーク</strong> — SimilarWeb/SEMrush データ横断比較</li>
+            <li><strong>季節性予測</strong> — 過去データベースの需要予測（特にランドセル）</li>
+            <li><strong>カテゴリ別マージン</strong> — 商品カテゴリごとの粗利率分析</li>
+            <li><strong>顧客クラスター分析</strong> — AIベースのペルソナ自動分類</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 24px;">
+      <h3>ダッシュボード画面構成（ワイヤーフレーム概要）</h3>
+      <div class="grid-2" style="margin-top: 16px;">
+        <div>
+          <h4 style="margin-bottom: 12px;">トップページ</h4>
+          <ul>
+            <li>今日の売上サマリー（前日比、前年同日比）</li>
+            <li>主要KPIカード（CVR、AOV、セッション数）</li>
+            <li>チャネル別売上パイチャート</li>
+            <li>直近7日の売上折れ線グラフ</li>
+            <li>アラート（異常値検知、在庫切れ等）</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="margin-bottom: 12px;">深掘りページ</h4>
+          <ul>
+            <li>商品詳細: SKU別売上、在庫、レビュー</li>
+            <li>顧客詳細: RFMマトリクス、コホート</li>
+            <li>広告詳細: キャンペーン別/クリエイティブ別</li>
+            <li>CRM詳細: Klaviyoフロー効果、セグメント</li>
+            <li>レポート: 自動生成PDF、Slack通知</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <h4>差別化ポイント: 「朝のSlack通知」機能</h4>
+      <p>
+        毎朝8時にSlack/LINEで昨日のサマリーを自動通知。
+        「昨日の売上: 320万円（前日比+12%）、CVR: 2.1%、在庫アラート: 3件」のような
+        1行サマリー。ダッシュボードを開かなくても状況を把握できる。
+        これだけでも月額5万円の価値がある機能。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 8. Shopify連携設計 ==================== -->
+<section id="shopify-api">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">Section 08</div>
+      <h2>Shopify連携の設計</h2>
+      <p>Shopify Admin API を中心に、Klaviyo・Judge.me のAPIを統合。既存CRMとの差分を明確化。</p>
+    </div>
+
+    <h3 style="font-size: 20px; margin-bottom: 20px; font-weight: 700;">API統合アーキテクチャ</h3>
+
+    <div class="flow-row" style="margin-bottom: 32px;">
+      <div class="flow-step" style="border-color: var(--accent);">Shopify Store</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">Admin API / Storefront API</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step" style="border-color: var(--accent);">データ集約レイヤー</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">ダッシュボードUI</div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom: 24px;">
+      <div class="api-card">
+        <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 16px;">Shopify Admin API</h4>
+        <div style="margin-bottom: 12px;">
+          <span class="api-method get">GET</span>
+          <span class="api-endpoint">/admin/api/2024-01/orders.json</span>
+        </div>
+        <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+          注文データ: 売上、商品、顧客、ディスカウント、フルフィルメント
+        </p>
+        <div style="margin-bottom: 12px;">
+          <span class="api-method get">GET</span>
+          <span class="api-endpoint">/admin/api/2024-01/products.json</span>
+        </div>
+        <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+          商品データ: タイトル、バリアント、在庫、画像、メタフィールド
+        </p>
+        <div style="margin-bottom: 12px;">
+          <span class="api-method get">GET</span>
+          <span class="api-endpoint">/admin/api/2024-01/customers.json</span>
+        </div>
+        <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+          顧客データ: 購入履歴、タグ、注文回数、総支出額
+        </p>
+        <div style="margin-bottom: 12px;">
+          <span class="api-method get">GET</span>
+          <span class="api-endpoint">/admin/api/2024-01/inventory_levels.json</span>
+        </div>
+        <p style="font-size: 13px; color: var(--text-secondary);">
+          在庫データ: ロケーション別在庫数、在庫調整履歴
+        </p>
+      </div>
+      <div class="api-card">
+        <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 16px;">Klaviyo API + Judge.me API</h4>
+        <div style="margin-bottom: 12px;">
+          <span class="api-method get">GET</span>
+          <span class="api-endpoint">api.klaviyo.com/api/metrics</span>
+        </div>
+        <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+          メールパフォーマンス: 送信数、開封率、クリック率、CV
+        </p>
+        <div style="margin-bottom: 12px;">
+          <span class="api-method get">GET</span>
+          <span class="api-endpoint">api.klaviyo.com/api/profiles</span>
+        </div>
+        <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+          顧客プロファイル: セグメント、予測LTV、エンゲージメントスコア
+        </p>
+        <div style="margin-bottom: 12px;">
+          <span class="api-method get">GET</span>
+          <span class="api-endpoint">judge.me/api/v1/reviews</span>
+        </div>
+        <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+          レビューデータ: 評価、テキスト、画像、商品紐付け
+        </p>
+        <div style="margin-bottom: 12px;">
+          <span class="api-method get">GET</span>
+          <span class="api-endpoint">judge.me/api/v1/widgets/product_review</span>
+        </div>
+        <p style="font-size: 13px; color: var(--text-secondary);">
+          レビューサマリー: 商品別平均評価、レビュー数推移
+        </p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 24px;">
+      <h3>既存CRMとの差分（何を追加すべきか）</h3>
+      <div class="data-table-wrap" style="margin-top: 16px;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>機能</th>
+              <th>Shopify標準</th>
+              <th>Klaviyo</th>
+              <th>不足 / 追加すべき機能</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>売上ダッシュボード</td>
+              <td><span class="tag tag-green">有</span></td>
+              <td><span class="tag tag-yellow">部分的</span></td>
+              <td>クロスチャネル統合ビュー、カスタムKPI</td>
+            </tr>
+            <tr>
+              <td>チャネル別ROAS</td>
+              <td><span class="tag tag-red">無</span></td>
+              <td><span class="tag tag-red">無</span></td>
+              <td>Google/Meta API統合の広告ROAS自動計算</td>
+            </tr>
+            <tr>
+              <td>コホート分析</td>
+              <td><span class="tag tag-red">無</span></td>
+              <td><span class="tag tag-yellow">簡易的</span></td>
+              <td>月別獲得コホートの長期LTV追跡</td>
+            </tr>
+            <tr>
+              <td>RFM分析</td>
+              <td><span class="tag tag-red">無</span></td>
+              <td><span class="tag tag-yellow">部分的</span></td>
+              <td>ビジュアルRFMマトリクス、セグメント自動化</td>
+            </tr>
+            <tr>
+              <td>LTV予測</td>
+              <td><span class="tag tag-red">無</span></td>
+              <td><span class="tag tag-green">有</span></td>
+              <td>カテゴリ別/チャネル別LTV予測</td>
+            </tr>
+            <tr>
+              <td>在庫×売上分析</td>
+              <td><span class="tag tag-yellow">基本的</span></td>
+              <td><span class="tag tag-red">無</span></td>
+              <td>需要予測、欠品インパクト試算、ABC分析</td>
+            </tr>
+            <tr>
+              <td>競合分析</td>
+              <td><span class="tag tag-red">無</span></td>
+              <td><span class="tag tag-red">無</span></td>
+              <td>SimilarWeb/SEMrush連携のベンチマーク</td>
+            </tr>
+            <tr>
+              <td>自動レポート</td>
+              <td><span class="tag tag-yellow">メール</span></td>
+              <td><span class="tag tag-yellow">メール</span></td>
+              <td>PDF自動生成、Slack/LINE通知、カスタムスケジュール</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <h4>技術実装の方針</h4>
+      <p>
+        Shopify Webhooks によるリアルタイムデータ同期 + 日次バッチでの集計処理を併用。
+        Webhooks で orders/create, orders/updated, products/update 等のイベントをキャッチし、
+        分析用DBに蓄積。Klaviyo は API ポーリング（6時間間隔）でメトリクスを同期。
+        フロントエンドは Next.js + Recharts/Nivo でダッシュボードを構築。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 9. SaaS構想 ==================== -->
+<section id="saas">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">Section 09</div>
+      <h2>外販SaaSとしてのビジネスモデル</h2>
+      <p>土屋鞄での実績を武器に、D2C/ECブランド向けマーケ分析SaaSとして水平展開する構想。</p>
+    </div>
+
+    <!-- 価格設計 -->
+    <h3 style="font-size: 20px; margin-bottom: 24px; font-weight: 700;">価格設計案</h3>
+    <div class="pricing-grid" style="margin-bottom: 40px;">
+      <div class="pricing-card">
+        <h3>Starter</h3>
+        <p style="font-size: 14px; color: var(--text-secondary);">小規模D2Cブランド向け</p>
+        <div class="pricing-price">5<span>万円/月</span></div>
+        <p style="font-size: 13px; color: var(--text-muted);">年契約: 4.5万円/月</p>
+        <ul class="pricing-features">
+          <li>売上ダッシュボード（日次）</li>
+          <li>CVRファネル分析</li>
+          <li>商品別パフォーマンス</li>
+          <li>Shopify連携</li>
+          <li>Slack通知（日次サマリー）</li>
+          <li>SKU上限: 1,000</li>
+          <li>ユーザー数: 3名</li>
+        </ul>
+      </div>
+      <div class="pricing-card featured">
+        <h3>Growth</h3>
+        <p style="font-size: 14px; color: var(--text-secondary);">成長期ブランド向け</p>
+        <div class="pricing-price">10<span>万円/月</span></div>
+        <p style="font-size: 13px; color: var(--text-muted);">年契約: 8.5万円/月</p>
+        <ul class="pricing-features">
+          <li>Starter全機能</li>
+          <li>チャネル別ROAS分析</li>
+          <li>コホート / RFM分析</li>
+          <li>LTV予測モデル</li>
+          <li>Klaviyo連携</li>
+          <li>自動PDFレポート</li>
+          <li>SKU上限: 5,000</li>
+          <li>ユーザー数: 10名</li>
+        </ul>
+      </div>
+      <div class="pricing-card">
+        <h3>Enterprise</h3>
+        <p style="font-size: 14px; color: var(--text-secondary);">大規模ブランド向け</p>
+        <div class="pricing-price">15<span>万円~/月</span></div>
+        <p style="font-size: 13px; color: var(--text-muted);">個別見積もり</p>
+        <ul class="pricing-features">
+          <li>Growth全機能</li>
+          <li>競合ベンチマーク</li>
+          <li>AI需要予測</li>
+          <li>カスタムダッシュボード</li>
+          <li>API提供</li>
+          <li>専任CSM</li>
+          <li>SKU上限: 無制限</li>
+          <li>ユーザー数: 無制限</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ターゲット -->
+    <div class="card card-accent" style="margin-bottom: 24px;">
+      <h3>ターゲット顧客像</h3>
+      <div class="grid-2" style="margin-top: 16px;">
+        <div>
+          <h4>プライマリ: D2C/ECブランドのマーケ責任者</h4>
+          <ul>
+            <li>年商 1-50億のD2Cブランド</li>
+            <li>Shopify利用（日本で推定15,000店以上）</li>
+            <li>マーケチーム 2-10名規模</li>
+            <li>Google/Meta広告を運用中</li>
+            <li>Looker Studioに不満を感じている</li>
+            <li><strong>例: 緑川さん（土屋鞄 グロースチーム）</strong></li>
+          </ul>
+        </div>
+        <div>
+          <h4>セカンダリ: EC支援会社/代理店</h4>
+          <ul>
+            <li>D2Cブランドを複数クライアントに持つ</li>
+            <li>レポーティング業務の効率化ニーズ</li>
+            <li>マルチアカウント管理が必要</li>
+            <li>クライアント向けホワイトラベル需要</li>
+            <li>月額15万+のEnterprise契約</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- GTM戦略 -->
+    <div class="card card-accent" style="margin-bottom: 24px;">
+      <h3>GTM（Go-To-Market）戦略</h3>
+      <div class="grid-3" style="margin-top: 16px;">
+        <div>
+          <h4 style="color: var(--accent);">Phase 1: 実績づくり (0-3ヶ月)</h4>
+          <ul>
+            <li>土屋鞄での導入・効果測定</li>
+            <li>ケーススタディ作成</li>
+            <li>緑川さんの推薦コメント獲得</li>
+            <li>Shopify App Store申請準備</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="color: var(--info);">Phase 2: 初期顧客 (3-6ヶ月)</h4>
+          <ul>
+            <li>緑川さんの紹介で5-10社獲得</li>
+            <li>Shopify App Storeにリスト</li>
+            <li>D2Cブランドコミュニティへの露出</li>
+            <li>プロダクト改善（フィードバック反映）</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="color: var(--success);">Phase 3: スケール (6-12ヶ月)</h4>
+          <ul>
+            <li>コンテンツマーケティング強化</li>
+            <li>パートナープログラム開始</li>
+            <li>代理店向けプラン展開</li>
+            <li>ARR 1,000万目標</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 競合分析 -->
+    <div class="card card-accent" style="margin-bottom: 24px;">
+      <h3>競合との差別化</h3>
+      <div class="data-table-wrap" style="margin-top: 16px;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ツール</th>
+              <th>強み</th>
+              <th>弱み</th>
+              <th>我々の差別化</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Looker Studio</strong></td>
+              <td>無料、Googleデータ統合</td>
+              <td>設定が複雑、Shopify連携弱い、デザイン制約</td>
+              <td>ワンクリック設定、Shopify最適化</td>
+            </tr>
+            <tr>
+              <td><strong>Tableau</strong></td>
+              <td>高機能、BI最強</td>
+              <td>高額（月$70~/人）、学習コスト高い</td>
+              <td>ECマーケター向けに特化、即日稼働</td>
+            </tr>
+            <tr>
+              <td><strong>Shopify Analytics</strong></td>
+              <td>標準搭載、無料</td>
+              <td>外部チャネルデータなし、カスタム不可</td>
+              <td>クロスチャネル統合、深い分析</td>
+            </tr>
+            <tr>
+              <td><strong>Lifetimely</strong></td>
+              <td>LTV特化、Shopify連携</td>
+              <td>LTV以外の機能薄い、月$149~</td>
+              <td>LTV+ROAS+在庫の統合分析</td>
+            </tr>
+            <tr>
+              <td><strong>Triple Whale</strong></td>
+              <td>D2C特化、ピクセル追跡</td>
+              <td>高額（月$129~）、英語UI</td>
+              <td>日本語完全対応、日本ECの商習慣</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <h4>最大の武器: 「土屋鞄が使っている」という事実</h4>
+      <p>
+        日本のD2C業界で土屋鞄は「憧れのブランド」。その土屋鞄のグロースチームが
+        実際に使っている分析ダッシュボードという事実は、他のどんなマーケティングよりも強力。
+        緑川さんがカンファレンスで登壇し「このツールで売上前年比120%を達成した」と
+        語ってくれるだけで、初期顧客獲得は大幅に加速する。
+      </p>
+    </div>
+
+    <!-- ビジネス予測 -->
+    <div class="card" style="margin-top: 24px;">
+      <h3>収益シミュレーション（12ヶ月）</h3>
+      <div class="data-table-wrap" style="margin-top: 16px;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>月</th>
+              <th>契約数</th>
+              <th>ARPU</th>
+              <th>MRR</th>
+              <th>ARR換算</th>
+              <th>備考</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Month 1-3</td>
+              <td>1社（土屋鞄）</td>
+              <td>15万円</td>
+              <td>15万</td>
+              <td>180万</td>
+              <td>POC/実績構築期間</td>
+            </tr>
+            <tr>
+              <td>Month 4-6</td>
+              <td>5社</td>
+              <td>10万円</td>
+              <td>50万</td>
+              <td>600万</td>
+              <td>紹介経由の初期顧客</td>
+            </tr>
+            <tr>
+              <td>Month 7-9</td>
+              <td>15社</td>
+              <td>9万円</td>
+              <td>135万</td>
+              <td>1,620万</td>
+              <td>Shopify App Store掲載</td>
+            </tr>
+            <tr>
+              <td>Month 10-12</td>
+              <td>30社</td>
+              <td>8.5万円</td>
+              <td>255万</td>
+              <td>3,060万</td>
+              <td>ARR 3,000万突破</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size: 14px; color: var(--text-secondary); margin-top: 16px; line-height: 1.8;">
+        保守的に見積もっても12ヶ月でARR 3,000万円は射程圏内。
+        Shopifyの日本市場規模（推定15,000店以上）を考えると、TAMは十分に大きい。
+        チャーンレートを月5%以下に抑えることが成功の鍵。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 10. 会議アジェンダ ==================== -->
+<section id="agenda">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number">Section 10</div>
+      <h2>緑川さんとの会議用アジェンダ案</h2>
+      <p>初回ミーティング60分の構成案。信頼構築→課題共有→提案→次のステップの流れで。</p>
+    </div>
+
+    <div class="card" style="margin-bottom: 24px;">
+      <h3>会議概要</h3>
+      <div class="grid-3" style="margin-top: 16px;">
+        <div>
+          <h4>目的</h4>
+          <p>土屋鞄のマーケ分析課題を深堀りし、ダッシュボードSaaSのPOC提案につなげる</p>
+        </div>
+        <div>
+          <h4>ゴール</h4>
+          <p>POC（2-4週間の試用）の合意を取り付ける。または次回詳細MTGの設定。</p>
+        </div>
+        <div>
+          <h4>準備物</h4>
+          <p>本レポートの要約版（印刷5部）、デモ画面モックアップ、名刺</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-accent">
+      <h3 style="margin-bottom: 24px;">アジェンダ（60分構成）</h3>
+
+      <div class="agenda-item">
+        <div class="agenda-time">0:00-5:00</div>
+        <div class="agenda-content">
+          <h4>1. アイスブレイク / 自己紹介</h4>
+          <p>
+            互いのバックグラウンド共有。こちらからは「D2CブランドのEC分析を支援するプロダクトを開発中」と簡潔に。
+            土屋鞄の商品への genuine な関心を示す（具体的な商品名に触れる）。
+          </p>
+        </div>
+      </div>
+
+      <div class="agenda-item">
+        <div class="agenda-time">5:00-15:00</div>
+        <div class="agenda-content">
+          <h4>2. 土屋鞄のマーケ組織 / 現状の分析環境</h4>
+          <p>
+            ヒアリング中心。「グロースチームの構成は？」「今どんなツールで分析していますか？」
+            「日々のKPIチェックはどんなフローで？」「一番ペインに感じている分析作業は？」
+            Looker Studio や Shopify Analytics の不満点を引き出す。
+          </p>
+        </div>
+      </div>
+
+      <div class="agenda-item">
+        <div class="agenda-time">15:00-20:00</div>
+        <div class="agenda-content">
+          <h4>3. ランドセル vs KABAN の分析課題</h4>
+          <p>
+            「2事業の分析を1つのダッシュボードで見たいか、分けたいか？」
+            「ランドセルの季節性で広告予算配分に困ることは？」
+            「ランドセルのラン活ピーク時のデータ粒度は十分か？」
+            事業特性の違いから来る分析ニーズの差を深堀り。
+          </p>
+        </div>
+      </div>
+
+      <div class="agenda-item">
+        <div class="agenda-time">20:00-35:00</div>
+        <div class="agenda-content">
+          <h4>4. ダッシュボードのデモ / 提案</h4>
+          <p>
+            モックアップまたはプロトタイプを画面共有。Tier1の基本ダッシュボードを見せながら
+            「こういうものが Shopify 連携するだけで翌日から使えます」と訴求。
+            朝のSlack通知デモを見せる。具体的な数字（CVR、ROAS等）が入ったリアルなUI。
+          </p>
+        </div>
+      </div>
+
+      <div class="agenda-item">
+        <div class="agenda-time">35:00-45:00</div>
+        <div class="agenda-content">
+          <h4>5. フィードバック / 機能要望</h4>
+          <p>
+            「こういう分析ができたら嬉しい、というのはありますか？」
+            「チームの誰が一番使うと思いますか？」
+            「今のレポーティング業務で月何時間かかっていますか？」
+            ROI を定量化する材料を集める。
+          </p>
+        </div>
+      </div>
+
+      <div class="agenda-item">
+        <div class="agenda-time">45:00-55:00</div>
+        <div class="agenda-content">
+          <h4>6. POC提案 / 協業モデル</h4>
+          <p>
+            「まず2-4週間、無償でPOCをやらせてください。Shopify APIキーだけいただければ翌日からダッシュボードが使えます」。
+            POC成功後の価格提示（Enterprise: 月15万円）。
+            さらに「土屋鞄での実績をもとに外販するプロダクトなので、御社にはファウンダー顧客として特別条件を」。
+          </p>
+        </div>
+      </div>
+
+      <div class="agenda-item">
+        <div class="agenda-time">55:00-60:00</div>
+        <div class="agenda-content">
+          <h4>7. ネクストステップ / クロージング</h4>
+          <p>
+            次のアクション明確化: API接続テスト日程、POC開始日、チーム内共有のスケジュール。
+            「2週間後にPOC結果レビューMTGを設定させてください」。
+            緑川さんのLinkedIn/Slack連絡先交換。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top: 24px;">
+      <h4>会議で伝えるべき核心メッセージ</h4>
+      <p>
+        「土屋鞄さんのように Shopify + Klaviyo を使っているD2Cブランドは、
+        データは全部あるのに統合して見る手段がない。
+        我々は Shopify API をワンクリックで接続するだけで、
+        翌日からCVR、ROAS、LTV、在庫を一画面で見られるダッシュボードを提供します。
+        そして、御社の実績をもとにこのプロダクトを日本中のD2Cブランドに届けたい。
+        御社はファウンダー顧客として、プロダクトの方向性に直接影響を与えられます」。
+      </p>
+    </div>
+
+    <!-- 想定Q&A -->
+    <div class="card" style="margin-top: 24px;">
+      <h3>想定Q&A（緑川さんから聞かれそうな質問）</h3>
+      <div style="margin-top: 16px;">
+        <div style="padding: 16px 0; border-bottom: 1px solid var(--border);">
+          <h4 style="color: var(--accent-light); font-size: 15px;">Q: 「Shopify Analyticsと何が違うの？」</h4>
+          <p style="font-size: 14px; color: var(--text-secondary); margin-top: 8px; line-height: 1.8;">
+            A: Shopify Analyticsは単一チャネルのデータのみ。我々は Google Ads、Meta、Klaviyo、Judge.me を統合し、
+            「どのチャネルで獲得した顧客が最もLTVが高いか」「どのクリエイティブが最もROASが高いか」を一画面で可視化します。
+          </p>
+        </div>
+        <div style="padding: 16px 0; border-bottom: 1px solid var(--border);">
+          <h4 style="color: var(--accent-light); font-size: 15px;">Q: 「データのセキュリティは？」</h4>
+          <p style="font-size: 14px; color: var(--text-secondary); margin-top: 8px; line-height: 1.8;">
+            A: Shopify APIの read-only 権限のみ使用。顧客の個人情報はハッシュ化して保存。
+            SOC2 Type II 取得に向けて準備中。データは日本リージョン（AWS ap-northeast-1）に保存。
+          </p>
+        </div>
+        <div style="padding: 16px 0; border-bottom: 1px solid var(--border);">
+          <h4 style="color: var(--accent-light); font-size: 15px;">Q: 「Looker Studioで十分では？」</h4>
+          <p style="font-size: 14px; color: var(--text-secondary); margin-top: 8px; line-height: 1.8;">
+            A: Looker Studioは汎用BIなので、Shopifyデータの取り込みにコネクタ設定が必要で、
+            ECに特化したKPI（CVRファネル、RFM、コホートLTV等）を出すには相当なカスタマイズが必要。
+            我々は Shopify接続の瞬間からこれらが全て表示されます。セットアップ時間は5分です。
+          </p>
+        </div>
+        <div style="padding: 16px 0;">
+          <h4 style="color: var(--accent-light); font-size: 15px;">Q: 「月15万円は高くない？」</h4>
+          <p style="font-size: 14px; color: var(--text-secondary); margin-top: 8px; line-height: 1.8;">
+            A: 現在、同等のダッシュボードをLooker Studioで構築・維持するための人件費（分析担当者の工数）を
+            月額換算すると、おそらく30-50万円相当。さらにTriple Whale（海外同等サービス）は月$300-$500。
+            日本語対応・日本EC商習慣最適化込みで月15万円は、むしろ投資対効果が高い選択です。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<div class="footer">
+  <p>Confidential &mdash; Prepared for Internal Strategy Review</p>
+  <p style="margin-top: 8px;">Last Updated: 2026-03-17</p>
+</div>
+
+</body>
+</html>

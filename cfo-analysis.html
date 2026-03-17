@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>トップティア CFO分析レポート — 財務・キャッシュフロー・経営判断</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #0A0A0A;
+  --card: #0F0F0F;
+  --card-hover: #141414;
+  --accent: #C13028;
+  --accent-dim: rgba(193,48,40,0.15);
+  --accent-glow: rgba(193,48,40,0.3);
+  --text: #E8E8E8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --border: #1E1E1E;
+  --green: #22C55E;
+  --green-dim: rgba(34,197,94,0.15);
+  --yellow: #EAB308;
+  --yellow-dim: rgba(234,179,8,0.15);
+  --red: #EF4444;
+  --red-dim: rgba(239,68,68,0.15);
+  --blue: #3B82F6;
+  --blue-dim: rgba(59,130,246,0.15);
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans JP', 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 16px 80px;
+}
+
+/* Header */
+.report-header {
+  text-align: center;
+  padding: 60px 20px 40px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 40px;
+}
+.report-header .label {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+.report-header h1 {
+  font-family: 'Inter', 'Noto Sans JP', sans-serif;
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.report-header .subtitle {
+  font-size: 16px;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+.report-header .date {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Section */
+.section {
+  margin-bottom: 48px;
+}
+.section-number {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+.section h2 {
+  font-size: clamp(22px, 3.5vw, 32px);
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
+}
+
+/* Cards */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 16px;
+  transition: border-color 0.2s;
+}
+.card:hover {
+  border-color: #333;
+}
+
+/* KPI Grid */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.kpi-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+.kpi-card.red::before { background: var(--accent); }
+.kpi-card.green::before { background: var(--green); }
+.kpi-card.yellow::before { background: var(--yellow); }
+.kpi-card.blue::before { background: var(--blue); }
+.kpi-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.kpi-value {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+.kpi-card.red .kpi-value { color: var(--red); }
+.kpi-card.green .kpi-value { color: var(--green); }
+.kpi-card.yellow .kpi-value { color: var(--yellow); }
+.kpi-card.blue .kpi-value { color: var(--blue); }
+.kpi-sub {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: 6px;
+}
+
+/* Alert Box */
+.alert {
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.alert-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+  line-height: 1;
+  margin-top: 2px;
+}
+.alert-danger {
+  background: var(--red-dim);
+  border: 1px solid rgba(239,68,68,0.3);
+}
+.alert-warning {
+  background: var(--yellow-dim);
+  border: 1px solid rgba(234,179,8,0.3);
+}
+.alert-success {
+  background: var(--green-dim);
+  border: 1px solid rgba(34,197,94,0.3);
+}
+.alert-info {
+  background: var(--blue-dim);
+  border: 1px solid rgba(59,130,246,0.3);
+}
+.alert h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.alert p {
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* Table */
+.table-wrap {
+  overflow-x: auto;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  min-width: 600px;
+}
+thead th {
+  background: #151515;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 14px 16px;
+  text-align: right;
+  white-space: nowrap;
+  border-bottom: 2px solid var(--border);
+}
+thead th:first-child { text-align: left; }
+tbody td {
+  padding: 12px 16px;
+  text-align: right;
+  border-bottom: 1px solid var(--border);
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  white-space: nowrap;
+}
+tbody td:first-child {
+  text-align: left;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 600;
+  color: var(--text);
+}
+tbody tr:hover { background: var(--card-hover); }
+.val-pos { color: var(--green); }
+.val-neg { color: var(--red); }
+.val-warn { color: var(--yellow); }
+.val-forecast { color: var(--text-dim); font-style: italic; }
+.row-highlight { background: rgba(193,48,40,0.07); }
+
+/* Bar Chart CSS */
+.bar-chart {
+  margin: 20px 0;
+}
+.bar-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 12px;
+}
+.bar-label {
+  width: 140px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: right;
+  flex-shrink: 0;
+  color: var(--text-dim);
+}
+.bar-track {
+  flex: 1;
+  height: 28px;
+  background: #1A1A1A;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+  transition: width 0.6s ease;
+}
+.bar-fill.red { background: linear-gradient(90deg, var(--accent), #E04040); }
+.bar-fill.green { background: linear-gradient(90deg, #16A34A, var(--green)); }
+.bar-fill.blue { background: linear-gradient(90deg, #2563EB, var(--blue)); }
+.bar-fill.yellow { background: linear-gradient(90deg, #CA8A04, var(--yellow)); }
+.bar-fill.gray { background: linear-gradient(90deg, #444, #666); }
+.bar-amount {
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  width: 80px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* Scenario Cards */
+.scenario-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 16px;
+  border-left: 4px solid;
+}
+.scenario-card.critical { border-left-color: var(--red); }
+.scenario-card.warning { border-left-color: var(--yellow); }
+.scenario-card.caution { border-left-color: #F97316; }
+.scenario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.scenario-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+.prob-badge {
+  font-size: 13px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+.prob-high { background: var(--red-dim); color: var(--red); }
+.prob-mid { background: var(--yellow-dim); color: var(--yellow); }
+
+/* Action Grid */
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+.action-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  border-top: 3px solid var(--accent);
+}
+.action-number {
+  font-family: 'Inter', sans-serif;
+  font-size: 36px;
+  font-weight: 900;
+  color: rgba(193,48,40,0.2);
+  margin-bottom: 8px;
+}
+.action-card h4 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.action-card p, .action-card ul {
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+.action-card ul { padding-left: 18px; }
+.action-card li { margin-bottom: 4px; }
+
+/* Decision Table */
+.decision-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.decision-table th {
+  background: #151515;
+  padding: 14px 16px;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-align: left;
+  border-bottom: 2px solid var(--border);
+}
+.decision-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+.decision-table tr:hover { background: var(--card-hover); }
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.badge-do { background: var(--green-dim); color: var(--green); }
+.badge-dont { background: var(--red-dim); color: var(--red); }
+.badge-hold { background: var(--yellow-dim); color: var(--yellow); }
+
+/* Detail List */
+.detail-list {
+  list-style: none;
+  padding: 0;
+}
+.detail-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.detail-list li:last-child { border-bottom: none; }
+.detail-list .dl-label { color: var(--text-dim); }
+.detail-list .dl-value {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+
+/* Subsection */
+.subsection {
+  margin-bottom: 24px;
+}
+.subsection h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-left: 12px;
+  border-left: 3px solid var(--accent);
+}
+.subsection h4 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.text-block {
+  font-size: 15px;
+  color: var(--text-dim);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+.text-block strong { color: var(--text); }
+
+/* Tag */
+.tag-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+.tag-red { background: var(--accent-dim); color: var(--accent); }
+.tag-green { background: var(--green-dim); color: var(--green); }
+.tag-yellow { background: var(--yellow-dim); color: var(--yellow); }
+
+/* TOC */
+.toc {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 48px;
+}
+.toc h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.toc ol {
+  list-style: none;
+  counter-reset: toc-counter;
+  padding: 0;
+}
+.toc li {
+  counter-increment: toc-counter;
+  margin-bottom: 6px;
+}
+.toc a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  transition: color 0.2s;
+}
+.toc a:hover { color: var(--accent); }
+.toc a::before {
+  content: counter(toc-counter, decimal-leading-zero);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--accent);
+  width: 24px;
+  flex-shrink: 0;
+}
+
+/* Two Column */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 768px) {
+  .two-col { grid-template-columns: 1fr; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .action-grid { grid-template-columns: 1fr; }
+  .bar-label { width: 100px; font-size: 12px; }
+  .bar-amount { width: 65px; font-size: 12px; }
+  table { font-size: 13px; }
+  thead th, tbody td { padding: 10px 10px; }
+}
+@media (max-width: 480px) {
+  .kpi-grid { grid-template-columns: 1fr; }
+  .container { padding: 12px 10px 60px; }
+}
+
+/* Separator */
+.sep {
+  height: 1px;
+  background: var(--border);
+  margin: 48px 0;
+}
+
+/* Footer */
+.report-footer {
+  text-align: center;
+  padding: 40px 20px;
+  border-top: 1px solid var(--border);
+  margin-top: 60px;
+}
+.report-footer p {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Stacked bar for waterfall */
+.waterfall-note {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 8px;
+  text-align: center;
+}
+
+.highlight-box {
+  background: var(--accent-dim);
+  border: 1px solid rgba(193,48,40,0.3);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin: 16px 0;
+}
+.highlight-box h4 {
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.highlight-box p, .highlight-box ul {
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+.highlight-box ul { padding-left: 18px; }
+
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 16px 0;
+}
+@media (max-width: 640px) {
+  .compare-grid { grid-template-columns: 1fr; }
+}
+.compare-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+}
+.compare-card h4 {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="report-header">
+  <div class="label">CONFIDENTIAL</div>
+  <h1>CFO分析レポート</h1>
+  <p class="subtitle">財務・キャッシュフロー・経営判断</p>
+  <p class="date">株式会社トップティア &#124; 2026年3月17日作成 &#124; 対象期間: 2026年1月-5月</p>
+</header>
+
+<div class="container">
+
+<!-- ===== TOC ===== -->
+<nav class="toc">
+  <h3>目次</h3>
+  <ol>
+    <li><a href="#sec1">エグゼクティブサマリー</a></li>
+    <li><a href="#sec2">月次キャッシュフロー推移</a></li>
+    <li><a href="#sec3">収入構造（3月詳細）</a></li>
+    <li><a href="#sec4">支出構造（3月詳細・メンバー別）</a></li>
+    <li><a href="#sec5">借入・純資産推移</a></li>
+    <li><a href="#sec6">キャッシュフロー改善 優先アクション</a></li>
+    <li><a href="#sec7">役員報酬引き上げの分析</a></li>
+    <li><a href="#sec8">広告費倍増（40万→80万）の妥当性</a></li>
+    <li><a href="#sec9">最も危険なシナリオ3つ</a></li>
+    <li><a href="#sec10">銀行融資戦略</a></li>
+    <li><a href="#sec11">CFO総括 — やるべき/やめるべき判定表</a></li>
+  </ol>
+</nav>
+
+<!-- ===== 1. EXECUTIVE SUMMARY ===== -->
+<section class="section" id="sec1">
+  <div class="section-number">SECTION 01</div>
+  <h2>エグゼクティブサマリー</h2>
+
+  <div class="kpi-grid">
+    <div class="kpi-card red">
+      <div class="kpi-label">現金残高（3月末）</div>
+      <div class="kpi-value">343万円</div>
+      <div class="kpi-sub">月コスト400万に対し0.86ヶ月分。危機的水準</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label">純資産</div>
+      <div class="kpi-value">-260万円</div>
+      <div class="kpi-sub">債務超過。4月にプラス転換予定（+36万）</div>
+    </div>
+    <div class="kpi-card yellow">
+      <div class="kpi-label">借入残高</div>
+      <div class="kpi-value">1,325万円</div>
+      <div class="kpi-sub">月25万返済 + 利息3万（月28万負担）</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label">人材紹介 確定パイプライン</div>
+      <div class="kpi-value">636万円</div>
+      <div class="kpi-sub">内定ベース売掛。入金で改善見込み</div>
+    </div>
+  </div>
+
+  <div class="alert alert-danger">
+    <div class="alert-icon">!!</div>
+    <div>
+      <h4>資金繰りが限界水準</h4>
+      <p>現金343万円は月間支出400万円の<strong>86%</strong>に過ぎず、1ヶ月分の運転資金を下回っている。想定外の支出や入金遅延が1件でも発生すれば、月末の支払いに支障をきたす可能性がある。人材紹介636万円の入金が実現すれば改善するが、入金時期の不確実性を考慮すると、融資申込を今月中に開始すべき。</p>
+    </div>
+  </div>
+
+  <div class="alert alert-success">
+    <div class="alert-icon">+</div>
+    <div>
+      <h4>改善の兆し</h4>
+      <p>売掛含む残高は1月493万→3月1,065万と急増。人材紹介パイプラインが本格稼働し、4月以降は売掛含む残高1,336万→1,352万と安定成長が見込まれる。純資産も4月に+36万でプラス転換予定。構造的には上向き。</p>
+    </div>
+  </div>
+
+  <div class="tag-row">
+    <span class="tag tag-red">CASH CRISIS</span>
+    <span class="tag tag-yellow">債務超過</span>
+    <span class="tag tag-green">パイプライン改善</span>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ===== 2. MONTHLY CASHFLOW ===== -->
+<section class="section" id="sec2">
+  <div class="section-number">SECTION 02</div>
+  <h2>月次キャッシュフロー推移</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>項目</th>
+          <th>1月</th>
+          <th>2月</th>
+          <th>3月</th>
+          <th>4月（予）</th>
+          <th>5月（予）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Cash残高</td>
+          <td>493万</td>
+          <td>393万</td>
+          <td class="val-neg">343万</td>
+          <td class="val-forecast">483万</td>
+          <td class="val-forecast">279万</td>
+        </tr>
+        <tr>
+          <td>売掛含む残高</td>
+          <td>493万</td>
+          <td>393万</td>
+          <td>1,065万</td>
+          <td class="val-forecast">1,336万</td>
+          <td class="val-forecast">1,352万</td>
+        </tr>
+        <tr>
+          <td>収入（Cash）</td>
+          <td>319万</td>
+          <td>328万</td>
+          <td>266万</td>
+          <td class="val-forecast">343万</td>
+          <td class="val-forecast">777万</td>
+        </tr>
+        <tr>
+          <td>支出</td>
+          <td>418万</td>
+          <td>378万</td>
+          <td>362万</td>
+          <td class="val-forecast">547万</td>
+          <td class="val-forecast">547万</td>
+        </tr>
+        <tr class="row-highlight">
+          <td>収支（Cash）</td>
+          <td class="val-neg">-100万</td>
+          <td class="val-neg">-50万</td>
+          <td class="val-pos">+139万</td>
+          <td class="val-neg val-forecast">-204万</td>
+          <td class="val-pos val-forecast">+91万</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <h3>Cash残高推移（棒グラフ）</h3>
+    <div class="bar-chart">
+      <div class="bar-row">
+        <div class="bar-label">1月</div>
+        <div class="bar-track"><div class="bar-fill blue" style="width:82%">493万</div></div>
+        <div class="bar-amount">493万</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">2月</div>
+        <div class="bar-track"><div class="bar-fill yellow" style="width:65%">393万</div></div>
+        <div class="bar-amount">393万</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">3月</div>
+        <div class="bar-track"><div class="bar-fill red" style="width:57%">343万</div></div>
+        <div class="bar-amount" style="color:var(--red);">343万</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">4月（予）</div>
+        <div class="bar-track"><div class="bar-fill blue" style="width:80%">483万</div></div>
+        <div class="bar-amount">483万</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">5月（予）</div>
+        <div class="bar-track"><div class="bar-fill yellow" style="width:46%">279万</div></div>
+        <div class="bar-amount" style="color:var(--yellow);">279万</div>
+      </div>
+    </div>
+    <p class="waterfall-note">※ 5月の再下降は4-5月の支出増（547万/月）による。売掛入金がずれると危険域に再突入</p>
+  </div>
+
+  <div class="alert alert-warning">
+    <div class="alert-icon">!!</div>
+    <div>
+      <h4>4月の支出急増に注意</h4>
+      <p>4-5月の支出が362万→547万に+185万増加する予測。決算対応・税金支払い等の季節要因が含まれると見られるが、Cash収入343万に対して547万支出では204万の赤字。4月のCash残高483万は3月より改善するが、構造的に支出>収入が続く限り持続不可能。</p>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ===== 3. REVENUE STRUCTURE ===== -->
+<section class="section" id="sec3">
+  <div class="section-number">SECTION 03</div>
+  <h2>収入構造（3月詳細）</h2>
+
+  <div class="kpi-grid">
+    <div class="kpi-card yellow">
+      <div class="kpi-label">Cash収入合計</div>
+      <div class="kpi-value">266万円</div>
+      <div class="kpi-sub">前月比 -19%（328万→266万）</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label">売掛計上込み</div>
+      <div class="kpi-value">633.6万円</div>
+      <div class="kpi-sub">補助金132万 + 人材紹介235.6万</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>Cash収入内訳</h3>
+    <div class="bar-chart">
+      <div class="bar-row">
+        <div class="bar-label">既卒スクール</div>
+        <div class="bar-track"><div class="bar-fill red" style="width:50%">132万</div></div>
+        <div class="bar-amount">132万</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">apps収入</div>
+        <div class="bar-track"><div class="bar-fill blue" style="width:28%">75万</div></div>
+        <div class="bar-amount">75万</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">新卒スクール</div>
+        <div class="bar-track"><div class="bar-fill green" style="width:19%">50万</div></div>
+        <div class="bar-amount">50万</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">note等</div>
+        <div class="bar-track"><div class="bar-fill gray" style="width:6%"></div></div>
+        <div class="bar-amount">15万</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>売掛計上（Cash未入金）</h3>
+    <div class="bar-chart">
+      <div class="bar-row">
+        <div class="bar-label">人材紹介（内定）</div>
+        <div class="bar-track"><div class="bar-fill green" style="width:64%">235.6万</div></div>
+        <div class="bar-amount">235.6万</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">補助金</div>
+        <div class="bar-track"><div class="bar-fill blue" style="width:36%">132万</div></div>
+        <div class="bar-amount">132万</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-danger">
+    <div class="alert-icon">!!</div>
+    <div>
+      <h4>既卒スクール収入の急降下</h4>
+      <p>1月260万 → 2月154万 → 3月132万と、3ヶ月で<strong>49%減少</strong>。メイン事業の売上が半減しており、広告効率の悪化か市場飽和の兆候。新規流入の立て直しが急務。このトレンドが続くと4月には100万を割り込む可能性。</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h4 style="margin-bottom: 12px; font-size: 15px;">収入ポートフォリオの評価</h4>
+    <ul class="detail-list">
+      <li>
+        <span class="dl-label">既卒スクール依存度</span>
+        <span class="dl-value" style="color:var(--red);">49.6%（下降中）</span>
+      </li>
+      <li>
+        <span class="dl-label">人材紹介（売掛含む）</span>
+        <span class="dl-value" style="color:var(--green);">37.2%（成長中）</span>
+      </li>
+      <li>
+        <span class="dl-label">apps収入</span>
+        <span class="dl-value">11.8%</span>
+      </li>
+      <li>
+        <span class="dl-label">その他（note等）</span>
+        <span class="dl-value">2.4%</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ===== 4. EXPENSE STRUCTURE ===== -->
+<section class="section" id="sec4">
+  <div class="section-number">SECTION 04</div>
+  <h2>支出構造（3月詳細・メンバー別）</h2>
+
+  <div class="kpi-grid">
+    <div class="kpi-card red">
+      <div class="kpi-label">月間支出合計</div>
+      <div class="kpi-value">362万円</div>
+      <div class="kpi-sub">Cash収入266万に対して96万超過</div>
+    </div>
+    <div class="kpi-card yellow">
+      <div class="kpi-label">人件費率</div>
+      <div class="kpi-value">46.1%</div>
+      <div class="kpi-sub">事業人件費97.5万 + 役員報酬69.7万 = 167.2万</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>支出カテゴリ別</h3>
+    <div class="bar-chart">
+      <div class="bar-row">
+        <div class="bar-label">事業人件費</div>
+        <div class="bar-track"><div class="bar-fill red" style="width:27%">97.5万</div></div>
+        <div class="bar-amount">97.5万</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">役員報酬+社保</div>
+        <div class="bar-track"><div class="bar-fill red" style="width:19%">69.7万</div></div>
+        <div class="bar-amount">69.7万</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">クレカ雑費</div>
+        <div class="bar-track"><div class="bar-fill yellow" style="width:17%">60万</div></div>
+        <div class="bar-amount">60万</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">広告費</div>
+        <div class="bar-track"><div class="bar-fill blue" style="width:11%">40万</div></div>
+        <div class="bar-amount">40万</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">金融公庫返済</div>
+        <div class="bar-track"><div class="bar-fill gray" style="width:8%">28万</div></div>
+        <div class="bar-amount">28万</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">メンタリング</div>
+        <div class="bar-track"><div class="bar-fill green" style="width:6%">20.4万</div></div>
+        <div class="bar-amount">20.4万</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">決算対応</div>
+        <div class="bar-track"><div class="bar-fill gray" style="width:6%">20万</div></div>
+        <div class="bar-amount">20万</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">営業費</div>
+        <div class="bar-track"><div class="bar-fill blue" style="width:5%">19.1万</div></div>
+        <div class="bar-amount">19.1万</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">専門家</div>
+        <div class="bar-track"><div class="bar-fill yellow" style="width:4%">16万</div></div>
+        <div class="bar-amount">16万</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">家賃</div>
+        <div class="bar-track"><div class="bar-fill gray" style="width:2%"></div></div>
+        <div class="bar-amount">7万</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">役員社宅</div>
+        <div class="bar-track"><div class="bar-fill gray" style="width:1%"></div></div>
+        <div class="bar-amount">4.6万</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>事業人件費 メンバー別内訳（97.5万円）</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>メンバー</th>
+            <th>月額</th>
+            <th>構成比</th>
+            <th>備考</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>田中</td>
+            <td style="color:var(--accent); font-weight:700;">295,000</td>
+            <td>30.3%</td>
+            <td style="font-family:'Noto Sans JP'; font-size:13px; color:var(--text-dim);">営業エース</td>
+          </tr>
+          <tr>
+            <td>岡本</td>
+            <td>146,000</td>
+            <td>15.0%</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>葉山</td>
+            <td>122,000</td>
+            <td>12.5%</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>村岡</td>
+            <td>80,000</td>
+            <td>8.2%</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>荒井</td>
+            <td>73,000</td>
+            <td>7.5%</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>河原</td>
+            <td>59,000</td>
+            <td>6.1%</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>安西</td>
+            <td>55,000</td>
+            <td>5.6%</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>内野</td>
+            <td>40,000</td>
+            <td>4.1%</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>woojin</td>
+            <td>30,000</td>
+            <td>3.1%</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>中川</td>
+            <td>20,000</td>
+            <td>2.1%</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>佐伯</td>
+            <td>17,000</td>
+            <td>1.7%</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>鈴木</td>
+            <td>12,000</td>
+            <td>1.2%</td>
+            <td></td>
+          </tr>
+          <tr class="row-highlight">
+            <td><strong>合計</strong></td>
+            <td style="font-weight:800;">949,000</td>
+            <td>—</td>
+            <td style="font-family:'Noto Sans JP'; font-size:13px; color:var(--text-dim);">≒ 97.5万（端数調整あり）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>専門家 内訳（16万円）</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>専門家</th>
+            <th>月額</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>榎本</td><td>55,000</td></tr>
+          <tr><td>カナ</td><td>50,000</td></tr>
+          <tr><td>meeds</td><td>30,000</td></tr>
+          <tr><td>shiori</td><td>25,000</td></tr>
+          <tr class="row-highlight"><td><strong>合計</strong></td><td style="font-weight:800;">160,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="alert alert-info">
+    <div class="alert-icon">i</div>
+    <div>
+      <h4>クレカ雑費60万の内訳精査を推奨</h4>
+      <p>全体の16.6%を占めるクレカ雑費60万は、カテゴリが不明瞭で削減余地が最も大きい。SaaS月額、備品、交通費等を分解して可視化すべき。月10万の削減が実現すれば年間120万のコスト改善。</p>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ===== 5. DEBT & NET ASSETS ===== -->
+<section class="section" id="sec5">
+  <div class="section-number">SECTION 05</div>
+  <h2>借入・純資産推移</h2>
+
+  <div class="two-col">
+    <div class="card">
+      <h4 style="margin-bottom: 16px;">借入の状況</h4>
+      <ul class="detail-list">
+        <li>
+          <span class="dl-label">借入残高</span>
+          <span class="dl-value" style="color:var(--yellow);">1,325万円</span>
+        </li>
+        <li>
+          <span class="dl-label">月額返済（元本）</span>
+          <span class="dl-value">25万円</span>
+        </li>
+        <li>
+          <span class="dl-label">月額利息</span>
+          <span class="dl-value">3万円</span>
+        </li>
+        <li>
+          <span class="dl-label">月額負担合計</span>
+          <span class="dl-value" style="color:var(--accent);">28万円</span>
+        </li>
+        <li>
+          <span class="dl-label">支出に占める割合</span>
+          <span class="dl-value">7.7%</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4 style="margin-bottom: 16px;">純資産推移</h4>
+      <div class="bar-chart">
+        <div class="bar-row">
+          <div class="bar-label" style="width:60px;">3月</div>
+          <div class="bar-track"><div class="bar-fill red" style="width:65%">-260万</div></div>
+          <div class="bar-amount" style="color:var(--red);">-260万</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label" style="width:60px;">4月(予)</div>
+          <div class="bar-track"><div class="bar-fill green" style="width:15%">+36万</div></div>
+          <div class="bar-amount" style="color:var(--green);">+36万</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label" style="width:60px;">5月(予)</div>
+          <div class="bar-track"><div class="bar-fill green" style="width:25%">+77万</div></div>
+          <div class="bar-amount" style="color:var(--green);">+77万</div>
+        </div>
+      </div>
+      <p class="waterfall-note">4月で債務超過解消予定。人材紹介入金が前提</p>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <h4>債務超過と銀行融資の関係</h4>
+    <p>純資産-260万は「債務超過」状態であり、通常の銀行融資は極めて困難。しかし日本政策金融公庫はスタートアップの債務超過に一定の理解がある。4月にプラス転換する見通しを事業計画書で示すことで、融資獲得の可能性を高められる。<strong>3月中の申込が戦略的に重要</strong>（決算確定前に動く）。</p>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ===== 6. PRIORITY ACTIONS ===== -->
+<section class="section" id="sec6">
+  <div class="section-number">SECTION 06</div>
+  <h2>キャッシュフロー改善 優先アクション</h2>
+
+  <p class="text-block">以下4つのアクションは<strong>今週中（3/17-3/21）</strong>に着手すべき緊急度の高い施策。</p>
+
+  <div class="action-grid">
+    <div class="action-card">
+      <div class="action-number">01</div>
+      <h4>日本政策金融公庫への融資申込</h4>
+      <ul>
+        <li>申込金額: <strong>500-800万円</strong></li>
+        <li>3月決算の数字が確定する前に申込書を提出</li>
+        <li>人材紹介パイプライン636万円を成長ストーリーとして提示</li>
+        <li>既存借入1,325万に対する返済実績をアピール</li>
+        <li>準備物: 事業計画書、資金繰り表（3ヶ月先まで）、確定申告書</li>
+        <li><strong>期限: 3/21（金）までに初回相談予約</strong></li>
+      </ul>
+    </div>
+
+    <div class="action-card">
+      <div class="action-number">02</div>
+      <h4>人材紹介 売掛金の入金促進</h4>
+      <ul>
+        <li>確定パイプライン636万円の入金スケジュールを全件確認</li>
+        <li>入社日が確定している案件は請求書の即時発行</li>
+        <li>支払いサイト30日→可能なら15日交渉</li>
+        <li>最も早く入金される案件の金額と日付を特定</li>
+        <li><strong>4月中旬までに最低200万の入金を確保</strong></li>
+      </ul>
+    </div>
+
+    <div class="action-card">
+      <div class="action-number">03</div>
+      <h4>クレカ雑費60万の内訳精査・削減</h4>
+      <ul>
+        <li>過去3ヶ月のクレカ明細をカテゴリ分解</li>
+        <li>SaaS月額: 不要なサブスクを特定・解約</li>
+        <li>削減目標: 月10万（年120万のインパクト）</li>
+        <li>経費精算ルールの明確化で今後の膨張を防止</li>
+        <li><strong>今週中にクレカ明細をスプレッドシートに整理</strong></li>
+      </ul>
+    </div>
+
+    <div class="action-card">
+      <div class="action-number">04</div>
+      <h4>既卒スクール売上の下降対策</h4>
+      <ul>
+        <li>1月260万→3月132万の49%減を分析</li>
+        <li>広告経由CVRの月次推移を確認</li>
+        <li>Google検索広告のキーワード別ROIを算出</li>
+        <li>既存生徒からの紹介制度の設計（CAC 0円施策）</li>
+        <li>LP改善: ファーストビューのA/Bテスト実施</li>
+        <li><strong>4月の申込数を3月比+30%に回復させる計画を策定</strong></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ===== 7. EXECUTIVE COMPENSATION ===== -->
+<section class="section" id="sec7">
+  <div class="section-number">SECTION 07</div>
+  <h2>役員報酬引き上げの分析</h2>
+
+  <div class="tag-row">
+    <span class="tag tag-red">要注意</span>
+    <span class="tag tag-yellow">段階的推奨</span>
+  </div>
+
+  <div class="compare-grid">
+    <div class="compare-card">
+      <h4 style="color: var(--text-dim);">現状</h4>
+      <ul class="detail-list">
+        <li><span class="dl-label">役員報酬</span><span class="dl-value">60万円/月</span></li>
+        <li><span class="dl-label">社保込み</span><span class="dl-value">69.7万円/月</span></li>
+        <li><span class="dl-label">年間コスト</span><span class="dl-value">836万円</span></li>
+      </ul>
+    </div>
+    <div class="compare-card" style="border: 1px solid rgba(239,68,68,0.3);">
+      <h4 style="color: var(--red);">130万円案</h4>
+      <ul class="detail-list">
+        <li><span class="dl-label">役員報酬</span><span class="dl-value" style="color:var(--red);">130万円/月</span></li>
+        <li><span class="dl-label">社保込み（推定）</span><span class="dl-value" style="color:var(--red);">約150万円/月</span></li>
+        <li><span class="dl-label">年間コスト</span><span class="dl-value" style="color:var(--red);">1,800万円</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h4 style="margin-bottom: 14px;">シミュレーション: 130万円に引き上げた場合</h4>
+    <div class="table-wrap" style="margin-top: 12px;">
+      <table>
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>現状（60万）</th>
+            <th>引上げ後（130万）</th>
+            <th>差額</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>役員報酬+社保</td>
+            <td>69.7万</td>
+            <td>約150万</td>
+            <td class="val-neg">+80.3万</td>
+          </tr>
+          <tr>
+            <td>月間支出合計</td>
+            <td>362万</td>
+            <td>約442万</td>
+            <td class="val-neg">+80万</td>
+          </tr>
+          <tr class="row-highlight">
+            <td>月次収支（Cash）</td>
+            <td class="val-neg">-96万</td>
+            <td class="val-neg">-176万</td>
+            <td class="val-neg">-80万</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="alert alert-danger">
+    <div class="alert-icon">!!</div>
+    <div>
+      <h4>130万円への即時引上げは経営危機を招く</h4>
+      <p>3月のCash収入266万に対し、支出が442万となり月次赤字176万に拡大。現金343万は<strong>2ヶ月で枯渇</strong>する計算。人材紹介の入金が遅れた場合、給与遅延のリスクが現実化する。</p>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <h4>推奨: 段階的引き上げプラン</h4>
+    <ul>
+      <li><strong>6月（期初変更）:</strong> 60万 → 90万（+30万/月、税務上クリーンな変更タイミング）</li>
+      <li><strong>9月（四半期レビュー後）:</strong> 月次収支が安定黒字化を確認後、90万 → 100万</li>
+      <li><strong>12月:</strong> 人材紹介収入の安定を確認後、100万 → 120万</li>
+      <li>130万到達は<strong>最短でも来期初（2027年4月）</strong>が安全</li>
+    </ul>
+    <p style="margin-top: 12px;"><strong>重要:</strong> 6月の期初変更が税務上最もクリーン。期中の報酬変更は税務署に否認されるリスクがある（損金不算入）。</p>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ===== 8. AD BUDGET ANALYSIS ===== -->
+<section class="section" id="sec8">
+  <div class="section-number">SECTION 08</div>
+  <h2>広告費倍増（40万→80万）の妥当性</h2>
+
+  <div class="kpi-grid">
+    <div class="kpi-card red">
+      <div class="kpi-label">Meta広告 CVR</div>
+      <div class="kpi-value">0%</div>
+      <div class="kpi-sub">予算倍増しても0%のまま</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label">Google検索広告</div>
+      <div class="kpi-value">ROI +</div>
+      <div class="kpi-sub">CVRが出ており投資効率あり</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h4 style="margin-bottom: 14px;">チャネル別評価</h4>
+    <div class="table-wrap" style="margin-top: 12px;">
+      <table>
+        <thead>
+          <tr>
+            <th>チャネル</th>
+            <th>現状予算</th>
+            <th>CVR</th>
+            <th>ROI</th>
+            <th>推奨アクション</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Google検索広告</td>
+            <td>—</td>
+            <td class="val-pos">出ている</td>
+            <td class="val-pos">プラス</td>
+            <td style="font-family:'Noto Sans JP'; font-size:13px; color:var(--green);">集中投下</td>
+          </tr>
+          <tr>
+            <td>Meta広告</td>
+            <td>—</td>
+            <td class="val-neg">0%</td>
+            <td class="val-neg">マイナス</td>
+            <td style="font-family:'Noto Sans JP'; font-size:13px; color:var(--red);">停止 or クリエイティブ刷新後に再開</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="alert alert-warning">
+    <div class="alert-icon">!!</div>
+    <div>
+      <h4>単純倍増は非推奨</h4>
+      <p>CVR 0%のMeta広告に追加投下しても、0% x 2 = 0%。資金が逼迫している状況でROIが証明されていないチャネルへの投資は正当化できない。</p>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <h4>推奨戦略</h4>
+    <ul>
+      <li><strong>Google検索広告:</strong> 現在の予算を+20-30万増額し、コンバージョンキーワードを拡大。ROIが出ているチャネルに集中投下</li>
+      <li><strong>Meta広告:</strong> 一旦停止 or 月5万以下に縮小。クリエイティブを完全刷新し、小額テスト（5-10万）でCVRが確認できたら段階的に増額</li>
+      <li><strong>合計広告費:</strong> 40万 → 55-60万程度が現実的な上限。80万への倍増は月次黒字化後に検討</li>
+      <li><strong>非広告施策:</strong> 既存生徒からの紹介制度（CAC 0円）、SNS発信の強化を並行</li>
+    </ul>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ===== 9. WORST CASE SCENARIOS ===== -->
+<section class="section" id="sec9">
+  <div class="section-number">SECTION 09</div>
+  <h2>最も危険なシナリオ3つ</h2>
+
+  <!-- Scenario A -->
+  <div class="scenario-card critical">
+    <div class="scenario-header">
+      <div class="scenario-title">Scenario A: 資金ショート</div>
+      <div class="prob-badge prob-high">発生確率 20-25%</div>
+    </div>
+    <div class="text-block">
+      <strong>条件:</strong> 人材紹介の入金が4月中旬以降にずれ込み、かつ既卒スクール売上が3月水準（132万）以下で推移した場合。
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>タイムライン</th><th>Cash残高</th><th>状態</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>3月末</td><td>343万</td><td style="font-family:'Noto Sans JP'; color:var(--yellow);">警戒水準</td></tr>
+          <tr><td>4月中旬</td><td class="val-neg">150-200万</td><td style="font-family:'Noto Sans JP'; color:var(--red);">危険水準</td></tr>
+          <tr><td>4月末</td><td class="val-neg">50-100万</td><td style="font-family:'Noto Sans JP'; color:var(--red);">給与遅延リスク</td></tr>
+          <tr><td>5月上旬</td><td class="val-neg">マイナス</td><td style="font-family:'Noto Sans JP'; color:var(--red);">資金ショート</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="text-block">
+      <strong>回避策:</strong>
+    </div>
+    <ul style="font-size:14px; color:var(--text-dim); padding-left:18px; line-height:1.8;">
+      <li>3月中に日本政策金融公庫へ融資申込（500-800万）</li>
+      <li>人材紹介の入金スケジュールを1件ずつ確認・早期請求</li>
+      <li>緊急時のブリッジファイナンス先（ファクタリング等）を事前調査</li>
+      <li>4月のクレカ支払い・不要経費を最小化</li>
+    </ul>
+  </div>
+
+  <!-- Scenario B -->
+  <div class="scenario-card warning">
+    <div class="scenario-header">
+      <div class="scenario-title">Scenario B: 構造的売上低下</div>
+      <div class="prob-badge prob-mid">発生確率 15-20%</div>
+    </div>
+    <div class="text-block">
+      <strong>条件:</strong> 既卒スクール売上の下降トレンド（260万→154万→132万）が継続し、4月100万→5月80万→6月60万に低下。人材紹介も計画通りに成長しない場合。
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>指標</th><th>現状</th><th>悪化シナリオ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>既卒スクール月額</td><td>132万</td><td class="val-neg">60-80万</td></tr>
+          <tr><td>月間Cash収入</td><td>266万</td><td class="val-neg">180-200万</td></tr>
+          <tr><td>月次赤字</td><td>-96万</td><td class="val-neg">-160~180万</td></tr>
+          <tr><td>資金枯渇までの期間</td><td>3.5ヶ月</td><td class="val-neg">2ヶ月未満</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="text-block">
+      <strong>回避策:</strong>
+    </div>
+    <ul style="font-size:14px; color:var(--text-dim); padding-left:18px; line-height:1.8;">
+      <li>スクール事業の集客チャネルを多角化（SEO、紹介制度、法人営業）</li>
+      <li>既卒スクール単価の見直し（値上げ or 高単価コース新設）</li>
+      <li>人材紹介を早期に第2の柱に育てる（営業体制強化）</li>
+      <li>コストの変動費化（固定費→成果報酬への移行）</li>
+    </ul>
+  </div>
+
+  <!-- Scenario C -->
+  <div class="scenario-card caution">
+    <div class="scenario-header">
+      <div class="scenario-title">Scenario C: 田中依存リスク</div>
+      <div class="prob-badge prob-high">発生確率 30%</div>
+    </div>
+    <div class="text-block">
+      <strong>条件:</strong> 営業エース田中（月額295K、事業人件費の30.3%）が離脱した場合。人材紹介パイプライン636万の大部分が田中の営業活動に依存していると仮定。
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>影響項目</th><th>現状</th><th>田中離脱後</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>人材紹介パイプライン</td><td>636万</td><td class="val-neg">200-300万（推定）</td></tr>
+          <tr><td>営業力（新規開拓）</td><td>高</td><td class="val-neg">大幅低下</td></tr>
+          <tr><td>事業人件費（削減分）</td><td>97.5万</td><td class="val-pos">67.5万（-29.5万）</td></tr>
+          <tr><td>純影響（月次）</td><td>—</td><td class="val-neg">-50~100万/月の売上減</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="text-block">
+      <strong>回避策:</strong>
+    </div>
+    <ul style="font-size:14px; color:var(--text-dim); padding-left:18px; line-height:1.8;">
+      <li>田中のインセンティブ設計（成果報酬の上乗せ、ストックオプション等）</li>
+      <li>営業プロセスの仕組み化・ドキュメント化（属人化の排除）</li>
+      <li>セカンド営業の育成（3ヶ月以内に独り立ちさせる計画）</li>
+      <li>CRMツールへの顧客情報集約（個人の人脈→会社資産へ）</li>
+      <li>田中との1on1を週次で実施し、不満・退職リスクを早期察知</li>
+    </ul>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ===== 10. BANK FINANCING STRATEGY ===== -->
+<section class="section" id="sec10">
+  <div class="section-number">SECTION 10</div>
+  <h2>銀行融資戦略</h2>
+
+  <div class="card">
+    <h4 style="margin-bottom: 16px;">融資申込計画</h4>
+    <ul class="detail-list">
+      <li>
+        <span class="dl-label">申込先（最優先）</span>
+        <span class="dl-value" style="color:var(--green);">日本政策金融公庫</span>
+      </li>
+      <li>
+        <span class="dl-label">申込タイミング</span>
+        <span class="dl-value" style="color:var(--accent);">今月中（3月中）</span>
+      </li>
+      <li>
+        <span class="dl-label">申込金額</span>
+        <span class="dl-value">500-800万円</span>
+      </li>
+      <li>
+        <span class="dl-label">想定金利</span>
+        <span class="dl-value">1.5-2.5%</span>
+      </li>
+      <li>
+        <span class="dl-label">審査期間（目安）</span>
+        <span class="dl-value">3-6週間</span>
+      </li>
+      <li>
+        <span class="dl-label">既存借入残高</span>
+        <span class="dl-value">1,325万円</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="alert alert-warning">
+    <div class="alert-icon">!!</div>
+    <div>
+      <h4>タイミングが極めて重要</h4>
+      <p>3月決算の確定数字（純資産-260万、債務超過）が出る前に申込書を提出することで、審査上有利に進められる可能性がある。4月以降に申し込むと、悪い決算数字を元に審査される。<strong>3月21日までに初回相談を完了</strong>させたい。</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>準備すべき書類</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>書類</th><th>状態</th><th>備考</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>事業計画書</td>
+            <td class="val-warn">要作成</td>
+            <td style="font-family:'Noto Sans JP'; font-size:13px; color:var(--text-dim);">人材紹介パイプライン636万の成長ストーリーを軸に</td>
+          </tr>
+          <tr>
+            <td>資金繰り表（3ヶ月先）</td>
+            <td class="val-warn">要作成</td>
+            <td style="font-family:'Noto Sans JP'; font-size:13px; color:var(--text-dim);">本レポートのデータを元にExcelで作成</td>
+          </tr>
+          <tr>
+            <td>直近の試算表</td>
+            <td class="val-pos">入手可能</td>
+            <td style="font-family:'Noto Sans JP'; font-size:13px; color:var(--text-dim);">freee会計から出力</td>
+          </tr>
+          <tr>
+            <td>確定申告書（前期）</td>
+            <td class="val-pos">あり</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>人材紹介の契約書・内定通知書</td>
+            <td class="val-pos">あり</td>
+            <td style="font-family:'Noto Sans JP'; font-size:13px; color:var(--text-dim);">パイプラインの裏付け資料として</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <h4>アピールポイント（融資面談で強調すべき点）</h4>
+    <ul>
+      <li><strong>人材紹介パイプライン636万円:</strong> 内定ベースで確定しており、入金は時間の問題</li>
+      <li><strong>売掛含む残高の急成長:</strong> 1月493万→3月1,065万と2.2倍。事業拡大フェーズ</li>
+      <li><strong>4月の純資産プラス転換:</strong> 債務超過は一時的。構造的な改善傾向</li>
+      <li><strong>既存融資の返済実績:</strong> 延滞なく返済を継続している信用実績</li>
+      <li><strong>人材紹介の成長性:</strong> スクール事業から人材紹介への収益モデル転換が進行中</li>
+    </ul>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ===== 11. CFO VERDICT TABLE ===== -->
+<section class="section" id="sec11">
+  <div class="section-number">SECTION 11</div>
+  <h2>CFO総括 — やるべき/やめるべき判定表</h2>
+
+  <div class="text-block">
+    現在の財務状況を踏まえ、各施策の<strong>実行/停止/保留</strong>を判定する。キャッシュポジションが危機的な今、「良さそうだが今ではない」施策を明確に分離することが最も重要。
+  </div>
+
+  <div class="table-wrap">
+    <table class="decision-table">
+      <thead>
+        <tr>
+          <th>施策</th>
+          <th>判定</th>
+          <th>理由</th>
+          <th>優先度</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>日本政策金融公庫 融資申込</td>
+          <td><span class="badge badge-do">即実行</span></td>
+          <td style="font-family:'Noto Sans JP'; font-size:13px; color:var(--text-dim);">Cash 343万は1ヶ月未満。融資無しでは4月末に危機</td>
+          <td style="text-align:center; color:var(--red); font-weight:700;">最優先</td>
+        </tr>
+        <tr>
+          <td>人材紹介 入金促進</td>
+          <td><span class="badge badge-do">即実行</span></td>
+          <td style="font-family:'Noto Sans JP'; font-size:13px; color:var(--text-dim);">636万の早期回収がキャッシュフロー改善の鍵</td>
+          <td style="text-align:center; color:var(--red); font-weight:700;">最優先</td>
+        </tr>
+        <tr>
+          <td>クレカ雑費60万の精査・削減</td>
+          <td><span class="badge badge-do">即実行</span></td>
+          <td style="font-family:'Noto Sans JP'; font-size:13px; color:var(--text-dim);">月10万削減で年120万改善。即効性が高い</td>
+          <td style="text-align:center; color:var(--yellow); font-weight:700;">高</td>
+        </tr>
+        <tr>
+          <td>Google検索広告 増額</td>
+          <td><span class="badge badge-do">実行</span></td>
+          <td style="font-family:'Noto Sans JP'; font-size:13px; color:var(--text-dim);">ROI出ているチャネル。+15-20万の増額は正当化可能</td>
+          <td style="text-align:center; font-weight:700;">高</td>
+        </tr>
+        <tr>
+          <td>田中インセンティブ設計</td>
+          <td><span class="badge badge-do">実行</span></td>
+          <td style="font-family:'Noto Sans JP'; font-size:13px; color:var(--text-dim);">離脱リスク30%。パイプライン636万の大部分を担う</td>
+          <td style="text-align:center; font-weight:700;">高</td>
+        </tr>
+        <tr>
+          <td>営業プロセス仕組み化</td>
+          <td><span class="badge badge-do">実行</span></td>
+          <td style="font-family:'Noto Sans JP'; font-size:13px; color:var(--text-dim);">属人化リスクの排除。中期的な安定に不可欠</td>
+          <td style="text-align:center; font-weight:700;">中</td>
+        </tr>
+        <tr>
+          <td>既卒スクール売上回復策</td>
+          <td><span class="badge badge-do">実行</span></td>
+          <td style="font-family:'Noto Sans JP'; font-size:13px; color:var(--text-dim);">49%減は看過できない。広告改善+紹介制度</td>
+          <td style="text-align:center; font-weight:700;">高</td>
+        </tr>
+        <tr style="background: rgba(239,68,68,0.05);">
+          <td>役員報酬 60万→130万</td>
+          <td><span class="badge badge-dont">やめる</span></td>
+          <td style="font-family:'Noto Sans JP'; font-size:13px; color:var(--text-dim);">月コスト+80万。Cash枯渇を加速。6月に段階引上げ</td>
+          <td style="text-align:center; color:var(--red); font-weight:700;">却下</td>
+        </tr>
+        <tr style="background: rgba(239,68,68,0.05);">
+          <td>Meta広告 追加投下</td>
+          <td><span class="badge badge-dont">やめる</span></td>
+          <td style="font-family:'Noto Sans JP'; font-size:13px; color:var(--text-dim);">CVR 0%。クリエイティブ刷新後に小額テストから</td>
+          <td style="text-align:center; color:var(--red); font-weight:700;">却下</td>
+        </tr>
+        <tr style="background: rgba(239,68,68,0.05);">
+          <td>広告費 単純倍増（40→80万）</td>
+          <td><span class="badge badge-dont">やめる</span></td>
+          <td style="font-family:'Noto Sans JP'; font-size:13px; color:var(--text-dim);">ROI未検証チャネルへの投下はキャッシュの浪費</td>
+          <td style="text-align:center; color:var(--red); font-weight:700;">却下</td>
+        </tr>
+        <tr>
+          <td>新規採用（人員増）</td>
+          <td><span class="badge badge-dont">やめる</span></td>
+          <td style="font-family:'Noto Sans JP'; font-size:13px; color:var(--text-dim);">固定費増は月次黒字化まで凍結</td>
+          <td style="text-align:center; color:var(--red); font-weight:700;">却下</td>
+        </tr>
+        <tr>
+          <td>役員報酬 段階引上げ（60→90万）</td>
+          <td><span class="badge badge-hold">6月に判断</span></td>
+          <td style="font-family:'Noto Sans JP'; font-size:13px; color:var(--text-dim);">期初変更で税務クリーン。キャッシュ安定が前提</td>
+          <td style="text-align:center; color:var(--yellow); font-weight:700;">保留</td>
+        </tr>
+        <tr>
+          <td>Meta広告 クリエイティブ刷新テスト</td>
+          <td><span class="badge badge-hold">4月以降</span></td>
+          <td style="font-family:'Noto Sans JP'; font-size:13px; color:var(--text-dim);">月5-10万で小額テスト。CVR確認後に増額判断</td>
+          <td style="text-align:center; color:var(--yellow); font-weight:700;">保留</td>
+        </tr>
+        <tr>
+          <td>オフィス移転・拡張</td>
+          <td><span class="badge badge-hold">来期判断</span></td>
+          <td style="font-family:'Noto Sans JP'; font-size:13px; color:var(--text-dim);">家賃7万は十分安い。固定費増は不要</td>
+          <td style="text-align:center; color:var(--yellow); font-weight:700;">保留</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sep" style="margin: 32px 0;"></div>
+
+  <div class="subsection">
+    <h3>CFOとしての最終提言</h3>
+  </div>
+
+  <div class="alert alert-danger">
+    <div class="alert-icon">!!</div>
+    <div>
+      <h4>今後30日間のキャッシュマネジメントが会社の生死を分ける</h4>
+      <p>現金343万円、月間支出362-547万円。この状態で役員報酬引上げ・広告費倍増を同時に行えば、<strong>4月末にCashゼロ</strong>になる。「攻め」の施策は全て、月次キャッシュフローが安定黒字になるまで凍結。今やるべきは3つだけ: <strong>(1) 融資の確保、(2) 売掛の早期回収、(3) 不要コストの削減</strong>。</p>
+    </div>
+  </div>
+
+  <div class="alert alert-success">
+    <div class="alert-icon">+</div>
+    <div>
+      <h4>ただし中期的な見通しは明るい</h4>
+      <p>人材紹介636万円のパイプラインが入金に転換すれば、売掛含む残高は1,352万円まで成長。純資産も5月には+77万でプラス圏に定着。スクール×人材紹介のクロスセルモデルは他社にない強み。<strong>この3ヶ月を乗り切れば、成長軌道に乗る。</strong></p>
+    </div>
+  </div>
+
+</section>
+
+</div>
+
+<footer class="report-footer">
+  <p>CONFIDENTIAL &mdash; 株式会社トップティア CFO分析レポート</p>
+  <p style="margin-top: 6px;">作成日: 2026年3月17日 &nbsp;|&nbsp; 対象期間: 2026年1月-5月（予測含む）</p>
+</footer>
+
+</body>
+</html>

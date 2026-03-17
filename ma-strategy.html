@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>トップティア M&A戦略 — 事業売却シナリオ分析</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0A0A0A;--card:#0F0F0F;--card-hover:#141414;
+  --accent:#C13028;--accent-light:#E8453C;--accent-dark:#8B1E18;
+  --text:#E8E8E8;--text-secondary:#999;--text-muted:#666;
+  --border:#1E1E1E;--border-light:#2A2A2A;
+  --success:#2ECC71;--warning:#F39C12;--info:#3498DB;
+  --tier1:#C13028;--tier2:#E67E22;--tier3:#3498DB;--tier-pe:#9B59B6;--tier-intl:#1ABC9C;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans JP','Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.8;-webkit-font-smoothing:antialiased}
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,#0A0A0A 0%,#1a0a09 50%,#0A0A0A 100%);padding:80px 0 60px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(193,48,40,0.08) 0%,transparent 70%);pointer-events:none}
+.hero-badge{display:inline-block;background:rgba(193,48,40,0.15);color:var(--accent-light);padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;letter-spacing:1px;margin-bottom:20px;border:1px solid rgba(193,48,40,0.3)}
+.hero h1{font-family:'Inter','Noto Sans JP',sans-serif;font-size:clamp(28px,5vw,48px);font-weight:800;line-height:1.2;margin-bottom:12px;background:linear-gradient(135deg,#fff 0%,#ccc 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero .subtitle{font-size:clamp(16px,2.5vw,22px);color:var(--text-secondary);font-weight:300}
+.hero-meta{display:flex;gap:24px;margin-top:24px;flex-wrap:wrap}
+.hero-meta span{font-size:13px;color:var(--text-muted);display:flex;align-items:center;gap:6px}
+.hero-meta span::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent)}
+
+/* Navigation */
+.nav-bar{background:rgba(15,15,15,0.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:16px 0;position:sticky;top:0;z-index:100}
+.nav-inner{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav-link{white-space:nowrap;padding:8px 16px;border-radius:8px;font-size:13px;color:var(--text-secondary);text-decoration:none;transition:all .2s;border:1px solid transparent}
+.nav-link:hover{color:var(--text);background:var(--card);border-color:var(--border)}
+.nav-link.active{color:var(--accent-light);background:rgba(193,48,40,0.1);border-color:rgba(193,48,40,0.3)}
+
+/* Section */
+section{padding:60px 0}
+.section-header{margin-bottom:40px}
+.section-number{font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--accent);letter-spacing:2px;margin-bottom:8px}
+.section-title{font-size:clamp(24px,3.5vw,36px);font-weight:800;line-height:1.3;margin-bottom:12px}
+.section-desc{font-size:16px;color:var(--text-secondary);max-width:700px}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;transition:all .3s;position:relative;overflow:hidden}
+.card:hover{border-color:var(--border-light);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.card-accent{border-left:3px solid var(--accent)}
+
+/* Valuation */
+.val-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.val-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;text-align:center;position:relative;overflow:hidden}
+.val-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.val-card.v1::before{background:linear-gradient(90deg,var(--accent),var(--accent-light))}
+.val-card.v2::before{background:linear-gradient(90deg,#E67E22,#F39C12)}
+.val-card.v3::before{background:linear-gradient(90deg,#3498DB,#5DADE2)}
+.val-card.v4::before{background:linear-gradient(90deg,#9B59B6,#BB8FCE)}
+.val-card.v5::before{background:linear-gradient(90deg,#1ABC9C,#48C9B0)}
+.val-card.v6::before{background:linear-gradient(90deg,#2ECC71,#58D68D)}
+.val-label{font-size:13px;color:var(--text-muted);font-weight:500;margin-bottom:8px;letter-spacing:1px}
+.val-amount{font-family:'Inter',sans-serif;font-size:clamp(28px,4vw,38px);font-weight:800;margin-bottom:4px}
+.val-sub{font-size:14px;color:var(--text-secondary)}
+.val-card.v1 .val-amount{color:#E8453C}
+.val-card.v2 .val-amount{color:#F39C12}
+.val-card.v3 .val-amount{color:#5DADE2}
+.val-card.v4 .val-amount{color:#BB8FCE}
+.val-card.v5 .val-amount{color:#48C9B0}
+.val-card.v6 .val-amount{color:#58D68D}
+
+/* Scenario Table */
+.table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;min-width:700px}
+thead{background:#141414}
+th{padding:16px 20px;text-align:left;font-size:13px;font-weight:700;color:var(--text-secondary);letter-spacing:1px;border-bottom:2px solid var(--border)}
+td{padding:14px 20px;border-bottom:1px solid var(--border);font-size:14px;vertical-align:top}
+tr:hover td{background:rgba(193,48,40,0.03)}
+.highlight-row td{background:rgba(193,48,40,0.06);font-weight:600}
+.tag{display:inline-block;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600}
+.tag-now{background:rgba(46,204,113,0.15);color:#2ECC71}
+.tag-6m{background:rgba(243,156,18,0.15);color:#F39C12}
+.tag-1y{background:rgba(52,152,219,0.15);color:#3498DB}
+.tag-risk{background:rgba(231,76,60,0.15);color:#E74C3C}
+
+/* Company Cards */
+.company-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px}
+.company-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:all .3s}
+.company-card:hover{border-color:var(--border-light);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.company-card-header{padding:20px 24px 16px;border-bottom:1px solid var(--border);position:relative}
+.company-card-header::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.tier-1 .company-card-header::before{background:var(--tier1)}
+.tier-2 .company-card-header::before{background:var(--tier2)}
+.tier-3 .company-card-header::before{background:var(--tier3)}
+.tier-pe .company-card-header::before{background:var(--tier-pe)}
+.tier-intl .company-card-header::before{background:var(--tier-intl)}
+.company-name{font-size:18px;font-weight:700;margin-bottom:4px}
+.company-sub{font-size:13px;color:var(--text-muted)}
+.company-card-body{padding:20px 24px}
+.company-meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.meta-item{font-size:13px}
+.meta-label{color:var(--text-muted);display:block;margin-bottom:2px}
+.meta-value{color:var(--text);font-weight:600}
+.company-desc{font-size:14px;color:var(--text-secondary);line-height:1.7;margin-bottom:16px}
+.company-card-footer{padding:12px 24px 20px;display:flex;justify-content:space-between;align-items:center}
+.stars{color:var(--accent-light);font-size:16px;letter-spacing:2px}
+.contact-method{font-size:12px;color:var(--text-muted);background:rgba(255,255,255,0.05);padding:4px 10px;border-radius:6px}
+
+/* Tier Badge */
+.tier-badge{display:inline-block;padding:4px 12px;border-radius:6px;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:20px}
+.tier-badge.t1{background:rgba(193,48,40,0.15);color:var(--tier1)}
+.tier-badge.t2{background:rgba(230,126,34,0.15);color:var(--tier2)}
+.tier-badge.t3{background:rgba(52,152,219,0.15);color:var(--tier3)}
+.tier-badge.tpe{background:rgba(155,89,182,0.15);color:var(--tier-pe)}
+.tier-badge.tintl{background:rgba(26,188,156,0.15);color:var(--tier-intl)}
+
+/* Timeline */
+.timeline{position:relative;padding-left:40px}
+.timeline::before{content:'';position:absolute;left:15px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--accent),var(--accent-dark),transparent)}
+.timeline-item{position:relative;margin-bottom:40px}
+.timeline-item::before{content:'';position:absolute;left:-33px;top:4px;width:14px;height:14px;border-radius:50%;background:var(--accent);border:3px solid var(--bg);z-index:1}
+.timeline-phase{font-size:13px;font-weight:700;color:var(--accent-light);letter-spacing:1px;margin-bottom:6px}
+.timeline-title{font-size:20px;font-weight:700;margin-bottom:8px}
+.timeline-period{font-size:13px;color:var(--text-muted);margin-bottom:12px}
+.timeline-content{font-size:14px;color:var(--text-secondary);line-height:1.8}
+.timeline-content ul{list-style:none;padding:0}
+.timeline-content li{padding:4px 0;padding-left:20px;position:relative}
+.timeline-content li::before{content:'';position:absolute;left:0;top:12px;width:8px;height:2px;background:var(--accent)}
+
+/* Prep Grid */
+.prep-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+.prep-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;position:relative;overflow:hidden}
+.prep-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent)}
+.prep-number{font-family:'Inter',sans-serif;font-size:48px;font-weight:900;color:rgba(193,48,40,0.1);position:absolute;top:10px;right:20px;line-height:1}
+.prep-title{font-size:17px;font-weight:700;margin-bottom:10px}
+.prep-text{font-size:14px;color:var(--text-secondary);line-height:1.8}
+
+/* Broker Table */
+.broker-grid{display:grid;gap:16px}
+.broker-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:16px;align-items:center}
+@media(max-width:768px){.broker-card{grid-template-columns:1fr;gap:10px}}
+.broker-name{font-size:16px;font-weight:700}
+.broker-fee{font-size:14px;color:var(--text-secondary)}
+.broker-fit{font-size:14px}
+.fit-good{color:var(--success)}
+.fit-ok{color:var(--warning)}
+.fit-bad{color:#E74C3C}
+
+/* Action Plan */
+.action-grid{display:grid;gap:16px}
+.action-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;border-left:3px solid}
+.action-card.a1{border-left-color:var(--tier1)}
+.action-card.a2{border-left-color:var(--tier2)}
+.action-card.a3{border-left-color:var(--tier3)}
+.action-title{font-size:16px;font-weight:700;margin-bottom:8px}
+.action-text{font-size:14px;color:var(--text-secondary);line-height:1.8}
+
+/* Analysis Box */
+.analysis-box{background:rgba(193,48,40,0.05);border:1px solid rgba(193,48,40,0.2);border-radius:12px;padding:28px;margin-top:24px}
+.analysis-box h4{color:var(--accent-light);font-size:16px;margin-bottom:12px}
+.analysis-box p{font-size:14px;color:var(--text-secondary);line-height:1.9}
+
+/* Footer */
+.footer{border-top:1px solid var(--border);padding:40px 0;text-align:center}
+.footer p{font-size:13px;color:var(--text-muted)}
+
+/* Responsive */
+@media(max-width:768px){
+  .hero{padding:50px 0 40px}
+  section{padding:40px 0}
+  .company-grid{grid-template-columns:1fr}
+  .val-grid{grid-template-columns:1fr}
+  .prep-grid{grid-template-columns:1fr}
+  .hero-meta{flex-direction:column;gap:8px}
+  .nav-link{padding:6px 12px;font-size:12px}
+  .card{padding:20px}
+}
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<header class="hero">
+<div class="container">
+  <div class="hero-badge">CONFIDENTIAL — M&A STRATEGY</div>
+  <h1>トップティア M&A戦略</h1>
+  <p class="subtitle">事業売却シナリオ分析 &amp; 候補企業マッピング</p>
+  <div class="hero-meta">
+    <span>株式会社トップティア</span>
+    <span>2026年3月17日 作成</span>
+    <span>想定バリュエーション: 8,175万〜1.97億円</span>
+  </div>
+</div>
+</header>
+
+<!-- Navigation -->
+<nav class="nav-bar">
+<div class="container">
+  <div class="nav-inner">
+    <a href="#valuation" class="nav-link active">バリュエーション</a>
+    <a href="#scenarios" class="nav-link">シナリオ比較</a>
+    <a href="#candidates" class="nav-link">売却先候補</a>
+    <a href="#brokers" class="nav-link">M&A仲介</a>
+    <a href="#timeline" class="nav-link">タイムライン</a>
+    <a href="#preparation" class="nav-link">準備事項</a>
+    <a href="#action" class="nav-link">アクションプラン</a>
+  </div>
+</div>
+</nav>
+
+<!-- 1. Valuation -->
+<section id="valuation">
+<div class="container">
+  <div class="section-header">
+    <div class="section-number">SECTION 01</div>
+    <h2 class="section-title">バリュエーション分析</h2>
+    <p class="section-desc">6つの評価手法による株式価値算定。事業特性・成長性を反映した複合的な分析。</p>
+  </div>
+
+  <div class="val-grid">
+    <div class="val-card v1">
+      <div class="val-label">営業利益3年分 + 純資産</div>
+      <div class="val-amount">約8,175万円</div>
+      <div class="val-sub">保守的評価 — 最低ラインの目安</div>
+    </div>
+    <div class="val-card v2">
+      <div class="val-label">営業利益4年分 + 純資産</div>
+      <div class="val-amount">約1.1億円</div>
+      <div class="val-sub">中間評価 — 業界標準的な算定</div>
+    </div>
+    <div class="val-card v3">
+      <div class="val-label">EV/EBITDA 5倍</div>
+      <div class="val-amount">約1.37億円</div>
+      <div class="val-sub">マルチプル法 — 中小M&A標準水準</div>
+    </div>
+    <div class="val-card v4">
+      <div class="val-label">EV/EBITDA 7倍</div>
+      <div class="val-amount">約1.97億円</div>
+      <div class="val-sub">プレミアム評価 — テック＋教育シナジー加味</div>
+    </div>
+    <div class="val-card v5">
+      <div class="val-label">EV/Revenue 1.5倍</div>
+      <div class="val-amount">約1.67億円</div>
+      <div class="val-sub">売上高倍率法 — SaaS的成長性を評価</div>
+    </div>
+    <div class="val-card v6">
+      <div class="val-label">月利の5年分</div>
+      <div class="val-amount">1.0〜1.8億円</div>
+      <div class="val-sub">キャッシュフロー基準 — やや楽観的</div>
+    </div>
+  </div>
+
+  <div class="analysis-box">
+    <h4>月利5年分（1.0〜1.8億円）の妥当性分析</h4>
+    <p>
+      月利の5年分という算定は、年間営業利益ベースで見ると EV/EBITDA 3.6〜6.5倍に相当する。中小M&A市場では EBITDA 3〜5倍が一般的であり、上限の1.8億円はやや楽観的な見積もりと言える。ただし、以下のプレミアム要因を考慮すれば正当化できる余地がある。
+    </p>
+    <p style="margin-top:12px">
+      <strong>プレミアム正当化要因：</strong><br>
+      (1) コンサル転職×教育というニッチ市場での高いブランド認知<br>
+      (2) AIを活用した独自プラットフォーム（技術資産）<br>
+      (3) リカーリング収益モデル（スクール受講料＋人材紹介報酬の二重収益構造）<br>
+      (4) 補助金スキーム活用による顧客獲得コスト低減<br>
+      (5) 創業者の知見・ネットワークの引き継ぎ可能性
+    </p>
+    <p style="margin-top:12px">
+      <strong>結論：</strong>現実的な交渉レンジは <strong>1.0億〜1.5億円</strong>、プレミアム付きで最大1.97億円が理論上の上限。初期提示は1.5億円から始め、最低ラインを1.0億円とする交渉戦略が望ましい。
+    </p>
+  </div>
+</div>
+</section>
+
+<!-- 2. Scenario Comparison -->
+<section id="scenarios" style="background:#070707">
+<div class="container">
+  <div class="section-header">
+    <div class="section-number">SECTION 02</div>
+    <h2 class="section-title">現在 vs 半年後 vs 1年後 — シナリオ比較</h2>
+    <p class="section-desc">売却タイミングによる事業価値・リスク・交渉力の変動を詳細に比較。</p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>評価項目</th>
+          <th>現在（2026年3月）<br><span class="tag tag-now">NOW</span></th>
+          <th>半年後（2026年9月）<br><span class="tag tag-6m">6M</span></th>
+          <th>1年後（2027年3月）<br><span class="tag tag-1y">1Y</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>想定バリュエーション</strong></td>
+          <td>8,175万〜1.37億円</td>
+          <td>1.1億〜1.67億円</td>
+          <td>1.37億〜1.97億円</td>
+        </tr>
+        <tr>
+          <td><strong>年間売上高</strong></td>
+          <td>約1.1億円</td>
+          <td>約1.3〜1.5億円（成長前提）</td>
+          <td>約1.6〜1.8億円（成長前提）</td>
+        </tr>
+        <tr>
+          <td><strong>営業利益率</strong></td>
+          <td>約25%</td>
+          <td>25〜28%（効率化進行）</td>
+          <td>28〜32%（スケール効果）</td>
+        </tr>
+        <tr class="highlight-row">
+          <td><strong>交渉上の強み</strong></td>
+          <td>成長トレンド途上。AIプラットフォームの希少性</td>
+          <td>成長実績が蓄積。複数期の右肩上がりを証明可能</td>
+          <td>高い実績値。EBITDA実績で強い交渉力</td>
+        </tr>
+        <tr>
+          <td><strong>買い手の関心度</strong></td>
+          <td>中〜高。AI教育市場への注目上昇中</td>
+          <td>高。市場トレンドが追い風</td>
+          <td>高。ただし競合出現リスクあり</td>
+        </tr>
+        <tr>
+          <td><strong>競合環境リスク</strong></td>
+          <td><span class="tag tag-now">低</span> ニッチ市場で先行</td>
+          <td><span class="tag tag-6m">中</span> 類似サービス出現可能性</td>
+          <td><span class="tag tag-risk">中〜高</span> 大手参入リスク増大</td>
+        </tr>
+        <tr>
+          <td><strong>オーナー依存度</strong></td>
+          <td>高い — 属人的要素大</td>
+          <td>中 — 仕組み化を進行中</td>
+          <td>低〜中 — 引き継ぎ体制構築済み</td>
+        </tr>
+        <tr>
+          <td><strong>準備の完成度</strong></td>
+          <td>40% — 財務整備・IM作成が未了</td>
+          <td>75% — IM完成・デューデリ対応準備完了</td>
+          <td>95% — 全準備完了・実績も積み上がり</td>
+        </tr>
+        <tr>
+          <td><strong>デューデリリスク</strong></td>
+          <td>財務整備不足で減額交渉されやすい</td>
+          <td>許容範囲。主要リスクは解消済み</td>
+          <td>低い。完全な開示体制</td>
+        </tr>
+        <tr>
+          <td><strong>市場環境</strong></td>
+          <td>M&A市場活況。中小向けプラットフォーム拡大中</td>
+          <td>継続成長見込み。金利環境次第</td>
+          <td>不透明。景気後退リスクに注意</td>
+        </tr>
+        <tr class="highlight-row">
+          <td><strong>推奨度</strong></td>
+          <td>△ 準備不足だが早期着手のメリット大</td>
+          <td>◎ バランス最適。準備×実績×市場</td>
+          <td>○ 最大額だが外部リスク増</td>
+        </tr>
+        <tr>
+          <td><strong>オーナーの機会費用</strong></td>
+          <td>低 — 事業への注力を継続可能</td>
+          <td>中 — 売却準備に時間を割く必要</td>
+          <td>高 — 1年間の労力と精神的負担</td>
+        </tr>
+        <tr>
+          <td><strong>税務・スキーム</strong></td>
+          <td>株式譲渡所得20.315%適用可能</td>
+          <td>同左。事前の税務スキーム構築完了</td>
+          <td>同左。退職金スキーム併用で最適化</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="analysis-box" style="margin-top:30px">
+    <h4>シナリオ分析の結論</h4>
+    <p>
+      <strong>最適タイミングは半年後（2026年9月頃）の売却開始。</strong>
+      現在から半年間で財務整備・IM作成・デューデリ準備を完了させ、成長実績を1〜2四半期分積み上げてからプロセス開始が最も有利。
+      1年後まで待つと最大額を狙えるが、競合出現・市場変動リスクが増大し、オーナーの機会費用も大きい。
+      現時点での即時開始は準備不足により減額交渉されるリスクが高い。
+    </p>
+  </div>
+</div>
+</section>
+
+<!-- 3. Candidates -->
+<section id="candidates">
+<div class="container">
+  <div class="section-header">
+    <div class="section-number">SECTION 03</div>
+    <h2 class="section-title">売却先候補リスト</h2>
+    <p class="section-desc">Tier 1〜3 + PEファンド + 海外企業の計20社以上を詳細分析。</p>
+  </div>
+
+  <!-- Tier 1 -->
+  <div class="tier-badge t1">TIER 1 — 最優先ターゲット</div>
+  <div class="company-grid" style="margin-bottom:40px">
+
+    <div class="company-card tier-1">
+      <div class="company-card-header">
+        <div class="company-name">ベネッセホールディングス（EQT）</div>
+        <div class="company-sub">東証プライム 9783 / 教育最大手</div>
+      </div>
+      <div class="company-card-body">
+        <div class="company-meta">
+          <div class="meta-item"><span class="meta-label">売上高</span><span class="meta-value">約4,200億円</span></div>
+          <div class="meta-item"><span class="meta-label">M&A予算</span><span class="meta-value">500億円規模</span></div>
+          <div class="meta-item"><span class="meta-label">従業員数</span><span class="meta-value">約16,000名</span></div>
+          <div class="meta-item"><span class="meta-label">買収可能性</span><span class="meta-value">★★★★☆</span></div>
+        </div>
+        <div class="company-desc">
+          2023年にスウェーデンPEファンドEQTがMBOで非上場化（約2,100億円）。子供教育から社会人教育への転換が急務。コンサル転職×教育という組み合わせは、Udemyビジネス対抗の法人向けリスキリング事業の核になり得る。EQT傘下で買収予算は潤沢であり、トップティアの規模感（1〜2億円）は意思決定が速い「ボルトオン案件」として処理される可能性が高い。
+        </div>
+      </div>
+      <div class="company-card-footer">
+        <div class="stars">★★★★☆</div>
+        <div class="contact-method">EQT日本チーム / ベネッセ事業開発部 経由</div>
+      </div>
+    </div>
+
+    <div class="company-card tier-1">
+      <div class="company-card-header">
+        <div class="company-name">ムービン・ストラテジック・キャリア</div>
+        <div class="company-sub">東証グロース 421A / コンサル特化転職</div>
+      </div>
+      <div class="company-card-body">
+        <div class="company-meta">
+          <div class="meta-item"><span class="meta-label">売上高</span><span class="meta-value">23億→35億円（急成長）</span></div>
+          <div class="meta-item"><span class="meta-label">時価総額</span><span class="meta-value">約100〜150億円</span></div>
+          <div class="meta-item"><span class="meta-label">従業員数</span><span class="meta-value">約120名</span></div>
+          <div class="meta-item"><span class="meta-label">買収可能性</span><span class="meta-value">★★★★★</span></div>
+        </div>
+        <div class="company-desc">
+          コンサル転職に最も直接的なシナジーを持つ上場企業。2024年上場で成長加速中、M&Aによる事業領域拡大に前向き。トップティアのスクール事業を取得すれば「教育→転職」のバリューチェーン完成。人材紹介の前工程（育成）を内製化でき、LTV最大化が可能。上場企業としてのれん計上・成長ストーリーにもフィット。最も成約可能性が高い候補。
+        </div>
+      </div>
+      <div class="company-card-footer">
+        <div class="stars">★★★★★</div>
+        <div class="contact-method">IR経由 / 代表・創業者に直接コンタクト</div>
+      </div>
+    </div>
+
+    <div class="company-card tier-1">
+      <div class="company-card-header">
+        <div class="company-name">Visional（ビズリーチ）</div>
+        <div class="company-sub">東証プライム 4194 / HR Tech大手</div>
+      </div>
+      <div class="company-card-body">
+        <div class="company-meta">
+          <div class="meta-item"><span class="meta-label">売上高</span><span class="meta-value">約801億円</span></div>
+          <div class="meta-item"><span class="meta-label">M&A実績</span><span class="meta-value">Thinkings 140億で買収済み</span></div>
+          <div class="meta-item"><span class="meta-label">時価総額</span><span class="meta-value">約5,000億円</span></div>
+          <div class="meta-item"><span class="meta-label">買収可能性</span><span class="meta-value">★★★★☆</span></div>
+        </div>
+        <div class="company-desc">
+          ビズリーチ運営のHR Techプラットフォーマー。Thinkingsを140億円で買収した実績があり、HR領域のロールアップ戦略を展開中。コンサル特化の教育×転職プラットフォームはビズリーチの高単価人材セグメントと完全に合致。トップティアのAI活用ノウハウも、VisionalのHR Tech戦略に統合可能。案件規模的に事業部レベルの決裁で完結する。
+        </div>
+      </div>
+      <div class="company-card-footer">
+        <div class="stars">★★★★☆</div>
+        <div class="contact-method">M&A推進室 / コーポレート開発チーム</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Tier 2 -->
+  <div class="tier-badge t2">TIER 2 — 有力ターゲット</div>
+  <div class="company-grid" style="margin-bottom:40px">
+
+    <div class="company-card tier-2">
+      <div class="company-card-header">
+        <div class="company-name">リンクアンドモチベーション</div>
+        <div class="company-sub">東証プライム 2170 / 組織開発</div>
+      </div>
+      <div class="company-card-body">
+        <div class="company-meta">
+          <div class="meta-item"><span class="meta-label">売上高</span><span class="meta-value">約412億円</span></div>
+          <div class="meta-item"><span class="meta-label">M&A実績</span><span class="meta-value">2025年に3件買収</span></div>
+          <div class="meta-item"><span class="meta-label">従業員数</span><span class="meta-value">約1,500名</span></div>
+          <div class="meta-item"><span class="meta-label">買収可能性</span><span class="meta-value">★★★★☆</span></div>
+        </div>
+        <div class="company-desc">
+          組織開発・モチベーションクラウドで知られるHR企業。2025年だけで3件のM&Aを実行しており、買収に対して非常にアグレッシブ。コンサル人材の育成・組織開発は同社の「組織と個人のエンゲージメント」ビジョンと親和性が高い。既存のコンサルティング部門との統合シナジーも期待できる。
+        </div>
+      </div>
+      <div class="company-card-footer">
+        <div class="stars">★★★★☆</div>
+        <div class="contact-method">事業開発部門 / M&Aアドバイザー経由</div>
+      </div>
+    </div>
+
+    <div class="company-card tier-2">
+      <div class="company-card-header">
+        <div class="company-name">アクシスコンサルティング</div>
+        <div class="company-sub">東証グロース 9344 / コンサル転職</div>
+      </div>
+      <div class="company-card-body">
+        <div class="company-meta">
+          <div class="meta-item"><span class="meta-label">売上高</span><span class="meta-value">約52億円</span></div>
+          <div class="meta-item"><span class="meta-label">上場</span><span class="meta-value">2023年 東証グロース</span></div>
+          <div class="meta-item"><span class="meta-label">従業員数</span><span class="meta-value">約200名</span></div>
+          <div class="meta-item"><span class="meta-label">買収可能性</span><span class="meta-value">★★★★☆</span></div>
+        </div>
+        <div class="company-desc">
+          コンサルティング業界特化の人材紹介会社として老舗。ムービンと並ぶ直接競合であり、スクール事業の取得で差別化を図れる。上場企業としての成長ストーリーにも「教育事業参入」は投資家に訴求力がある。コンサル転職市場の知見が深く、トップティアの教育コンテンツの価値を正確に評価できる買い手。
+        </div>
+      </div>
+      <div class="company-card-footer">
+        <div class="stars">★★★★☆</div>
+        <div class="contact-method">代表・IR経由 / 業界イベントでの接点構築</div>
+      </div>
+    </div>
+
+    <div class="company-card tier-2">
+      <div class="company-card-header">
+        <div class="company-name">Z会 / 増進会ホールディングス</div>
+        <div class="company-sub">非上場 / 教育大手</div>
+      </div>
+      <div class="company-card-body">
+        <div class="company-meta">
+          <div class="meta-item"><span class="meta-label">売上高</span><span class="meta-value">600億円超</span></div>
+          <div class="meta-item"><span class="meta-label">事業領域</span><span class="meta-value">通信教育・学習塾・出版</span></div>
+          <div class="meta-item"><span class="meta-label">従業員数</span><span class="meta-value">約3,000名</span></div>
+          <div class="meta-item"><span class="meta-label">買収可能性</span><span class="meta-value">★★★☆☆</span></div>
+        </div>
+        <div class="company-desc">
+          高品質な通信教育で知られるZ会グループ。少子化で学生向け市場が縮小する中、社会人教育への展開は経営課題。トップティアのコンサル転職スクールは、Z会の「質の高い教育」ブランドと合致する。ただし非上場のため意思決定プロセスが不透明で、M&Aの経験も限定的な点が懸念。
+        </div>
+      </div>
+      <div class="company-card-footer">
+        <div class="stars">★★★☆☆</div>
+        <div class="contact-method">事業開発 / M&A仲介経由での打診</div>
+      </div>
+    </div>
+
+    <div class="company-card tier-2">
+      <div class="company-card-header">
+        <div class="company-name">Schoo（スクー）</div>
+        <div class="company-sub">東証グロース / オンライン学習</div>
+      </div>
+      <div class="company-card-body">
+        <div class="company-meta">
+          <div class="meta-item"><span class="meta-label">売上高</span><span class="meta-value">約28.5億円</span></div>
+          <div class="meta-item"><span class="meta-label">事業内容</span><span class="meta-value">法人向けオンライン研修</span></div>
+          <div class="meta-item"><span class="meta-label">会員数</span><span class="meta-value">100万人超</span></div>
+          <div class="meta-item"><span class="meta-label">買収可能性</span><span class="meta-value">★★★☆☆</span></div>
+        </div>
+        <div class="company-desc">
+          法人向けオンライン学習プラットフォーム。コンサル転職特化のハイエンド教育コンテンツを追加することで、高単価セグメントへの展開が可能になる。トップティアのAI教育プラットフォームとの技術統合にもシナジーがある。ただし自社も成長途上のため、買収予算の確保が課題となる可能性。
+        </div>
+      </div>
+      <div class="company-card-footer">
+        <div class="stars">★★★☆☆</div>
+        <div class="contact-method">事業開発部 / IR経由</div>
+      </div>
+    </div>
+
+    <div class="company-card tier-2">
+      <div class="company-card-header">
+        <div class="company-name">MyVision</div>
+        <div class="company-sub">非上場 / コンサル転職エージェント</div>
+      </div>
+      <div class="company-card-body">
+        <div class="company-meta">
+          <div class="meta-item"><span class="meta-label">従業員数</span><span class="meta-value">314名</span></div>
+          <div class="meta-item"><span class="meta-label">事業内容</span><span class="meta-value">コンサル特化転職支援</span></div>
+          <div class="meta-item"><span class="meta-label">成長性</span><span class="meta-value">急成長中</span></div>
+          <div class="meta-item"><span class="meta-label">買収可能性</span><span class="meta-value">★★★☆☆</span></div>
+        </div>
+        <div class="company-desc">
+          コンサル転職特化のエージェントとして急成長。314名の社員規模で、ムービン・アクシスに次ぐ勢力。トップティアのスクール事業との統合で「育成→転職」一気通貫モデルが完成する。現在急拡大中のため買収資金力は不明だが、VCやPEファンドからの資金調達による買収も考えられる。同業者として事業価値を最も正確に理解できる。
+        </div>
+      </div>
+      <div class="company-card-footer">
+        <div class="stars">★★★☆☆</div>
+        <div class="contact-method">経営陣への直接アプローチ / 業界ネットワーク</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Tier 3 -->
+  <div class="tier-badge t3">TIER 3 — ポテンシャル候補</div>
+  <div class="company-grid" style="margin-bottom:40px">
+
+    <div class="company-card tier-3">
+      <div class="company-card-header">
+        <div class="company-name">コンコードエグゼクティブグループ</div>
+        <div class="company-sub">非上場 / コンサル転職ブティック</div>
+      </div>
+      <div class="company-card-body">
+        <div class="company-meta">
+          <div class="meta-item"><span class="meta-label">従業員数</span><span class="meta-value">37〜50名</span></div>
+          <div class="meta-item"><span class="meta-label">特徴</span><span class="meta-value">ハイエンド特化</span></div>
+          <div class="meta-item"><span class="meta-label">買収可能性</span><span class="meta-value">★★★☆☆</span></div>
+        </div>
+        <div class="company-desc">
+          コンサル転職のブティック型エージェント。東大・京大出身者中心のハイエンドポジションに強い。トップティアの教育事業は「ポテンシャル層の育成→ハイエンドポジションへの橋渡し」として機能し得る。小規模だが収益性は高いと推定され、買収資金の確保は可能。ただしブティック志向のため大型買収には消極的な可能性。
+        </div>
+      </div>
+      <div class="company-card-footer">
+        <div class="stars">★★★☆☆</div>
+        <div class="contact-method">代表への直接コンタクト / 紹介経由</div>
+      </div>
+    </div>
+
+    <div class="company-card tier-3">
+      <div class="company-card-header">
+        <div class="company-name">フォルトナ</div>
+        <div class="company-sub">非上場 / コンサル・ハイクラス転職</div>
+      </div>
+      <div class="company-card-body">
+        <div class="company-meta">
+          <div class="meta-item"><span class="meta-label">事業内容</span><span class="meta-value">ハイクラス転職支援</span></div>
+          <div class="meta-item"><span class="meta-label">特徴</span><span class="meta-value">コンサル・PE・VC特化</span></div>
+          <div class="meta-item"><span class="meta-label">買収可能性</span><span class="meta-value">★★☆☆☆</span></div>
+        </div>
+        <div class="company-desc">
+          コンサル・PE・VCなど超ハイクラスポジションに特化したブティックエージェント。トップティアの教育事業との親和性は高いが、規模的にも文化的にもM&Aには積極的でない可能性。ただし業務提携やジョイントベンチャーから段階的に統合していくシナリオは考えられる。
+        </div>
+      </div>
+      <div class="company-card-footer">
+        <div class="stars">★★☆☆☆</div>
+        <div class="contact-method">業界ネットワーク / 紹介経由</div>
+      </div>
+    </div>
+
+    <div class="company-card tier-3">
+      <div class="company-card-header">
+        <div class="company-name">アンテロープ</div>
+        <div class="company-sub">非上場 / 金融・コンサル転職</div>
+      </div>
+      <div class="company-card-body">
+        <div class="company-meta">
+          <div class="meta-item"><span class="meta-label">従業員数</span><span class="meta-value">約26名</span></div>
+          <div class="meta-item"><span class="meta-label">特徴</span><span class="meta-value">金融・コンサル特化20年</span></div>
+          <div class="meta-item"><span class="meta-label">買収可能性</span><span class="meta-value">★★☆☆☆</span></div>
+        </div>
+        <div class="company-desc">
+          金融・コンサル業界特化で約20年の実績を持つ老舗ブティック。26名の少数精鋭体制で高い収益性。教育事業の付加で「未経験者の育成→金融・コンサルへの転職」という新たな収益源を確保できる。ただし小規模事業者同士の統合はシナジーが限定的になる可能性あり。
+        </div>
+      </div>
+      <div class="company-card-footer">
+        <div class="stars">★★☆☆☆</div>
+        <div class="contact-method">代表への直接アプローチ</div>
+      </div>
+    </div>
+
+    <div class="company-card tier-3">
+      <div class="company-card-header">
+        <div class="company-name">アサイン</div>
+        <div class="company-sub">非上場 / 若手ハイエンド転職</div>
+      </div>
+      <div class="company-card-body">
+        <div class="company-meta">
+          <div class="meta-item"><span class="meta-label">従業員数</span><span class="meta-value">約350名</span></div>
+          <div class="meta-item"><span class="meta-label">特徴</span><span class="meta-value">20-30代特化・AI活用</span></div>
+          <div class="meta-item"><span class="meta-label">買収可能性</span><span class="meta-value">★★★☆☆</span></div>
+        </div>
+        <div class="company-desc">
+          20-30代の若手ハイエンド層に特化した転職エージェント。350名規模で急成長中。コンサル転職も主要領域の一つ。トップティアの教育コンテンツは、アサインの若手ターゲット層への「スキルアップ→転職」パッケージとして強力な商品になる。AI活用にも積極的で技術面でのシナジーも期待できる。
+        </div>
+      </div>
+      <div class="company-card-footer">
+        <div class="stars">★★★☆☆</div>
+        <div class="contact-method">経営陣 / 事業開発チーム経由</div>
+      </div>
+    </div>
+
+    <div class="company-card tier-3">
+      <div class="company-card-header">
+        <div class="company-name">JACリクルートメント</div>
+        <div class="company-sub">東証プライム 2124 / ハイクラス転職</div>
+      </div>
+      <div class="company-card-body">
+        <div class="company-meta">
+          <div class="meta-item"><span class="meta-label">売上高</span><span class="meta-value">約461億円</span></div>
+          <div class="meta-item"><span class="meta-label">時価総額</span><span class="meta-value">約1,500億円</span></div>
+          <div class="meta-item"><span class="meta-label">従業員数</span><span class="meta-value">約2,000名</span></div>
+          <div class="meta-item"><span class="meta-label">買収可能性</span><span class="meta-value">★★☆☆☆</span></div>
+        </div>
+        <div class="company-desc">
+          ハイクラス・ミドルクラスの管理職・専門職転職に強い大手エージェント。コンサル業界への転職支援も行っているが、教育事業への進出は戦略的優先度が低い可能性。ただし同社の「グローバル×ハイクラス」戦略にコンサル教育をバンドルする提案は検討の余地あり。大企業のため意思決定に時間がかかる点に注意。
+        </div>
+      </div>
+      <div class="company-card-footer">
+        <div class="stars">★★☆☆☆</div>
+        <div class="contact-method">M&A・事業開発部門 / アドバイザー経由</div>
+      </div>
+    </div>
+
+    <div class="company-card tier-3">
+      <div class="company-card-header">
+        <div class="company-name">タイグロンパートナーズ</div>
+        <div class="company-sub">非上場 / エグゼクティブサーチ</div>
+      </div>
+      <div class="company-card-body">
+        <div class="company-meta">
+          <div class="meta-item"><span class="meta-label">事業内容</span><span class="meta-value">エグゼクティブサーチ</span></div>
+          <div class="meta-item"><span class="meta-label">特徴</span><span class="meta-value">金融・プロフェッショナルファーム特化</span></div>
+          <div class="meta-item"><span class="meta-label">買収可能性</span><span class="meta-value">★★☆☆☆</span></div>
+        </div>
+        <div class="company-desc">
+          金融・コンサル・PE業界のエグゼクティブサーチに強みを持つブティックファーム。ヘッドハンティング型のため転職「候補者育成」事業との統合は論理的に成立する。ただしブティック型経営のためM&Aへの意欲は不明。提携や紹介パートナーシップから開始するアプローチが現実的。
+        </div>
+      </div>
+      <div class="company-card-footer">
+        <div class="stars">★★☆☆☆</div>
+        <div class="contact-method">代表への直接アプローチ / 紹介</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PE Funds -->
+  <div class="tier-badge tpe">PE FUND — プライベートエクイティファンド</div>
+  <div class="company-grid" style="margin-bottom:40px">
+
+    <div class="company-card tier-pe">
+      <div class="company-card-header">
+        <div class="company-name">EQT（ベネッセ経由）</div>
+        <div class="company-sub">スウェーデン / グローバルPE</div>
+      </div>
+      <div class="company-card-body">
+        <div class="company-meta">
+          <div class="meta-item"><span class="meta-label">運用資産</span><span class="meta-value">約13兆円</span></div>
+          <div class="meta-item"><span class="meta-label">日本実績</span><span class="meta-value">ベネッセMBO（2,100億）</span></div>
+          <div class="meta-item"><span class="meta-label">投資テーマ</span><span class="meta-value">教育・ヘルスケア・テック</span></div>
+          <div class="meta-item"><span class="meta-label">買収可能性</span><span class="meta-value">★★★★☆</span></div>
+        </div>
+        <div class="company-desc">
+          ベネッセのMBOを主導したグローバルPEファンド。ベネッセの「社会人教育転換」戦略の一環として、トップティアをボルトオン買収する可能性。EQT自体が教育セクターに強い関心を持っており、日本チームが主導する形で意思決定される。トップティアの規模感はEQTにとっては小さいが、ベネッセのプラットフォームへの統合先として検討対象になり得る。
+        </div>
+      </div>
+      <div class="company-card-footer">
+        <div class="stars">★★★★☆</div>
+        <div class="contact-method">EQT日本オフィス / ベネッセ経営企画経由</div>
+      </div>
+    </div>
+
+    <div class="company-card tier-pe">
+      <div class="company-card-header">
+        <div class="company-name">カーライル・グループ（カオナビ経由）</div>
+        <div class="company-sub">米国 / グローバルPE</div>
+      </div>
+      <div class="company-card-body">
+        <div class="company-meta">
+          <div class="meta-item"><span class="meta-label">運用資産</span><span class="meta-value">約55兆円</span></div>
+          <div class="meta-item"><span class="meta-label">日本実績</span><span class="meta-value">カオナビ出資等</span></div>
+          <div class="meta-item"><span class="meta-label">投資テーマ</span><span class="meta-value">HR Tech・SaaS</span></div>
+          <div class="meta-item"><span class="meta-label">買収可能性</span><span class="meta-value">★★★☆☆</span></div>
+        </div>
+        <div class="company-desc">
+          HR Tech領域への投資実績があるグローバルPE。カオナビへの出資を通じて日本のHR市場に精通。トップティアの「教育×HR Tech」としてのポジショニングは、カーライルの投資テーマに合致。ただしスタンドアローンでの投資は規模が小さすぎるため、ポートフォリオ企業（カオナビ等）への統合案件としての検討が現実的。
+        </div>
+      </div>
+      <div class="company-card-footer">
+        <div class="stars">★★★☆☆</div>
+        <div class="contact-method">カーライル日本チーム / カオナビM&A部門</div>
+      </div>
+    </div>
+
+    <div class="company-card tier-pe">
+      <div class="company-card-header">
+        <div class="company-name">ベインキャピタル</div>
+        <div class="company-sub">米国 / グローバルPE</div>
+      </div>
+      <div class="company-card-body">
+        <div class="company-meta">
+          <div class="meta-item"><span class="meta-label">運用資産</span><span class="meta-value">約23兆円</span></div>
+          <div class="meta-item"><span class="meta-label">日本実績</span><span class="meta-value">すかいらーく、ワークスアプリ等</span></div>
+          <div class="meta-item"><span class="meta-label">投資テーマ</span><span class="meta-value">テック・教育・ヘルスケア</span></div>
+          <div class="meta-item"><span class="meta-label">買収可能性</span><span class="meta-value">★★☆☆☆</span></div>
+        </div>
+        <div class="company-desc">
+          日本市場での大型投資実績が豊富なグローバルPE。教育領域への関心もあるが、典型的な投資対象は数十億〜数百億円規模。トップティア単体では投資対象にならないが、教育×HRの「ロールアップ戦略」のプラットフォーム案件として複数社を束ねて提案する場合は検討対象となり得る。
+        </div>
+      </div>
+      <div class="company-card-footer">
+        <div class="stars">★★☆☆☆</div>
+        <div class="contact-method">ベインキャピタル日本 / アドバイザー紹介</div>
+      </div>
+    </div>
+
+    <div class="company-card tier-pe">
+      <div class="company-card-header">
+        <div class="company-name">ポラリス・キャピタル・グループ</div>
+        <div class="company-sub">日本 / 国内独立系PE</div>
+      </div>
+      <div class="company-card-body">
+        <div class="company-meta">
+          <div class="meta-item"><span class="meta-label">運用資産</span><span class="meta-value">約3,000億円</span></div>
+          <div class="meta-item"><span class="meta-label">投資スタイル</span><span class="meta-value">中堅企業の成長支援</span></div>
+          <div class="meta-item"><span class="meta-label">投資テーマ</span><span class="meta-value">サービス・教育・ヘルスケア</span></div>
+          <div class="meta-item"><span class="meta-label">買収可能性</span><span class="meta-value">★★★☆☆</span></div>
+        </div>
+        <div class="company-desc">
+          国内独立系PEとして中堅企業への投資に実績。教育・サービス業への投資テーマがあり、トップティアの規模感にも対応可能。グローバルPEよりも意思決定が速く、日本市場の理解が深い。スタンドアローンでの投資よりも、同業他社との統合・ロールアップのプラットフォーム投資として提案するのが効果的。
+        </div>
+      </div>
+      <div class="company-card-footer">
+        <div class="stars">★★★☆☆</div>
+        <div class="contact-method">投資チーム直接 / M&Aアドバイザー経由</div>
+      </div>
+    </div>
+
+    <div class="company-card tier-pe">
+      <div class="company-card-header">
+        <div class="company-name">インテグラル</div>
+        <div class="company-sub">日本 / 国内独立系PE</div>
+      </div>
+      <div class="company-card-body">
+        <div class="company-meta">
+          <div class="meta-item"><span class="meta-label">運用資産</span><span class="meta-value">約2,000億円</span></div>
+          <div class="meta-item"><span class="meta-label">投資スタイル</span><span class="meta-value">「i-Engine」共同経営</span></div>
+          <div class="meta-item"><span class="meta-label">特徴</span><span class="meta-value">経営参画型PE</span></div>
+          <div class="meta-item"><span class="meta-label">買収可能性</span><span class="meta-value">★★☆☆☆</span></div>
+        </div>
+        <div class="company-desc">
+          「共同経営」を標榜する国内PE。投資先に経営人材を派遣し、ハンズオンで成長支援する。トップティアのオーナー依存度を下げつつ事業を成長させるパートナーとしては理想的。ただしトップティア単体の規模では投資対象にならない可能性が高く、より大きな教育プラットフォーム構想の一部として提案する必要がある。
+        </div>
+      </div>
+      <div class="company-card-footer">
+        <div class="stars">★★☆☆☆</div>
+        <div class="contact-method">投資チーム / 紹介経由</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- International -->
+  <div class="tier-badge tintl">INTERNATIONAL — 海外企業</div>
+  <div class="company-grid" style="margin-bottom:40px">
+
+    <div class="company-card tier-intl" style="border-color:rgba(26,188,156,0.3)">
+      <div class="company-card-header">
+        <div class="company-name">Coursera / Udemy（統合企業）</div>
+        <div class="company-sub">米国 / グローバルEdTech</div>
+      </div>
+      <div class="company-card-body">
+        <div class="company-meta">
+          <div class="meta-item"><span class="meta-label">売上高</span><span class="meta-value">約10億ドル（統合後）</span></div>
+          <div class="meta-item"><span class="meta-label">ユーザー数</span><span class="meta-value">1.5億人超</span></div>
+          <div class="meta-item"><span class="meta-label">日本戦略</span><span class="meta-value">法人向け拡大中</span></div>
+          <div class="meta-item"><span class="meta-label">買収可能性</span><span class="meta-value">★★☆☆☆</span></div>
+        </div>
+        <div class="company-desc">
+          CourseraとUdemyの統合により誕生したグローバルEdTech最大手。日本市場への進出を強化しており、現地の教育事業者の買収で市場シェアを拡大する戦略が考えられる。トップティアの「コンサル特化×日本語」教育コンテンツは差別化された日本市場参入のアンカーとなり得る。ただしグローバル企業ゆえに意思決定は非常に遅く、文化的な統合課題も大きい。
+        </div>
+      </div>
+      <div class="company-card-footer">
+        <div class="stars">★★☆☆☆</div>
+        <div class="contact-method">日本法人 / APAC事業開発チーム</div>
+      </div>
+    </div>
+
+    <div class="company-card tier-intl" style="border-color:rgba(26,188,156,0.3)">
+      <div class="company-card-header">
+        <div class="company-name">Heidrick &amp; Struggles</div>
+        <div class="company-sub">米国 NASDAQ: HSII / エグゼクティブサーチ</div>
+      </div>
+      <div class="company-card-body">
+        <div class="company-meta">
+          <div class="meta-item"><span class="meta-label">売上高</span><span class="meta-value">約10億ドル</span></div>
+          <div class="meta-item"><span class="meta-label">拠点</span><span class="meta-value">世界30カ国以上</span></div>
+          <div class="meta-item"><span class="meta-label">日本拠点</span><span class="meta-value">東京オフィスあり</span></div>
+          <div class="meta-item"><span class="meta-label">買収可能性</span><span class="meta-value">★★☆☆☆</span></div>
+        </div>
+        <div class="company-desc">
+          世界トップクラスのエグゼクティブサーチファーム。近年はリーダーシップ開発・アセスメントなど教育領域にも事業を拡大。トップティアの「コンサル人材育成」ノウハウは、同社の日本市場でのリーダーシップ開発事業を補完する。ただし外資系のため日本語教育コンテンツへの理解が限定的で、投資判断はグローバル本社に委ねられる。
+        </div>
+      </div>
+      <div class="company-card-footer">
+        <div class="stars">★★☆☆☆</div>
+        <div class="contact-method">東京オフィス / APAC M&Aチーム</div>
+      </div>
+    </div>
+
+    <div class="company-card tier-intl" style="border-color:rgba(26,188,156,0.3)">
+      <div class="company-card-header">
+        <div class="company-name">Korn Ferry</div>
+        <div class="company-sub">米国 NYSE: KFY / 組織コンサル・人材</div>
+      </div>
+      <div class="company-card-body">
+        <div class="company-meta">
+          <div class="meta-item"><span class="meta-label">売上高</span><span class="meta-value">約28億ドル</span></div>
+          <div class="meta-item"><span class="meta-label">従業員数</span><span class="meta-value">約10,000名</span></div>
+          <div class="meta-item"><span class="meta-label">日本拠点</span><span class="meta-value">東京オフィスあり</span></div>
+          <div class="meta-item"><span class="meta-label">買収可能性</span><span class="meta-value">★★☆☆☆</span></div>
+        </div>
+        <div class="company-desc">
+          グローバル最大級の組織コンサルティング・人材サービス企業。「人材の評価・育成・配置」を一気通貫で手がける。トップティアの「コンサル人材育成プログラム」は、Korn Ferryの日本でのタレント開発事業の一部として位置づけられる可能性がある。ただし日本の中小規模の教育事業が投資判断のテーブルに乗るかは不透明。
+        </div>
+      </div>
+      <div class="company-card-footer">
+        <div class="stars">★★☆☆☆</div>
+        <div class="contact-method">日本オフィス / コーポレートM&Aチーム</div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</section>
+
+<!-- 4. Brokers -->
+<section id="brokers" style="background:#070707">
+<div class="container">
+  <div class="section-header">
+    <div class="section-number">SECTION 04</div>
+    <h2 class="section-title">M&A仲介コンタクトリスト</h2>
+    <p class="section-desc">案件規模（1〜2億円）に最適な仲介サービスの比較評価。</p>
+  </div>
+
+  <div class="broker-grid">
+
+    <div class="card card-accent">
+      <div style="display:grid;grid-template-columns:1fr;gap:16px">
+        <div>
+          <div style="font-size:18px;font-weight:700;margin-bottom:4px">MAポート</div>
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:12px">人材業界専門M&A仲介</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+          <div>
+            <div style="font-size:12px;color:var(--text-muted)">手数料</div>
+            <div style="font-size:14px;font-weight:600">成功報酬型 — レーマン方式（5%〜）</div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:var(--text-muted)">最低手数料</div>
+            <div style="font-size:14px;font-weight:600">要確認（業界特化のため柔軟）</div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:var(--text-muted)">適合性</div>
+            <div style="font-size:14px;font-weight:600;color:var(--success)">◎ 最適 — 人材業界の買い手ネットワークが強み</div>
+          </div>
+        </div>
+        <div style="font-size:14px;color:var(--text-secondary);line-height:1.8">
+          人材紹介・教育業界に特化したM&A仲介。業界特化のため、コンサル転職×教育スクールという事業モデルの価値を正確に評価できる買い手候補を多く保有している。Tier 1・2の候補企業との接点も期待できる。案件規模が小さくても対応してくれる可能性が高い。
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-accent">
+      <div style="display:grid;grid-template-columns:1fr;gap:16px">
+        <div>
+          <div style="font-size:18px;font-weight:700;margin-bottom:4px">バトンズ（BATONZ）</div>
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:12px">売り手無料プラットフォーム</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+          <div>
+            <div style="font-size:12px;color:var(--text-muted)">手数料（売り手）</div>
+            <div style="font-size:14px;font-weight:600;color:var(--success)">無料</div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:var(--text-muted)">手数料（買い手）</div>
+            <div style="font-size:14px;font-weight:600">成約価格の2%（最低25万円）</div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:var(--text-muted)">適合性</div>
+            <div style="font-size:14px;font-weight:600;color:var(--success)">◎ 推奨 — 無料で幅広い買い手にリーチ</div>
+          </div>
+        </div>
+        <div style="font-size:14px;color:var(--text-secondary);line-height:1.8">
+          日本M&Aセンター子会社のM&Aプラットフォーム。売り手完全無料で、登録企業数が国内最大級。IT・教育分野の買い手も多く登録。匿名で案件登録できるため、情報漏洩リスクも低い。まず登録して市場の反応を見るのに最適。
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-accent">
+      <div style="display:grid;grid-template-columns:1fr;gap:16px">
+        <div>
+          <div style="font-size:18px;font-weight:700;margin-bottom:4px">TRANBI（トランビ）</div>
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:12px">売り手無料プラットフォーム</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+          <div>
+            <div style="font-size:12px;color:var(--text-muted)">手数料（売り手）</div>
+            <div style="font-size:14px;font-weight:600;color:var(--success)">無料</div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:var(--text-muted)">手数料（買い手）</div>
+            <div style="font-size:14px;font-weight:600">成約価格の3%（最低30万円）+ 月額プラン</div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:var(--text-muted)">適合性</div>
+            <div style="font-size:14px;font-weight:600;color:var(--success)">○ 推奨 — 個人・中小の買い手に強い</div>
+          </div>
+        </div>
+        <div style="font-size:14px;color:var(--text-secondary);line-height:1.8">
+          国内有数のM&Aマッチングプラットフォーム。登録ユーザー20万人以上。個人事業主から上場企業まで幅広い買い手が利用。教育系・IT系の買い手も多い。バトンズと併用して市場の反応を広く見るのが効果的。
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-accent">
+      <div style="display:grid;grid-template-columns:1fr;gap:16px">
+        <div>
+          <div style="font-size:18px;font-weight:700;margin-bottom:4px">M&Aクラウド</div>
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:12px">売り手無料 — 上場企業マッチング</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+          <div>
+            <div style="font-size:12px;color:var(--text-muted)">手数料（売り手）</div>
+            <div style="font-size:14px;font-weight:600;color:var(--success)">無料</div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:var(--text-muted)">手数料（買い手）</div>
+            <div style="font-size:14px;font-weight:600">月額制プラン（買い手が負担）</div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:var(--text-muted)">適合性</div>
+            <div style="font-size:14px;font-weight:600;color:var(--success)">◎ 推奨 — 上場企業の買い手に直接リーチ</div>
+          </div>
+        </div>
+        <div style="font-size:14px;color:var(--text-secondary);line-height:1.8">
+          上場企業・大企業を中心とした買い手がM&A候補を探すプラットフォーム。Tier 1・2の上場企業候補への接点として有効。売り手は無料で案件掲載でき、買い手企業から直接オファーを受けられる。ムービン、Visional、リンクアンドモチベーションなどが登録済みの可能性がある。
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-accent">
+      <div style="display:grid;grid-template-columns:1fr;gap:16px">
+        <div>
+          <div style="font-size:18px;font-weight:700;margin-bottom:4px">M&Aサクシード</div>
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:12px">リクルート系プラットフォーム</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+          <div>
+            <div style="font-size:12px;color:var(--text-muted)">手数料（売り手）</div>
+            <div style="font-size:14px;font-weight:600">成約報酬型（要確認）</div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:var(--text-muted)">運営</div>
+            <div style="font-size:14px;font-weight:600">リクルートHD系</div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:var(--text-muted)">適合性</div>
+            <div style="font-size:14px;font-weight:600;color:var(--warning)">○ 併用推奨 — 法人買い手に強み</div>
+          </div>
+        </div>
+        <div style="font-size:14px;color:var(--text-secondary);line-height:1.8">
+          リクルートHDが運営するM&Aマッチングプラットフォーム。人材業界の買い手候補が多く利用。リクルートの法人ネットワークを活用した買い手マッチングが強み。トップティアの事業領域と相性が良い。
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border-left:3px solid #E74C3C">
+      <div style="display:grid;grid-template-columns:1fr;gap:16px">
+        <div>
+          <div style="font-size:18px;font-weight:700;margin-bottom:4px">日本M&Aセンター</div>
+          <div style="font-size:13px;color:#E74C3C;margin-bottom:12px">不向き — 最低手数料が高い</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+          <div>
+            <div style="font-size:12px;color:var(--text-muted)">手数料</div>
+            <div style="font-size:14px;font-weight:600">レーマン方式</div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:var(--text-muted)">最低手数料</div>
+            <div style="font-size:14px;font-weight:600;color:#E74C3C">2,000万円</div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:var(--text-muted)">適合性</div>
+            <div style="font-size:14px;font-weight:600;color:#E74C3C">× 不適合 — 売却額の15〜20%が手数料に</div>
+          </div>
+        </div>
+        <div style="font-size:14px;color:var(--text-secondary);line-height:1.8">
+          国内最大のM&A仲介会社だが、最低手数料2,000万円は本案件の規模（1〜2億円）に対して過大。売却額の15〜20%が手数料となり、手取り額が大幅に減少する。大企業の売り手には最適だが、中小規模の案件には不向き。
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border-left:3px solid #E74C3C">
+      <div style="display:grid;grid-template-columns:1fr;gap:16px">
+        <div>
+          <div style="font-size:18px;font-weight:700;margin-bottom:4px">ストライク</div>
+          <div style="font-size:13px;color:var(--warning);margin-bottom:12px">要検討 — 最低手数料に注意</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+          <div>
+            <div style="font-size:12px;color:var(--text-muted)">手数料</div>
+            <div style="font-size:14px;font-weight:600">レーマン方式</div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:var(--text-muted)">最低手数料</div>
+            <div style="font-size:14px;font-weight:600;color:var(--warning)">1,000万円</div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:var(--text-muted)">適合性</div>
+            <div style="font-size:14px;font-weight:600;color:var(--warning)">△ 条件付き — 売却額1.5億以上なら許容範囲</div>
+          </div>
+        </div>
+        <div style="font-size:14px;color:var(--text-secondary);line-height:1.8">
+          上場M&A仲介大手。オンラインM&Aにも注力。最低手数料1,000万円は売却額が1.5億円以上であれば7%程度となり許容範囲。IT・教育分野のM&A実績もある。ただし売却額が1億円を下回った場合は手数料負担が重すぎる。
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="analysis-box">
+    <h4>仲介サービスの推奨組み合わせ</h4>
+    <p>
+      <strong>Phase 1（即座に）:</strong> バトンズ + TRANBI + M&Aクラウドの3プラットフォームに匿名登録。無料で市場の反応を測定。<br>
+      <strong>Phase 2（1ヶ月後）:</strong> MAポートに正式依頼。人材業界特化のネットワークでTier 1・2候補への個別アプローチ。<br>
+      <strong>Phase 3（必要に応じて）:</strong> 売却額1.5億円以上が見込めるならストライクの利用も検討。<br>
+      <strong>使わない:</strong> 日本M&Aセンターは案件規模に対して手数料が過大。
+    </p>
+  </div>
+</div>
+</section>
+
+<!-- 5. Timeline -->
+<section id="timeline">
+<div class="container">
+  <div class="section-header">
+    <div class="section-number">SECTION 05</div>
+    <h2 class="section-title">売却プロセスのタイムライン</h2>
+    <p class="section-desc">6〜12ヶ月の売却プロセスを6つのフェーズに分割。</p>
+  </div>
+
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-phase">PHASE 1</div>
+      <div class="timeline-title">準備・体制整備</div>
+      <div class="timeline-period">Month 1-2（2026年3月〜4月）</div>
+      <div class="timeline-content">
+        <ul>
+          <li>財務諸表の整備 — 過去3年分のP/L・B/Sを税理士と整理</li>
+          <li>事業計画書（3年分）の作成 — 成長ストーリーの構築</li>
+          <li>IM（インフォメーション・メモランダム）のドラフト作成</li>
+          <li>ノンネーム資料（匿名概要書）の作成</li>
+          <li>弁護士・税理士との事前相談 — 税務スキームの検討</li>
+          <li>社内情報の棚卸し — 契約書、顧客リスト、知的財産の整理</li>
+          <li>オーナー依存度の低減施策の開始</li>
+          <li>M&Aプラットフォーム（バトンズ・TRANBI・M&Aクラウド）への匿名登録</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-phase">PHASE 2</div>
+      <div class="timeline-title">市場探索・初期コンタクト</div>
+      <div class="timeline-period">Month 2-3（2026年4月〜5月）</div>
+      <div class="timeline-content">
+        <ul>
+          <li>MAポートへの正式依頼・仲介契約締結</li>
+          <li>プラットフォーム経由の反応分析 — 関心度の高い買い手のフィルタリング</li>
+          <li>Tier 1候補（ムービン・ベネッセ・Visional）への初期アプローチ</li>
+          <li>NDA（秘密保持契約）の締結準備</li>
+          <li>業界カンファレンス・イベントでの自然な接点構築</li>
+          <li>IM（インフォメーション・メモランダム）の最終版完成</li>
+          <li>バリュエーションの根拠資料作成</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-phase">PHASE 3</div>
+      <div class="timeline-title">買い手選定・交渉開始</div>
+      <div class="timeline-period">Month 3-5（2026年5月〜7月）</div>
+      <div class="timeline-content">
+        <ul>
+          <li>関心を示した買い手との初回面談（トップ面談）</li>
+          <li>IM開示後の質疑応答対応</li>
+          <li>意向表明書（LOI）の受領・比較検討</li>
+          <li>複数の買い手候補による競争環境の醸成</li>
+          <li>基本条件（価格帯・スキーム・引き継ぎ条件）の方向性合意</li>
+          <li>独占交渉権の付与判断 — 最有力候補の絞り込み</li>
+          <li>基本合意書（MOU）の締結</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-phase">PHASE 4</div>
+      <div class="timeline-title">デューデリジェンス（DD）</div>
+      <div class="timeline-period">Month 5-7（2026年7月〜9月）</div>
+      <div class="timeline-content">
+        <ul>
+          <li>財務DD — 過去3〜5年の財務諸表精査、運転資本分析</li>
+          <li>法務DD — 契約書、許認可、訴訟リスク、知的財産権の確認</li>
+          <li>税務DD — 税務リスク、繰延税金資産の評価</li>
+          <li>事業DD — 事業モデルの持続可能性、市場分析、競合分析</li>
+          <li>IT/テクノロジーDD — システム構成、セキュリティ、技術負債の評価</li>
+          <li>人事DD — 主要人材の引き継ぎ、雇用条件の確認</li>
+          <li>データルーム（VDR）の準備と情報開示管理</li>
+          <li>DD指摘事項への回答・是正対応</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-phase">PHASE 5</div>
+      <div class="timeline-title">最終交渉・契約締結</div>
+      <div class="timeline-period">Month 7-9（2026年9月〜11月）</div>
+      <div class="timeline-content">
+        <ul>
+          <li>DD結果を踏まえた最終価格交渉</li>
+          <li>株式譲渡契約書（SPA）のドラフト作成・交渉</li>
+          <li>表明保証条項の範囲・期間の交渉</li>
+          <li>アーンアウト条項（業績連動対価）の設計</li>
+          <li>競業避止義務・引き継ぎ期間の条件交渉</li>
+          <li>従業員への事前通知タイミングの決定</li>
+          <li>クロージング条件（前提条件）の整理</li>
+          <li>SPA最終版の合意・署名</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-phase">PHASE 6</div>
+      <div class="timeline-title">クロージング・PMI</div>
+      <div class="timeline-period">Month 9-12（2026年11月〜2027年3月）</div>
+      <div class="timeline-content">
+        <ul>
+          <li>クロージング前提条件の充足確認</li>
+          <li>株式譲渡の実行・対価の支払い</li>
+          <li>登記変更・各種届出</li>
+          <li>従業員・顧客・取引先への正式通知</li>
+          <li>PMI（Post Merger Integration）計画の実行開始</li>
+          <li>オーナーの引き継ぎ期間開始（3〜6ヶ月想定）</li>
+          <li>システム統合・業務プロセス統合の段階的実施</li>
+          <li>KPI設定とモニタリング体制の構築</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- 6. Preparation -->
+<section id="preparation" style="background:#070707">
+<div class="container">
+  <div class="section-header">
+    <div class="section-number">SECTION 06</div>
+    <h2 class="section-title">売却額を最大化するための7つの準備事項</h2>
+    <p class="section-desc">バリュエーション向上とDD対策のための具体的アクションリスト。</p>
+  </div>
+
+  <div class="prep-grid">
+
+    <div class="prep-card">
+      <div class="prep-number">01</div>
+      <div class="prep-title">財務の「見える化」と正常収益力の提示</div>
+      <div class="prep-text">
+        過去3年分のP/L・B/Sを税理士と協力して整備。オーナー報酬・経費の「正常化調整（ノーマライゼーション）」を実施し、実質的な営業利益・EBITDAを算出する。役員報酬・交際費・私用経費などを調整後の数値で提示することで、買い手が評価しやすい財務プロファイルを作成。月次推移の可視化も重要。成長トレンドを視覚的に示すダッシュボードを準備する。
+      </div>
+    </div>
+
+    <div class="prep-card">
+      <div class="prep-number">02</div>
+      <div class="prep-title">オーナー依存度の低減と仕組み化</div>
+      <div class="prep-text">
+        買い手が最も懸念するのは「オーナーがいなくなっても事業が回るか」。主要業務プロセスのマニュアル化、AI活用による自動化の推進、主要取引先との契約を法人名義に統一する。教育コンテンツの体系化・動画化により、オーナーの知見を組織知に転換。キーパーソンのリテンション施策（インセンティブ設計）も重要な準備事項。
+      </div>
+    </div>
+
+    <div class="prep-card">
+      <div class="prep-number">03</div>
+      <div class="prep-title">リカーリング収益の強化と可視化</div>
+      <div class="prep-text">
+        買い手はストック型収益を高く評価する。スクール受講料のサブスクリプション化、法人向け研修の年間契約化、卒業生コミュニティの月額課金モデルなど、リカーリング収益比率を引き上げる。MRR（月次経常収益）・ARR（年間経常収益）として提示できる形に整理。チャーンレート（解約率）の改善にも注力し、LTVの高さを定量的に証明する。
+      </div>
+    </div>
+
+    <div class="prep-card">
+      <div class="prep-number">04</div>
+      <div class="prep-title">技術資産・知的財産の棚卸しと強化</div>
+      <div class="prep-text">
+        AIプラットフォーム、教育コンテンツ、独自アルゴリズムなどの技術資産を整理し、特許出願や商標登録を検討。ソースコードの品質改善・ドキュメント整備、技術負債の解消を進める。APIドキュメント、システムアーキテクチャ図、セキュリティ監査レポートなど、テクノロジーDDで求められる資料を事前に準備。これらの知的財産はバリュエーションのプレミアム要因になる。
+      </div>
+    </div>
+
+    <div class="prep-card">
+      <div class="prep-number">05</div>
+      <div class="prep-title">顧客基盤と契約関係の整備</div>
+      <div class="prep-text">
+        主要顧客との契約書を法人対法人の正式な書面に統一。顧客リストのセグメント分析（LTV、獲得コスト、リピート率）を作成。パイプライン（見込み客）の可視化も重要。卒業生の転職成功率、年収アップ幅などの成果データをKPIとして整備し、事業の「成果証明」を定量化する。口コミ・推薦の仕組み化も顧客基盤の強固さを示す材料になる。
+      </div>
+    </div>
+
+    <div class="prep-card">
+      <div class="prep-number">06</div>
+      <div class="prep-title">コンプライアンス・法務リスクの解消</div>
+      <div class="prep-text">
+        法務DDで指摘されそうなリスクを事前に洗い出し・解消する。補助金関連の法令遵守状況の確認、個人情報保護法対応（プライバシーポリシー・同意取得の整備）、労務関連の法令遵守（就業規則・36協定等）、知的財産の権利関係の明確化。弁護士と事前チェックリストを作成し、DD開始前に全項目をクリアにしておく。減額交渉の材料を与えないことが重要。
+      </div>
+    </div>
+
+    <div class="prep-card">
+      <div class="prep-number">07</div>
+      <div class="prep-title">成長ストーリーと事業計画の策定</div>
+      <div class="prep-text">
+        買い手は「買った後にどう成長するか」に対価を払う。3〜5年の事業計画を策定し、売上・利益の成長シナリオを保守的・基本・楽観の3パターンで提示。特に「買い手のリソースを活用した場合のアップサイド」を具体的に示す。例：ムービンが買収した場合の紹介報酬増、ベネッセが買収した場合の法人チャネル活用、Visionalが買収した場合のプラットフォーム統合効果など、買い手ごとにカスタマイズしたシナジー試算を準備する。
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- 7. Action Plan -->
+<section id="action">
+<div class="container">
+  <div class="section-header">
+    <div class="section-number">SECTION 07</div>
+    <h2 class="section-title">推奨アクションプラン</h2>
+    <p class="section-desc">Tier別のアプローチ戦略と優先順位。</p>
+  </div>
+
+  <div class="action-grid">
+
+    <div class="action-card a1">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <div class="tier-badge t1" style="margin:0">TIER 1</div>
+        <div class="action-title" style="margin:0">最優先 — 直接アプローチ（2026年4月開始）</div>
+      </div>
+      <div class="action-text">
+        <p><strong>ムービン・ストラテジック・キャリア</strong></p>
+        <ul style="list-style:none;padding:0;margin:8px 0 16px">
+          <li style="padding:4px 0 4px 16px;position:relative"><span style="position:absolute;left:0">→</span> IR経由で代表・創業者に直接コンタクト。「コンサル教育事業の業務提携」を入口にし、M&Aの可能性を探る</li>
+          <li style="padding:4px 0 4px 16px;position:relative"><span style="position:absolute;left:0">→</span> 上場企業のため決算説明会・IRイベントでの接点構築も有効</li>
+          <li style="padding:4px 0 4px 16px;position:relative"><span style="position:absolute;left:0">→</span> 「教育→転職」バリューチェーン完成のストーリーを強調</li>
+        </ul>
+        <p><strong>ベネッセHD（EQT）</strong></p>
+        <ul style="list-style:none;padding:0;margin:8px 0 16px">
+          <li style="padding:4px 0 4px 16px;position:relative"><span style="position:absolute;left:0">→</span> EQT日本チームへの直接アプローチ。ベネッセの「社会人教育転換」戦略に合致するボルトオン案件として提案</li>
+          <li style="padding:4px 0 4px 16px;position:relative"><span style="position:absolute;left:0">→</span> M&Aクラウドやアドバイザー経由でのベネッセ事業開発部門へのアプローチも並行</li>
+          <li style="padding:4px 0 4px 16px;position:relative"><span style="position:absolute;left:0">→</span> EQTの投資テーマ（教育×テック）への適合性を強調</li>
+        </ul>
+        <p><strong>Visional（ビズリーチ）</strong></p>
+        <ul style="list-style:none;padding:0;margin:8px 0 16px">
+          <li style="padding:4px 0 4px 16px;position:relative"><span style="position:absolute;left:0">→</span> M&A推進室・コーポレート開発チームへの直接アプローチ</li>
+          <li style="padding:4px 0 4px 16px;position:relative"><span style="position:absolute;left:0">→</span> Thinkings買収の成功体験を引き合いに出し、「HR領域のロールアップ戦略の一環」として提案</li>
+          <li style="padding:4px 0 4px 16px;position:relative"><span style="position:absolute;left:0">→</span> ビズリーチの高単価人材セグメントとの統合シナジーを定量化して提示</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="action-card a2">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <div class="tier-badge t2" style="margin:0">TIER 2</div>
+        <div class="action-title" style="margin:0">並行アプローチ — 仲介・プラットフォーム活用（2026年4月〜5月）</div>
+      </div>
+      <div class="action-text">
+        <p><strong>アプローチ方法：</strong></p>
+        <ul style="list-style:none;padding:0;margin:8px 0 16px">
+          <li style="padding:4px 0 4px 16px;position:relative"><span style="position:absolute;left:0">→</span> M&Aクラウドに案件登録。リンクアンドモチベーション、アクシスコンサルティング、Schooなど上場企業への露出を狙う</li>
+          <li style="padding:4px 0 4px 16px;position:relative"><span style="position:absolute;left:0">→</span> MAポートに正式依頼。人材業界専門の買い手ネットワークを活用</li>
+          <li style="padding:4px 0 4px 16px;position:relative"><span style="position:absolute;left:0">→</span> Z会・増進会HDには業界カンファレンスでの接点構築、または教育系M&Aに強いアドバイザー経由</li>
+          <li style="padding:4px 0 4px 16px;position:relative"><span style="position:absolute;left:0">→</span> MyVisionには同業者ネットワーク・業界イベントで自然に接点を構築</li>
+        </ul>
+        <p><strong>ポイント：</strong> Tier 1のアプローチと並行して進め、複数の買い手候補を確保することで交渉力を維持する。1社だけに絞ると足元を見られるリスクがある。</p>
+      </div>
+    </div>
+
+    <div class="action-card a3">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <div class="tier-badge t3" style="margin:0">TIER 3</div>
+        <div class="action-title" style="margin:0">補完的アプローチ — プラットフォーム掲載中心（2026年5月〜）</div>
+      </div>
+      <div class="action-text">
+        <p><strong>アプローチ方法：</strong></p>
+        <ul style="list-style:none;padding:0;margin:8px 0 16px">
+          <li style="padding:4px 0 4px 16px;position:relative"><span style="position:absolute;left:0">→</span> バトンズ・TRANBIでの匿名掲載による反応収集。ブティック系（コンコード・フォルトナ・アンテロープ・タイグロン）からのアプローチを待つ</li>
+          <li style="padding:4px 0 4px 16px;position:relative"><span style="position:absolute;left:0">→</span> アサインには経営陣への直接コンタクト。急成長中で買収への関心がある可能性</li>
+          <li style="padding:4px 0 4px 16px;position:relative"><span style="position:absolute;left:0">→</span> JACリクルートメントには仲介アドバイザー経由での打診。大企業のため直接アプローチは非効率</li>
+          <li style="padding:4px 0 4px 16px;position:relative"><span style="position:absolute;left:0">→</span> PEファンドへは仲介経由でのアプローチ。単体投資は難しいためプラットフォーム型提案を準備</li>
+          <li style="padding:4px 0 4px 16px;position:relative"><span style="position:absolute;left:0">→</span> 海外企業へは日本法人経由のアプローチ。時間がかかるため並行的に進める</li>
+        </ul>
+        <p><strong>ポイント：</strong> Tier 3は「幅を広げる」目的。メインの交渉はTier 1・2で進めつつ、想定外の好条件オファーの可能性を残す。</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="analysis-box" style="margin-top:30px">
+    <h4>即座に開始すべきアクション TOP 5</h4>
+    <p>
+      <strong>1. 今週中：</strong> バトンズ・TRANBI・M&Aクラウドに匿名登録（無料・リスクなし）<br>
+      <strong>2. 今月中：</strong> 税理士と財務諸表の正常化調整を開始<br>
+      <strong>3. 今月中：</strong> M&A専門の弁護士に初回相談（税務スキームの方向性確認）<br>
+      <strong>4. 来月まで：</strong> MAポートに正式コンタクト・仲介契約の検討<br>
+      <strong>5. 来月まで：</strong> IM（インフォメーション・メモランダム）のドラフト作成開始
+    </p>
+  </div>
+</div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+<div class="container">
+  <p>株式会社トップティア — M&A戦略分析レポート | 2026年3月17日作成 | CONFIDENTIAL</p>
+  <p style="margin-top:8px;font-size:12px;color:var(--text-muted)">本資料は社内検討用であり、外部への開示は禁止します。記載内容は分析時点の情報に基づく推定を含みます。</p>
+</div>
+</footer>
+
+</body>
+</html>
