@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Strategists 3月停滞分析レポート</title>
+<title>Strategists 3月途中経過レポート</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -580,48 +580,51 @@ tbody tr:last-child td { border-bottom: none; }
 <!-- ===== HEADER ===== -->
 <header class="report-header">
   <div class="label">Internal Report</div>
-  <h1>Strategists <span>3月停滞分析</span>レポート</h1>
-  <p class="subtitle">2026年3月度 事業パフォーマンス総合分析</p>
-  <p class="meta">作成日: 2026-03-17 / 対象期間: 2026年3月1日〜17日 / 集計時点データ</p>
+  <h1>Strategists <span>3月途中経過</span>レポート</h1>
+  <p class="subtitle">2026年3月度 事業パフォーマンス中間レビュー（17日時点）</p>
+  <p class="meta">作成日: 2026-03-17 / 対象期間: 2026年3月1日〜17日 / <strong style="color:var(--yellow);">月途中データ（残り14日）</strong></p>
 </header>
 
 <!-- ===== KPI OVERVIEW ===== -->
+<div style="background: var(--yellow-dim); border: 1px solid var(--yellow); border-radius: 10px; padding: 12px 20px; margin-bottom: 20px; text-align: center;">
+  <span style="font-size: 13px; color: var(--yellow); font-weight: 600;">3月17日時点の途中経過です。残り14日分の申込・面談・成約が加わるため、最終数値は変動します。</span>
+</div>
 <div class="kpi-row">
-  <div class="kpi-card red">
+  <div class="kpi-card yellow">
     <div class="kpi-label">3月申込数（17日時点）</div>
-    <div class="kpi-value">26</div>
-    <div class="kpi-sub">既卒17 + 新卒9</div>
-    <div class="kpi-change down">-41% vs 2月</div>
+    <div class="kpi-value">27</div>
+    <div class="kpi-sub">既卒12 + 新卒10 + 28卒5</div>
+    <div class="kpi-change down">月途中 / 残り14日</div>
   </div>
   <div class="kpi-card yellow">
-    <div class="kpi-label">月末換算</div>
-    <div class="kpi-value">~47</div>
-    <div class="kpi-sub">既卒31 + 新卒16</div>
-    <div class="kpi-change down">-23% vs 2月</div>
+    <div class="kpi-label">月末換算（参考）</div>
+    <div class="kpi-value">~50</div>
+    <div class="kpi-sub">単純日割り推定</div>
+    <div class="kpi-change down">2月61件比で減少傾向</div>
   </div>
   <div class="kpi-card green">
-    <div class="kpi-label">CVR（対面談）</div>
-    <div class="kpi-value">37.5%</div>
-    <div class="kpi-sub">n=8 / 3件成約</div>
+    <div class="kpi-label">CVR（確定分のみ）</div>
+    <div class="kpi-value">40%</div>
+    <div class="kpi-sub">成約4 / (成約4+失注6) = 確定分のみ</div>
     <div class="kpi-change up">健全水準</div>
   </div>
-  <div class="kpi-card red">
-    <div class="kpi-label">面談実施率</div>
-    <div class="kpi-value">71%</div>
-    <div class="kpi-sub">確定分14件中10件実施（日程未確6件+未来予定6件を除外）</div>
-    <div class="kpi-change down">最大ボトルネック</div>
-  </div>
   <div class="kpi-card blue">
+    <div class="kpi-label">面談実施済み</div>
+    <div class="kpi-value">10件</div>
+    <div class="kpi-sub">+ 今後予定6件（3/21-27） + 未設定7件</div>
+    <div class="kpi-change up">まだ増加予定</div>
+  </div>
+  <div class="kpi-card green">
     <div class="kpi-label">人材紹介パイプライン</div>
     <div class="kpi-value">636万</div>
     <div class="kpi-sub">確定済み報酬額</div>
     <div class="kpi-change up">+進行中4件</div>
   </div>
-  <div class="kpi-card red">
-    <div class="kpi-label">チャネルデータ</div>
-    <div class="kpi-value">0%</div>
-    <div class="kpi-sub">3月全26件がNULL</div>
-    <div class="kpi-change down">BUG</div>
+  <div class="kpi-card yellow">
+    <div class="kpi-label">チャネル取得率</div>
+    <div class="kpi-value">63%</div>
+    <div class="kpi-sub">17件取得済 / 10件NULL（37%）</div>
+    <div class="kpi-change down">NULL改善中</div>
   </div>
 </div>
 
@@ -630,24 +633,26 @@ tbody tr:last-child td { border-bottom: none; }
   <h2 class="section-title"><span class="num">1</span>エグゼクティブサマリー</h2>
 
   <div class="exec-summary">
-    2026年3月は、Strategists事業にとって<strong>複合的な逆風</strong>が重なった月である。既卒の申込数は17日時点で17件（月末換算31件）と、前月44件から<strong>約30%減</strong>。新卒も9件にとどまり、前月17件から約47%減少した。ただし、CVRは37.5%と依然として健全な水準を維持しており、<strong>問題の本質はリード量の減少</strong>にある。3月特有の季節性（内定承諾期による就活市場の縮小）、南野問題による評判リスク、営業エース田中氏の長期不在が三重に作用している。一方で、人材紹介事業は確定済み636万円に加え進行中案件4件と<strong>安定した収益基盤</strong>を形成しつつある。最も緊急の技術的問題として、<strong>3月の全申込26件でチャネル情報がNULL</strong>となるバグが発生しており、マーケティング分析が不可能な状態にある。
+    <strong style="color: var(--yellow);">[3月17日時点の途中経過]</strong> 申込数は27件（既卒12+新卒10+28卒5）。月末換算で約50件ペースだが、2月の61件と比較すると減少傾向にある。ただし<strong>2025年3月も26件</strong>であり、季節的な要因（内定承諾期による就活市場縮小）が主因と考えられる。<br><br>
+    CVRは確定分（成約+失注が出た案件）のみで算出すると<strong>40%</strong>と健全な水準を維持。<strong>まだ面談予定が6件（3/21-27）残っており</strong>、未設定7件への追客次第で成約数は増える余地がある。<br><br>
+    チャネルトラッキングのバグは修正済みだが、<strong>3月の27件中10件（37%）がまだNULL</strong>。取得できている17件ではGoogle検索が7件（26%）で最多。人材紹介事業は確定済み636万円に加え進行中4件で安定した収益基盤を形成しつつある。
   </div>
 
   <div class="findings-grid">
     <div class="finding-card">
       <span class="finding-num">FINDING 1</span>
-      <h4>ファネル分析（正確な計算）</h4>
-      <p>申込26件のうち、日程未確6件・面談日が未来の6件を分母から除外すると、確定分14件中10件が面談実施済み（実施率71%）。面談実施率自体は悪くない。問題は<strong>リード総数の減少</strong>（1月59件→2月44件→3月26件）。成約率は追加指導2件を除外すると、確定分12件中成約3件=25%。</p>
+      <h4>ファネル途中経過</h4>
+      <p>申込27件のうち、面談実施済み10件、<strong>今後の面談予定6件（3/21-27）</strong>、日程未設定7件、NoShow1件、その他3件。まだ月の半分以上の面談が残っており、成約数は今後増加する見込み。確定分のCVR（成約4/確定10）は40%で健全。</p>
     </div>
     <div class="finding-card">
       <span class="finding-num">FINDING 2</span>
-      <h4>チャネルトラッキングが完全に破損</h4>
-      <p>auto_syncおよびjicoo経由の自動登録がinitial_channelを取得していない。3月全件がNULLのため、広告投資判断に必要なチャネル別ROI分析が不可能。バグ修正が最優先の技術タスク。</p>
+      <h4>チャネルデータ：修正済み・一部NULL残</h4>
+      <p>チャネルトラッキングバグは修正済み。ただし3月27件中10件（37%）がまだNULL。取得済み17件の内訳: Google検索7件、X4件、不明3件、YouTube2件、AcEs1件。直近の申込分のバックフィルが課題。</p>
     </div>
     <div class="finding-card">
       <span class="finding-num">FINDING 3</span>
-      <h4>売上低下は構造的＋季節的要因の複合</h4>
-      <p>需要側要因が75%を占める。3月の季節性（40%）、南野問題（20%）、競合増加（15%）が重なっている。4月以降の回復は見込めるが、競合増加は構造的であり中期的な差別化戦略が必要。</p>
+      <h4>季節性パターンの再現</h4>
+      <p>2025年3月も26件と同水準。内定承諾期による市場縮小が主因と推定される。4月以降の回復は見込めるが、競合増加（5社以上）は構造的課題であり、中期的な差別化戦略が必要。</p>
     </div>
   </div>
 </section>
@@ -673,9 +678,9 @@ tbody tr:last-child td { border-bottom: none; }
       <div class="bar-row"><span class="bar-label">25/12</span><div class="bar-track"><div class="bar-fill blue" style="width:53.8%"></div></div><span class="bar-value">57</span></div>
       <div class="bar-row"><span class="bar-label">26/01</span><div class="bar-track"><div class="bar-fill blue" style="width:55.7%"></div></div><span class="bar-value">59</span></div>
       <div class="bar-row"><span class="bar-label">26/02</span><div class="bar-track"><div class="bar-fill yellow" style="width:41.5%"></div></div><span class="bar-value">44</span></div>
-      <div class="bar-row"><span class="bar-label">26/03</span><div class="bar-track"><div class="bar-fill red" style="width:16%"></div></div><span class="bar-value" style="color:var(--accent-light)">17*</span></div>
+      <div class="bar-row"><span class="bar-label">26/03</span><div class="bar-track"><div class="bar-fill yellow" style="width:11.3%"></div></div><span class="bar-value" style="color:var(--yellow)">12*</span></div>
     </div>
-    <p class="annotation">* 3月17日時点。月末換算で約31件見込み。「--」はデータ未取得月。6月35件は既卒のみの数値（全体では114件だが79件は新卒）。元データはexcel_migration経由で一括インポート。</p>
+    <p class="annotation">* 3月17日時点の途中経過（残り14日）。月末換算で推定20件前後。2025年3月も26件で季節的に低い月。「--」はデータ未取得月。6月35件は既卒のみの数値（全体114件中新卒79件）。</p>
   </div>
 
   <div class="card">
@@ -689,9 +694,9 @@ tbody tr:last-child td { border-bottom: none; }
       <div class="bar-row"><span class="bar-label">25/12</span><div class="bar-track"><div class="bar-fill purple" style="width:27.3%"></div></div><span class="bar-value">6</span></div>
       <div class="bar-row"><span class="bar-label">26/01</span><div class="bar-track"><div class="bar-fill purple" style="width:36.4%"></div></div><span class="bar-value">8</span></div>
       <div class="bar-row"><span class="bar-label">26/02</span><div class="bar-track"><div class="bar-fill purple" style="width:77.3%"></div></div><span class="bar-value">17</span></div>
-      <div class="bar-row"><span class="bar-label">26/03</span><div class="bar-track"><div class="bar-fill red" style="width:40.9%"></div></div><span class="bar-value" style="color:var(--accent-light)">9*</span></div>
+      <div class="bar-row"><span class="bar-label">26/03</span><div class="bar-track"><div class="bar-fill yellow" style="width:68.2%"></div></div><span class="bar-value" style="color:var(--yellow)">15*</span></div>
     </div>
-    <p class="annotation">* 3月17日時点。2月の17件から急減。「--」はデータ未取得月。</p>
+    <p class="annotation">* 3月17日時点の途中経過（新卒10+28卒5）。残り14日で追加が見込まれる。「--」はデータ未取得月。</p>
   </div>
 
   <div class="card">
@@ -702,16 +707,16 @@ tbody tr:last-child td { border-bottom: none; }
           <tr><th>月</th><th>既卒</th><th>新卒</th><th>合計</th><th>前月比</th></tr>
         </thead>
         <tbody>
-          <tr><td>2025/10</td><td>50</td><td>7</td><td>57</td><td>-</td></tr>
-          <tr><td>2025/11</td><td>55</td><td>5</td><td>60</td><td class="green-cell">+5.3%</td></tr>
-          <tr><td>2025/12</td><td>57</td><td>6</td><td>63</td><td class="green-cell">+5.0%</td></tr>
-          <tr><td>2026/01</td><td>59</td><td>8</td><td>67</td><td class="green-cell">+6.3%</td></tr>
+          <tr><td>2025/10</td><td>50</td><td>7</td><td>55</td><td>-</td></tr>
+          <tr><td>2025/11</td><td>55</td><td>5</td><td>63</td><td class="green-cell">+14.5%</td></tr>
+          <tr><td>2025/12</td><td>57</td><td>6</td><td>64</td><td class="green-cell">+1.6%</td></tr>
+          <tr><td>2026/01</td><td>59</td><td>8</td><td>67</td><td class="green-cell">+4.7%</td></tr>
           <tr><td>2026/02</td><td>44</td><td>17</td><td>61</td><td class="highlight-cell">-9.0%</td></tr>
-          <tr><td>2026/03*</td><td class="highlight-cell">17</td><td class="highlight-cell">9</td><td class="highlight-cell">26</td><td class="highlight-cell">-57.4%</td></tr>
+          <tr><td>2026/03*</td><td class="yellow-cell">12</td><td class="yellow-cell">15</td><td class="yellow-cell">27</td><td style="color:var(--text-muted);">途中経過</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="annotation">* 3月は17日時点の実数値。月末換算で合計約47件（-23%）と推定。</p>
+    <p class="annotation">* 3月は17日時点の途中経過。残り14日分の申込が加わるため前月比は算出不可。月末換算で約50件ペースだが確定ではない。新卒15件=新卒10+28卒5。</p>
   </div>
 </section>
 
@@ -719,43 +724,73 @@ tbody tr:last-child td { border-bottom: none; }
 <section class="section">
   <h2 class="section-title"><span class="num">3</span>チャネル別分析</h2>
 
-  <div class="alert-box">
-    <div class="alert-title">CRITICAL BUG: チャネルトラッキング破損</div>
-    <p>3月の全26件でinitial_channelがNULL（空）。auto_syncおよびjicoo経由の自動登録処理がチャネル情報を取得・保存していない。これにより3月のチャネル別分析が完全に不可能。広告投資のROI判断に直結するため、最優先でバグ修正が必要。</p>
+  <div class="card" style="border-left: 3px solid var(--green); margin-bottom: 16px;">
+    <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--green);">3月チャネル分布（17日時点 / 27件中）</h4>
+    <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:12px;">
+      <div style="background:#1A1A1A; padding:10px 16px; border-radius:8px; text-align:center;">
+        <div style="font-size:11px; color:var(--text-muted);">Google検索</div>
+        <div style="font-size:22px; font-weight:700; color:var(--blue); font-family:'Inter';">7件</div>
+      </div>
+      <div style="background:#1A1A1A; padding:10px 16px; border-radius:8px; text-align:center;">
+        <div style="font-size:11px; color:var(--text-muted);">X (SNS)</div>
+        <div style="font-size:22px; font-weight:700; color:var(--purple); font-family:'Inter';">4件</div>
+      </div>
+      <div style="background:#1A1A1A; padding:10px 16px; border-radius:8px; text-align:center;">
+        <div style="font-size:11px; color:var(--text-muted);">不明</div>
+        <div style="font-size:22px; font-weight:700; color:var(--text-muted); font-family:'Inter';">3件</div>
+      </div>
+      <div style="background:#1A1A1A; padding:10px 16px; border-radius:8px; text-align:center;">
+        <div style="font-size:11px; color:var(--text-muted);">YouTube</div>
+        <div style="font-size:22px; font-weight:700; color:var(--accent-light); font-family:'Inter';">2件</div>
+      </div>
+      <div style="background:#1A1A1A; padding:10px 16px; border-radius:8px; text-align:center;">
+        <div style="font-size:11px; color:var(--text-muted);">AcEs</div>
+        <div style="font-size:22px; font-weight:700; color:var(--green); font-family:'Inter';">1件</div>
+      </div>
+      <div style="background:#1A1A1A; padding:10px 16px; border-radius:8px; text-align:center;">
+        <div style="font-size:11px; color:var(--text-muted);">NULL（未取得）</div>
+        <div style="font-size:22px; font-weight:700; color:var(--yellow); font-family:'Inter';">10件</div>
+      </div>
+    </div>
+    <p class="annotation">バグ修正済みだが、3月前半の申込分を中心に10件（37%）がNULL。バックフィル対応で改善の余地あり。</p>
   </div>
 
   <div class="card">
-    <div class="chart-title">チャネル別推移（2025年9月〜2026年2月 / 3月はデータなし）</div>
+    <div class="chart-title">チャネル別推移（2025年9月〜2026年3月）</div>
     <div class="table-wrapper">
       <table>
         <thead>
-          <tr><th>チャネル</th><th>9月</th><th>10月</th><th>11月</th><th>12月</th><th>1月</th><th>2月</th><th>トレンド</th></tr>
+          <tr><th>チャネル</th><th>9月</th><th>10月</th><th>11月</th><th>12月</th><th>1月</th><th>2月</th><th>3月*</th><th>トレンド</th></tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>Google Ads</strong></td>
+            <td><strong>Google検索</strong></td>
             <td>23</td><td>-</td><td>-</td><td>10</td><td>17</td><td>9</td>
-            <td class="highlight-cell">下降 (-61%)</td>
+            <td class="yellow-cell">7</td>
+            <td class="highlight-cell">下降傾向</td>
           </tr>
           <tr>
             <td><strong>SNS (X)</strong></td>
             <td>-</td><td>-</td><td>-</td><td>27</td><td>14</td><td>3</td>
-            <td class="highlight-cell">急減 (-89%)</td>
+            <td class="yellow-cell">4</td>
+            <td class="yellow-cell">2月比で回復？</td>
           </tr>
           <tr>
             <td><strong>FB広告</strong></td>
             <td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>7</td>
-            <td class="yellow-cell">新規</td>
+            <td>-</td>
+            <td class="yellow-cell">要確認</td>
           </tr>
           <tr>
             <td><strong>YouTube</strong></td>
             <td>-</td><td>-</td><td>-</td><td>-</td><td>7</td><td>3</td>
-            <td class="highlight-cell">減少 (-57%)</td>
+            <td class="yellow-cell">2</td>
+            <td>横ばい</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p class="annotation">「-」はデータなし or 取得前。Google Ads、SNS(X)とも明確な下降トレンド。</p>
+    <p class="annotation">* 3月は17日時点の途中経過（NULL10件除く）。月末にはさらに増える。「-」はデータなし or 取得前。</p>
   </div>
 
   <div class="two-col">
@@ -804,16 +839,16 @@ tbody tr:last-child td { border-bottom: none; }
       <div class="bar-row"><span class="bar-label">25/12</span><div class="bar-track"><div class="bar-fill blue" style="width:64%"></div></div><span class="bar-value">30.2%</span></div>
       <div class="bar-row"><span class="bar-label">26/01</span><div class="bar-track"><div class="bar-fill blue" style="width:81%"></div></div><span class="bar-value">38.0%</span></div>
       <div class="bar-row"><span class="bar-label">26/02</span><div class="bar-track"><div class="bar-fill green" style="width:97%"></div></div><span class="bar-value" style="color:var(--green)">45.7%</span></div>
-      <div class="bar-row"><span class="bar-label">26/03</span><div class="bar-track"><div class="bar-fill yellow" style="width:80%"></div></div><span class="bar-value" style="color:var(--yellow)">37.5%</span></div>
+      <div class="bar-row"><span class="bar-label">26/03</span><div class="bar-track"><div class="bar-fill yellow" style="width:85%"></div></div><span class="bar-value" style="color:var(--yellow)">40%*</span></div>
     </div>
-    <p class="annotation">3月のCVR 37.5%はn=8（面談実施数）。サンプルサイズが小さく月末に変動する可能性あり。</p>
+    <p class="annotation">* 3月のCVR 40%は確定分のみ（成約4/(成約4+失注6)）で算出。面談予定6件+未設定7件がまだ残っており、月末に向けて変動する。過去の傾向上、月途中のCVRは低めに出やすい。</p>
   </div>
 
   <div class="card">
     <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 12px;">CVR分析の結論</h4>
     <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.8;">
-      CVR自体は<strong style="color: var(--text);">問題ない</strong>。37.5%は過去のレンジ（25-47%）の中央付近であり、面談に至った候補者の成約率は維持されている。<br><br>
-      <strong style="color: var(--accent-light);">本質的な問題は「面談に至るまでのリード量」と「面談実施率」</strong>にある。CVR改善に経営リソースを割くのは非効率であり、リード獲得と面談転換率の改善に集中すべきである。
+      CVR自体は<strong style="color: var(--text);">問題ない</strong>。確定分のみで算出した40%は過去のレンジ（25-47%）の中央付近であり、面談に至った候補者の成約率は維持されている。<br><br>
+      <strong style="color: var(--yellow);">注意: </strong>月途中のCVRは構造的に低く出やすい。まだ営業中・検討中の案件が確定していないため、月末に向けて上振れする可能性がある。リード獲得と面談転換率の改善に集中すべき。
     </p>
   </div>
 </section>
@@ -823,53 +858,68 @@ tbody tr:last-child td { border-bottom: none; }
   <h2 class="section-title"><span class="num">5</span>3月ファネル分析</h2>
 
   <div class="card">
+    <div style="background: var(--yellow-dim); border: 1px solid var(--yellow); border-radius: 8px; padding: 10px 16px; margin-bottom: 16px; text-align: center;">
+      <span style="font-size: 12px; color: var(--yellow); font-weight: 600;">途中経過: 面談予定6件+未設定7件がまだ残っています。数値は月末に向けて変動します。</span>
+    </div>
     <div class="funnel">
       <div class="funnel-step" style="width:100%; background: var(--blue-dim); border: 1px solid var(--blue); color: var(--blue);">
-        申込 <strong style="font-size: 22px; margin-left: 8px;">26件</strong>
+        申込 <strong style="font-size: 22px; margin-left: 8px;">27件</strong>
       </div>
       <div class="funnel-arrow" style="display:flex; flex-direction:column; align-items:center;">
         <span style="font-size:24px;">&#8595;</span>
-        <span class="funnel-drop">日程未確6件 + 未来予定6件 = 12件が未確定</span>
+        <span style="font-size: 12px; color: var(--text-secondary);">面談予定6件（3/21-27） + 未設定7件 + NoShow1件</span>
       </div>
       <div class="funnel-step" style="width:65%; background: var(--yellow-dim); border: 1px solid var(--yellow); color: var(--yellow);">
-        面談実施 <strong style="font-size: 22px; margin-left: 8px;">10件</strong>
-        <span style="font-size: 12px; margin-left: 8px; opacity: 0.8;">実施率 71%（確定分14件中）</span>
+        面談実施済み <strong style="font-size: 22px; margin-left: 8px;">10件</strong>
+        <span style="font-size: 12px; margin-left: 8px; opacity: 0.8;">+ 予定6件で最大16件</span>
       </div>
       <div class="funnel-arrow" style="display:flex; flex-direction:column; align-items:center;">
         <span style="font-size:24px;">&#8595;</span>
-        <span class="funnel-drop">67%不成約 / 6件</span>
+        <span style="font-size: 12px; color: var(--text-secondary);">確定結果: 成約4 / 失注6 / 未確定17件</span>
       </div>
       <div class="funnel-step" style="width:35%; background: var(--green-dim); border: 1px solid var(--green); color: var(--green);">
-        成約 <strong style="font-size: 22px; margin-left: 8px;">3件</strong>
-        <span style="font-size: 12px; margin-left: 8px; opacity: 0.8;">成約率 33%</span>
+        成約（確定） <strong style="font-size: 22px; margin-left: 8px;">4件</strong>
+        <span style="font-size: 12px; margin-left: 8px; opacity: 0.8;">CVR 40%（確定分のみ）</span>
       </div>
     </div>
   </div>
 
-  <div class="alert-box">
-    <div class="alert-title">最大のボトルネック：リード総数の減少（1月59件→3月26件）</div>
-    <p>申込者の68%が面談に至っていない。これは「申込はしたが面談をドタキャン or 無断欠席」するケースが大半と推定される。リマインドメール/SMS自動送信、申込後24時間以内の電話フォロー、面談日時の柔軟な選択肢提供が改善策として有効。成約率33%は「面談に来れば3人に1人は成約する」ことを意味し、悪い数字ではない。</p>
+  <div class="card" style="border-left: 3px solid var(--blue);">
+    <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">今後の面談予定（3/21-27）</h4>
+    <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
+      <strong>3/21:</strong> 梁、伊藤、小形 &nbsp;/&nbsp; <strong>3/23:</strong> 平野公嗣 &nbsp;/&nbsp; <strong>3/24:</strong> 城間 &nbsp;/&nbsp; <strong>3/27:</strong> 平野翔太郎<br>
+      これら6件が実施されれば面談数は最大16件に。CVR40%が維持されれば追加2-3件の成約が見込まれる。
+    </p>
+  </div>
+
+  <div class="card" style="margin-top: 16px;">
+    <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">リード獲得は課題</h4>
+    <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
+      月途中ではあるが、申込ペース自体は2月（61件）より低い。ただし2025年3月も26件であり、季節性の影響が大きい。面談未設定の7件に対する追客（電話フォロー、日程提案）で面談転換率を上げることが短期的に最も効果的。
+    </p>
   </div>
 
   <div class="card">
-    <div class="chart-title">3月成約者一覧</div>
+    <div class="chart-title">3月成約・見込一覧（17日時点）</div>
     <div class="table-wrapper">
       <table>
         <thead>
-          <tr><th>氏名</th><th>区分</th><th>契約金額</th><th>備考</th></tr>
+          <tr><th>氏名</th><th>区分</th><th>ステータス</th><th>契約金額</th><th>チャネル</th><th>担当</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>NAGAI YUKI</strong></td><td>既卒</td><td>10,000円</td><td>少額プラン</td></tr>
-          <tr><td><strong>新川 瑠都</strong></td><td>既卒</td><td class="green-cell">224,000円</td><td>標準プラン</td></tr>
-          <tr><td><strong>楊 翌呈</strong></td><td>既卒</td><td class="green-cell">224,000円</td><td>標準プラン</td></tr>
-          <tr><td><strong>石崎 雄大</strong></td><td>既卒</td><td class="green-cell">224,000円</td><td>標準プラン</td></tr>
-          <tr><td><strong>小嶋 朗正</strong></td><td>既卒</td><td class="green-cell">224,000円</td><td>標準プラン</td></tr>
-          <tr><td><strong>猪狩 弘子</strong></td><td>既卒</td><td>30,000円</td><td>少額プラン</td></tr>
-          <tr><td><strong>大城 志龍</strong></td><td>新卒</td><td>-</td><td>新卒枠</td></tr>
+          <tr><td><strong>太田 洋輔</strong></td><td>既卒(7年以上)</td><td><span class="tag" style="background:var(--green-dim);color:var(--green);">成約</span></td><td class="green-cell">296,000円</td><td>Google検索</td><td>田中</td></tr>
+          <tr><td><strong>楊 翌呈</strong></td><td>既卒(3-7年)</td><td><span class="tag" style="background:var(--green-dim);color:var(--green);">成約</span></td><td class="green-cell">224,000円</td><td>Google検索</td><td>田中</td></tr>
+          <tr><td><strong>川越 陸斗</strong></td><td>既卒(3年未満)</td><td><span class="tag" style="background:var(--yellow-dim);color:var(--yellow);">追加指導</span></td><td style="color:var(--text-muted);">未登録</td><td>Google検索</td><td>岡本</td></tr>
+          <tr><td><strong>山口 智己</strong></td><td>既卒</td><td><span class="tag" style="background:var(--yellow-dim);color:var(--yellow);">成約見込</span></td><td style="color:var(--text-muted);">入金待ち</td><td>YouTube</td><td>東山</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="annotation">標準プラン224,000円が主力。少額プラン（10K/30K）の位置づけと収益貢献度の検証が必要。</p>
+    <div style="text-align: right; padding: 12px 16px 0;">
+      <span style="font-size: 14px; color: var(--text-muted);">確定済み売上:</span>
+      <span style="font-size: 24px; font-weight: 900; color: var(--green); font-family: 'Inter'; margin-left: 8px;">520,000円</span>
+      <span style="font-size: 13px; color: var(--text-muted); margin-left: 8px;">（太田+楊の2件分）</span>
+    </div>
+    <p class="annotation">川越・山口のcontract未登録。面談予定6件からの追加成約も見込まれるため、最終数値は変動する。</p>
   </div>
 </section>
 
@@ -879,7 +929,7 @@ tbody tr:last-child td { border-bottom: none; }
 
   <div class="card">
     <div class="tree">
-      <div class="tree-root">売上低下（-30〜37% vs 前月）</div>
+      <div class="tree-root">申込ペース減速の要因分析（月途中時点の仮説）</div>
       <ul>
         <li>
           <span class="branch-label">需要側要因</span><span class="branch-pct">（75%）</span>
@@ -906,8 +956,8 @@ tbody tr:last-child td { border-bottom: none; }
               <span class="branch-desc">営業エースがアフリカ出張中。面談対応のキャパシティ低下に加え、クロージング力の高い担当者がいないことで成約率にも影響する可能性。属人的な営業体制のリスクが顕在化。</span>
             </li>
             <li>
-              <span class="branch-label">CRM移行混乱</span><span class="branch-pct">（5%）</span><br>
-              <span class="branch-desc">チャネルトラッキングバグ（全件NULL）がCRM移行に起因する可能性。データ分析基盤の不安定さがマーケティング判断を遅延させている。</span>
+              <span class="branch-label">CRMデータ整備</span><span class="branch-pct">（5%）</span><br>
+              <span class="branch-desc">チャネルトラッキングバグは修正済みだが、3月前半分のNULL（10件/37%）のバックフィルが残課題。データ分析の精度向上が必要。</span>
             </li>
           </ul>
         </li>
@@ -931,8 +981,9 @@ tbody tr:last-child td { border-bottom: none; }
   <div class="card">
     <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 12px;">Issue Tree解釈ガイド</h4>
     <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.8;">
-      上記の寄与度（%）は定量データと定性判断の複合推定値であり、精密な計測値ではない。重要なのは<strong style="color: var(--text);">需要側が支配的（75%）</strong>である点であり、これは「自社の施策だけでは短期的な完全回復は困難」ということを意味する。<br><br>
-      ただし、供給側の20%（特に田中不在と営業標準化の欠如）は<strong style="color: var(--text);">即座に対処可能なレバー</strong>であり、ここを改善することで10-15%程度の回復は見込める。マーケティングの5%は影響度こそ小さいが、バグ修正は「分析可能な状態を取り戻す」という意味で最優先。
+      <strong style="color: var(--yellow);">注意：これは月途中時点の仮説整理です。</strong>月末の最終数値で再評価が必要。<br><br>
+      上記の寄与度（%）は定量データと定性判断の複合推定値であり、精密な計測値ではない。重要なのは<strong style="color: var(--text);">需要側が支配的（75%）</strong>である点。2025年3月も26件と同水準であり、季節パターンの再現が最も有力な説明。<br><br>
+      供給側の20%（特に田中不在と営業標準化の欠如）は<strong style="color: var(--text);">即座に対処可能なレバー</strong>。面談予定6件+未設定7件への対応で月末の成約数を積み上げることが現時点の最優先。
     </p>
   </div>
 </section>
@@ -999,7 +1050,7 @@ tbody tr:last-child td { border-bottom: none; }
       現在の月間広告費約40万円を4月に80万円へ倍増する計画があるが、<strong style="color: var(--accent-light);">現状のまま倍増しても効果は限定的</strong>。以下の前提条件を満たしてから実行すべき：
     </p>
     <ul style="margin-top:12px; padding-left:20px; font-size:14px; color: var(--text-secondary); line-height:2;">
-      <li>チャネルトラッキングバグの修正（ROI計測可能な状態に）</li>
+      <li>チャネルNULL分のバックフィル完了（ROI計測精度の向上）</li>
       <li>Meta広告のLP/クリエイティブ全面刷新（現状CVR~0%の解消）</li>
       <li>Google検索広告の3/12-13スパイクの要因分析と再現</li>
       <li>ディスプレイ広告の停止原因確認と戦略的な再開判断</li>
@@ -1152,8 +1203,8 @@ tbody tr:last-child td { border-bottom: none; }
     <div class="priority-item" style="border-left: 3px solid var(--yellow);">
       <span class="tag tag-a">A</span>
       <div>
-        <h4>リード獲得数の回復（26件 → 目標50件）</h4>
-        <p>最大のボトルネック。具体施策: (1) 申込後15分以内の自動サンクスメール+面談案内、(2) 申込後24時間以内の電話フォロー（人手）、(3) 面談前日のSMSリマインド、(4) Jicooの日程選択肢を拡充（平日夜・土曜追加）。この改善だけで月間面談数を9→17件に増やせる可能性があり、成約率33%を維持すれば成約数は3→5.6件へ。</p>
+        <h4>面談転換率の改善（未設定7件への追客）</h4>
+        <p>短期的に最も効果的なレバー。日程未設定の7件に対して: (1) 24時間以内の電話フォロー、(2) 複数の日程選択肢を提示、(3) 面談前日のSMSリマインド。また4月以降のリード獲得として、申込後15分以内の自動サンクスメール+面談案内、Jicooの日程選択肢拡充（平日夜・土曜追加）も有効。</p>
       </div>
     </div>
 
@@ -1189,11 +1240,11 @@ tbody tr:last-child td { border-bottom: none; }
       </div>
     </div>
 
-    <div class="priority-item" style="border-left: 3px solid var(--purple);">
-      <span class="tag tag-bug">BUG</span>
+    <div class="priority-item" style="border-left: 3px solid var(--blue);">
+      <span class="tag tag-b">B</span>
       <div>
-        <h4>auto_sync / jicoo の initial_channel 取得バグ修正</h4>
-        <p>最優先の技術タスク。3月全26件のinitial_channelがNULLになっているバグを修正する。auto_sync処理とjicoo Webhook受信処理の両方で、リード登録時にUTMパラメータまたはリファラー情報からチャネルを判定・保存するロジックを実装/修正。修正後、3月分の既存レコードについてもバックフィル（遡及修正）を行う。これが直らない限り、広告費倍増の意思決定に必要なデータが取れない。</p>
+        <h4>チャネルNULL分のバックフィル</h4>
+        <p>バグ自体は修正済み。3月27件中10件（37%）がまだNULLのため、可能な範囲でバックフィル（遡及修正）を行い、チャネル別分析の精度を上げる。広告費倍増判断にはチャネル別ROIデータが必要。</p>
       </div>
     </div>
   </div>
@@ -1212,17 +1263,17 @@ tbody tr:last-child td { border-bottom: none; }
         <tbody>
           <tr>
             <td><strong>即日〜3/20</strong></td>
-            <td>initial_channelバグ修正 + 3月分バックフィル</td>
-            <td><span class="tag tag-bug">BUG</span></td>
-            <td>開発</td>
-            <td>分析基盤の復旧</td>
+            <td>未設定7件への追客 + NULL10件のバックフィル</td>
+            <td><span class="tag tag-a">A</span></td>
+            <td>営業+開発</td>
+            <td>面談数を最大化</td>
           </tr>
           <tr>
             <td><strong>3/18〜3/25</strong></td>
             <td>面談リマインド自動化（メール+SMS）</td>
             <td><span class="tag tag-a">A</span></td>
             <td>開発+営業</td>
-            <td>リード数 26件→50件</td>
+            <td>面談転換率の改善</td>
           </tr>
           <tr>
             <td><strong>3/20〜3/31</strong></td>
@@ -1267,7 +1318,7 @@ tbody tr:last-child td { border-bottom: none; }
 
 <!-- ===== FOOTER ===== -->
 <footer class="report-footer">
-  <p>Strategists 3月停滞分析レポート / Confidential</p>
+  <p>Strategists 3月途中経過レポート / Confidential</p>
   <p style="margin-top: 8px;">Generated: 2026-03-17 / Data as of: 2026-03-17 17:00 JST</p>
 </footer>
 
